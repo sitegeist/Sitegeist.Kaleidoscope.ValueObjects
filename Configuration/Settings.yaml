@@ -1,0 +1,16 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          '@sitegeist/papertiger-editors':
+            resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/Neos.Ui/Plugin.js'
+    UserInterface:
+      inspector:
+        dataTypes:
+          Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata:
+            editor: 'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata'
+#            editorOptions:
+#              features:
+#                upload: true
+#                mediaBrowser: true

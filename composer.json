@@ -1,0 +1,19 @@
+{
+    "description": "Value objects and editors based on Kaleidoscope",
+    "type": "neos-package",
+    "name": "sitegeist/kaleidoscope-valueobjects",
+    "require": {
+        "sitegeist/kaleidoscope": "~6.6",
+        "sitegeist/inspectorgadget": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sitegeist\\Kaleidoscope\\ValueObjects\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Sitegeist.Kaleidoscope.ValueObjects"
+        }
+    }
+}

@@ -1,0 +1,1 @@
+export {AssetWithMetadata} from './AssetWithMetadata';
