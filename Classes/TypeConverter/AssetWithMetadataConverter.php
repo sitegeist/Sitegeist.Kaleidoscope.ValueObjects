@@ -32,5 +32,4 @@ class AssetWithMetadataConverter extends AbstractTypeConverter
         }
         throw new \Exception('WTF');
     }
-
 }

@@ -13,7 +13,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public readonly array $items;
 
     public function __construct(
-        AssetWithMetadata ... $items,
+        AssetWithMetadata ...$items,
     ) {
     }
 
@@ -32,7 +32,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
 
     public static function fromArray(array $data): self
     {
-        return new self(...array_map(fn(array $item) => AssetWithMetadata::fromArray($item),$data));
+        return new self(...array_map(fn(array $item) => AssetWithMetadata::fromArray($item), $data));
     }
 
     public function jsonSerialize(): mixed

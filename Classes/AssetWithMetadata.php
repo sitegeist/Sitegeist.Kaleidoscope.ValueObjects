@@ -10,7 +10,7 @@ use Sitegeist\Kaleidoscope\Domain\ImageSourceInterface;
 final class AssetWithMetadata implements \JsonSerializable
 {
     public function __construct(
-        public readonly Asset $asset,
+        public readonly ImageInterface $asset,
         public readonly string $alt = '',
         public readonly string $title = '',
     ) {
@@ -27,13 +27,11 @@ final class AssetWithMetadata implements \JsonSerializable
 
     public function getImageSource(): ImageSourceInterface
     {
-        if ($this->asset instanceof ImageInterface) {
-            return new AssetImageSource($this->asset, $this->title, $this->alt);
-        }
-        throw new \Exception('not an image');
+        return new AssetImageSource($this->asset, $this->title, $this->alt);
     }
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return [
             'asset' => $this->asset,
             'alt' => $this->alt,

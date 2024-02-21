@@ -3,8 +3,7 @@
     "type": "neos-package",
     "name": "sitegeist/kaleidoscope-valueobjects",
     "require": {
-        "sitegeist/kaleidoscope": "~6.6",
-        "sitegeist/inspectorgadget": "~2.0"
+        "sitegeist/kaleidoscope": "~6.6"
     },
     "autoload": {
         "psr-4": {

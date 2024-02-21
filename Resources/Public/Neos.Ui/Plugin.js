@@ -86,9 +86,9 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./lib/AssetWithMetadata/AssetWithMetadata.js":
+/***/ "./lib/ImageWithMetadata/ImageWithMetadata.js":
 /*!****************************************************!*\
-  !*** ./lib/AssetWithMetadata/AssetWithMetadata.js ***!
+  !*** ./lib/ImageWithMetadata/ImageWithMetadata.js ***!
   \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -154,13 +154,13 @@ var Form = function Form(props) {
     return React.createElement(Layout.Stack, null, React.createElement(Field, { name: "asset", label: "Asset", editor: "Neos.Neos/Inspector/Editors/AssetEditor" }), React.createElement(Layout.Columns, { columns: 2 }, React.createElement(Field, { name: "alt", label: "Alt", editor: "Neos.Neos/Inspector/Editors/TextFieldEditor" }), React.createElement(Field, { name: "title", label: "Title", editor: "Neos.Neos/Inspector/Editors/TextFieldEditor" })));
 };
 exports.Form = Form;
-//# sourceMappingURL=AssetWithMetadata.js.map
+//# sourceMappingURL=ImageWithMetadata.js.map
 
 /***/ }),
 
-/***/ "./lib/AssetWithMetadata/index.js":
+/***/ "./lib/ImageWithMetadata/index.js":
 /*!****************************************!*\
-  !*** ./lib/AssetWithMetadata/index.js ***!
+  !*** ./lib/ImageWithMetadata/index.js ***!
   \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -195,8 +195,8 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssetWithMetadata = void 0;
-exports.AssetWithMetadata = __importStar(__webpack_require__(/*! ./AssetWithMetadata */ "./lib/AssetWithMetadata/AssetWithMetadata.js"));
+exports.ImageWithMetadata = void 0;
+exports.ImageWithMetadata = __importStar(__webpack_require__(/*! ./ImageWithMetadata */ "./lib/ImageWithMetadata/ImageWithMetadata.js"));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -212,10 +212,10 @@ exports.AssetWithMetadata = __importStar(__webpack_require__(/*! ./AssetWithMeta
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssetWithMetadata = void 0;
-var AssetWithMetadata_1 = __webpack_require__(/*! ./AssetWithMetadata */ "./lib/AssetWithMetadata/index.js");
-Object.defineProperty(exports, "AssetWithMetadata", { enumerable: true, get: function get() {
-    return AssetWithMetadata_1.AssetWithMetadata;
+exports.ImageWithMetadata = void 0;
+var ImageWithMetadata_1 = __webpack_require__(/*! ./ImageWithMetadata */ "./lib/ImageWithMetadata/index.js");
+Object.defineProperty(exports, "ImageWithMetadata", { enumerable: true, get: function get() {
+    return ImageWithMetadata_1.ImageWithMetadata;
   } });
 //# sourceMappingURL=index.js.map
 
@@ -1742,7 +1742,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 	console.log('papertiger-editors');
 	console.log(editorsRegistry);
 
-	editorsRegistry.set('Sitegeist\\Kaleidoscope\\ValueObjects\\AssetWithMetadata', _lib.AssetWithMetadata);
+	editorsRegistry.set('Sitegeist\\Kaleidoscope\\ValueObjects\\ImageWithMetadata', _lib.ImageWithMetadata);
 	console.log(editorsRegistry);
 });
 
