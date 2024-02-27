@@ -1009,7 +1009,7 @@ var _kaleidoscopeAssetWithMetadataEditor = __webpack_require__(/*! @sitegeist/ka
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _neosUiExtensibility2.default)('@sitegeist/archaeopteryx-plugin', {}, function (globalRegistry, _ref) {
+(0, _neosUiExtensibility2.default)('@sitegeist/kaleidoscope-plugin', {}, function (globalRegistry, _ref) {
     var store = _ref.store,
         configuration = _ref.configuration,
         routes = _ref.routes;
