@@ -952,8 +952,7 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerAssetWithMetadataEditor = void 0;
 var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-function registerAssetWithMetadataEditor(neosContextProperties, editor) {
-    var globalRegistry = neosContextProperties.globalRegistry;
+function registerAssetWithMetadataEditor(globalRegistry) {
     var inspectorRegistry = globalRegistry.get('inspector');
     if (!inspectorRegistry) {
         console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Could not find inspector registry.');
