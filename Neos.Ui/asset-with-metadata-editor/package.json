@@ -1,0 +1,19 @@
+{
+    "name": "@sitegeist/kaleidoscope-asset-with-metadata-editor",
+    "license": "MIT",
+    "version": "0.0.0",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "scripts": {
+        "build": "rm -rf lib && tsc -p tsconfig.build.json",
+        "watch": "tsc -w -p tsconfig.build.json"
+    },
+    "dependencies": {
+        "@neos-project/react-ui-components": "^7.0.2",
+        "react": "^17.0.2",
+        "styled-components": "^5.3.0"
+    },
+    "devDependencies": {
+        "typescript": "^4.2.4"
+    }
+}

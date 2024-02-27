@@ -1,0 +1,19 @@
+{
+    "name": "@sitegeist/kaleidoscope",
+    "license": "MIT",
+
+    "private": true,
+    "workspaces": [
+        "Neos.Ui/*"
+    ],
+    "scripts": {
+        "build": "yarn workspace @sitegeist/kaleidoscope-asset-with-metadata-editor build && yarn workspace @sitegeist/kaleidoscope-plugin build"
+    },
+    "devDependencies": {
+        "@neos-project/neos-ui-extensibility": "^7.0.2",
+        "@types/react": "^18.2.60",
+        "@types/react-dom": "^18.2.19",
+        "@types/styled-components": "^5.1.9",
+        "typescript": "^4.2.4"
+    }
+}
