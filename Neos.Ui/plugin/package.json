@@ -1,5 +1,5 @@
 {
-    "name": "@sitegeist/kaleidoscope-plugin",
+    "name": "@sitegeist/kaleidoscope-valueobjects-plugin",
     "license": "MIT",
     "version": "0.0.0",
     "scripts": {
@@ -10,6 +10,6 @@
         "buildTargetDirectory": "../../Resources/Public/JavaScript"
     },
     "dependencies": {
-        "@sitegeist/kaleidoscope-asset-with-metadata-editor": "^0.0.0"
+        "@sitegeist/kaleidoscope-valueobjects-asset-with-metadata-editor": "^0.0.0"
     }
 }

@@ -3,13 +3,13 @@ Neos:
     Ui:
       resources:
         javascript:
-          '@sitegeist/kaleidoscoe-valueobjects':
-            resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/Neos.Ui/Plugin.js'
+          '@sitegeist/kaleidoscope-valueobjects-plugin':
+            resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
     userInterface:
       inspector:
         dataTypes:
           'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
-            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadata'
+            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
           'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
             editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollection'
 

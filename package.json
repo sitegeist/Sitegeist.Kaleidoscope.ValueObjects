@@ -1,12 +1,12 @@
 {
-    "name": "@sitegeist/kaleidoscope",
+    "name": "@sitegeist/kaleidoscope-valueobjects",
     "license": "MIT",
     "private": true,
     "workspaces": [
         "Neos.Ui/*"
     ],
     "scripts": {
-        "build": "yarn workspace @sitegeist/kaleidoscope-asset-with-metadata-editor build && yarn workspace @sitegeist/kaleidoscope-plugin build"
+        "build": "yarn workspace @sitegeist/kaleidoscope-valueobjects-asset-with-metadata-editor build && yarn workspace @sitegeist/kaleidoscope-valueobjects-plugin build"
     },
     "devDependencies": {
         "@neos-project/neos-ui-extensibility": "^7.0.2",

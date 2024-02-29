@@ -1,5 +1,5 @@
 {
-    "name": "@sitegeist/kaleidoscope-asset-with-metadata-editor",
+    "name": "@sitegeist/kaleidoscope-valueobjects-asset-with-metadata-editor",
     "license": "MIT",
     "version": "0.0.0",
     "main": "./lib/index.js",
