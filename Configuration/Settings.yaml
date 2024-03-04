@@ -1,15 +1,14 @@
 Neos:
-  Neos:
-    Ui:
-      resources:
-        javascript:
-          '@sitegeist/kaleidoscope-valueobjects-plugin':
-            resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
-    userInterface:
-      inspector:
-        dataTypes:
-          'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
-            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
-          'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
-            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollection'
-
+    Neos:
+        Ui:
+            resources:
+                javascript:
+                    '@sitegeist/kaleidoscope-valueobjects-plugin':
+                        resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
+        userInterface:
+            inspector:
+                dataTypes:
+                    'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
+                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
+                    'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
+                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollection'
