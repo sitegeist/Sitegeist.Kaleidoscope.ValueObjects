@@ -966,7 +966,8 @@ function registerAssetWithMetadataEditor(globalRegistry) {
         return;
     }
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor', {
-        component: function component() {
+        component: function component(props) {
+            console.log('Editor Props', props);
             return React.createElement("div", null, "AssetWithMetadata");
         }
     });
