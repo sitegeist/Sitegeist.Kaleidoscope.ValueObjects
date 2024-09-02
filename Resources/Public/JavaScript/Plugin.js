@@ -376,6 +376,26 @@ exports.SynchronousMetaRegistry = SynchronousMetaRegistry_1["default"];
 
 /***/ }),
 
+/***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js ***!
+  \****************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "../../node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
+
+/***/ }),
+
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js":
 /*!*************************************************************************************************************************************************************!*\
   !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js ***!
@@ -913,6 +933,264 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 /***/ }),
 
+/***/ "../asset-with-metadata-editor/lib/editor.js":
+/*!***************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/editor.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function get() {
+                return m[k];
+            } };
+    }
+    Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+var __setModuleDefault = undefined && undefined.__setModuleDefault || (Object.create ? function (o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+} : function (o, v) {
+    o["default"] = v;
+});
+var __importStar = undefined && undefined.__importStar || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) {
+        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    }__setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __read = undefined && undefined.__read || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o),
+        r,
+        ar = [],
+        e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) {
+            ar.push(r.value);
+        }
+    } catch (error) {
+        e = { error: error };
+    } finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally {
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+};
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Editor = void 0;
+var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
+var react_ui_components_2 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
+var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var Editor = function Editor(_a) {
+    var valueExtern = _a.value,
+        globalRegistry = _a.neos.globalRegistry,
+        renderSecondaryInspector = _a.renderSecondaryInspector,
+        _b = _a.options,
+        multiple = _b.multiple,
+        placeholder = _b.placeholder,
+        disabled = _b.disabled,
+        threshold = _b.threshold,
+        commit = _a.commit;
+    var _c = __read(React.useState(false), 2),
+        isLoading = _c[0],
+        setIsLoading = _c[1];
+    var _d = __read(React.useState([]), 2),
+        options = _d[0],
+        setOptions = _d[1];
+    var valueRef = React.useRef(valueExtern);
+    var i18nRegistry = globalRegistry.get('i18n');
+    var assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup');
+    React.useEffect(function () {
+        valueRef.current = valueExtern;
+    }, [valueExtern]);
+    var getIdentity = function getIdentity(value) {
+        if (value && value.__identity) {
+            return value.__identity;
+        }
+        if (value && value.assetUuid) {
+            return value.assetUuid;
+        }
+        return value;
+    };
+    var getValue = function getValue() {
+        return getIdentity(valueRef.current);
+    };
+    var getValues = function getValues() {
+        return Array.isArray(valueRef.current) ? valueRef.current.map(getIdentity) : [];
+    };
+    React.useEffect(function () {
+        var resolver = function resolver() {
+            return __awaiter(void 0, void 0, void 0, function () {
+                var values, options_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!valueExtern) return [3, 2];
+                            setIsLoading(true);
+                            values = multiple ? getValues() : [getValue()];
+                            return [4, Promise.all(values.map(function (value) {
+                                return assetLookupDataLoader.resolveValue({}, value);
+                            }))];
+                        case 1:
+                            options_1 = _a.sent();
+                            setIsLoading(false);
+                            setOptions([].concat.apply([], __spreadArray([], __read(options_1), false)));
+                            _a.label = 2;
+                        case 2:
+                            return [2];
+                    }
+                });
+            });
+        };
+        resolver();
+    }, [valueExtern]);
+    var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
+        if (multiple) return commit(__spreadArray(__spreadArray([], __read(getValues()), false), [assetIdentifier], false));
+        commit(assetIdentifier);
+    };
+    var handleChooseFromMedia = function handleChooseFromMedia() {
+        var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
+        renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
+            return React.createElement(MediaSelectionScreen, { constraints: {}, onComplete: handleMediaSelection });
+        });
+    };
+    var handleChooseFile = function handleChooseFile() {
+        var AssetUploadScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/AssetUploadScreen').component;
+        renderSecondaryInspector('ASSET_UPLOAD_MEDIA', function () {
+            return React.createElement(AssetUploadScreen, { type: 'images', constraints: {}, onComplete: function onComplete(props) {
+                    return console.log('handleChooseFile.onComplete', props);
+                }, additionalData: {} });
+        });
+    };
+    return React.createElement("div", null, React.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: true, ListPreviewElement: Test, placeholder: i18nRegistry.translate(placeholder), options: options, values: getValues(), onValuesChange: commit, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: threshold, disabled: disabled }), React.createElement("button", { onClick: handleChooseFromMedia }, "Media"), React.createElement("button", { onClick: handleChooseFile }, "File"));
+};
+exports.Editor = Editor;
+var Test = function Test(props) {
+    return React.createElement(React.Fragment, null, React.createElement(react_ui_components_2.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), React.createElement("input", { type: "text" }));
+};
+//# sourceMappingURL=editor.js.map
+
+/***/ }),
+
 /***/ "../asset-with-metadata-editor/lib/index.js":
 /*!**************************************************!*\
   !*** ../asset-with-metadata-editor/lib/index.js ***!
@@ -923,6 +1201,18 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -952,6 +1242,7 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerAssetWithMetadataEditor = void 0;
 var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var editor_1 = __webpack_require__(/*! ./editor */ "../asset-with-metadata-editor/lib/editor.js");
 function registerAssetWithMetadataEditor(globalRegistry) {
     var inspectorRegistry = globalRegistry.get('inspector');
     if (!inspectorRegistry) {
@@ -968,7 +1259,7 @@ function registerAssetWithMetadataEditor(globalRegistry) {
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor', {
         component: function component(props) {
             console.log('Editor Props', props);
-            return React.createElement("div", null, "AssetWithMetadata");
+            return React.createElement(editor_1.Editor, __assign({}, props));
         }
     });
 }

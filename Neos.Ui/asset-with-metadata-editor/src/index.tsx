@@ -1,6 +1,7 @@
 import { SynchronousRegistry } from '@neos-project/neos-ui-extensibility'
 import * as React from 'react'
 
+import { Editor } from './editor'
 import { IGlobalRegistry } from './globalRegistry'
 
 export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry): void {
@@ -29,7 +30,7 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
         {
             component: (props: any) => {
                 console.log('Editor Props', props)
-                return <div>AssetWithMetadata</div>
+                return <Editor {...props} />
             },
         }
     )

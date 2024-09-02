@@ -6,7 +6,8 @@
         "Neos.Ui/*"
     ],
     "scripts": {
-        "build": "yarn workspace @sitegeist/kaleidoscope-valueobjects-asset-with-metadata-editor build && yarn workspace @sitegeist/kaleidoscope-valueobjects-plugin build"
+        "build": "yarn workspace @sitegeist/kaleidoscope-valueobjects-asset-with-metadata-editor build && yarn workspace @sitegeist/kaleidoscope-valueobjects-plugin build",
+        "build:dev": "yarn build && rsync -a -delete /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects /Users/christian.pansch/Projects/dsr/Packages/Application/"
     },
     "devDependencies": {
         "@neos-project/neos-ui-extensibility": "^7.0.2",
