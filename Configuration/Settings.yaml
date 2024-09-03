@@ -10,7 +10,11 @@ Neos:
                 dataTypes:
                     'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
                         editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
+                        editorOptions:
+                          multiple: false
                         typeConverter: 'Sitegeist\Kaleidoscope\ValueObjects\TypeConverter\AssetWithMetadataConverter'
                     'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
-                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollection'
+                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
+                        editorOptions:
+                          multiple: true
                         typeConverter: 'Sitegeist\Kaleidoscope\ValueObjects\TypeConverter\AssetWithMetadataCollectionConverter'
