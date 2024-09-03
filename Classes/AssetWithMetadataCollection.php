@@ -15,6 +15,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public function __construct(
         AssetWithMetadata ...$items,
     ) {
+        $this->items = $items;
     }
 
     /**
