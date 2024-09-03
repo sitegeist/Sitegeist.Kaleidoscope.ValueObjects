@@ -1,6 +1,12 @@
-import { MultiSelectBox } from '@neos-project/react-ui-components'
-import { SelectBox_Option_MultiLineWithThumbnail } from '@neos-project/react-ui-components'
+import {
+    Label,
+    MultiSelectBox,
+    SelectBox_Option_MultiLineWithThumbnail,
+    TextInput,
+} from '@neos-project/react-ui-components'
 import * as React from 'react'
+
+import { MetaContextProvider, useMetaContext } from './metaContext'
 
 type Props = {
     identifier: string
@@ -120,7 +126,7 @@ export const Editor = ({
     }
 
     return (
-        <div>
+        <MetaContextProvider>
             <MultiSelectBox
                 optionValueField="identifier"
                 loadingLabel={i18nRegistry.translate('Neos.Neos:Main:loading')}
@@ -143,11 +149,14 @@ export const Editor = ({
             />
             <button onClick={handleChooseFromMedia}>Media</button>
             <button onClick={handleChooseFile}>File</button>
-        </div>
+        </MetaContextProvider>
     )
 }
 
 const Test = (props: any) => {
+    const { setMeta, meta } = useMetaContext()
+
+    const onChangeTitle = (value: string) => {}
     return (
         <>
             <SelectBox_Option_MultiLineWithThumbnail
@@ -155,7 +164,14 @@ const Test = (props: any) => {
                 imageUri={props.option.preview}
                 label={props.option.label}
             />
-            <input type="text" />
+            <Label htmlFor="title">
+                Title
+                <TextInput type="text" id="title" />
+            </Label>
+            <Label htmlFor="alt">
+                Alt
+                <TextInput type="text" id="alt" />
+            </Label>
         </>
     )
 }

@@ -1098,8 +1098,8 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Editor = void 0;
 var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
-var react_ui_components_2 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
 var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var metaContext_1 = __webpack_require__(/*! ./metaContext */ "../asset-with-metadata-editor/lib/metaContext.js");
 var Editor = function Editor(_a) {
     var valueExtern = _a.value,
         globalRegistry = _a.neos.globalRegistry,
@@ -1181,11 +1181,15 @@ var Editor = function Editor(_a) {
                 }, additionalData: {} });
         });
     };
-    return React.createElement("div", null, React.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: true, ListPreviewElement: Test, placeholder: i18nRegistry.translate(placeholder), options: options, values: getValues(), onValuesChange: commit, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: threshold, disabled: disabled }), React.createElement("button", { onClick: handleChooseFromMedia }, "Media"), React.createElement("button", { onClick: handleChooseFile }, "File"));
+    return React.createElement(metaContext_1.MetaContextProvider, null, React.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: true, ListPreviewElement: Test, placeholder: i18nRegistry.translate(placeholder), options: options, values: getValues(), onValuesChange: commit, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: threshold, disabled: disabled }), React.createElement("button", { onClick: handleChooseFromMedia }, "Media"), React.createElement("button", { onClick: handleChooseFile }, "File"));
 };
 exports.Editor = Editor;
 var Test = function Test(props) {
-    return React.createElement(React.Fragment, null, React.createElement(react_ui_components_2.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), React.createElement("input", { type: "text" }));
+    var _a = (0, metaContext_1.useMetaContext)(),
+        setMeta = _a.setMeta,
+        meta = _a.meta;
+    var onChangeTitle = function onChangeTitle(value) {};
+    return React.createElement(React.Fragment, null, React.createElement(react_ui_components_1.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), React.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", React.createElement(react_ui_components_1.TextInput, { type: "text", id: "title" })), React.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", React.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt" })));
 };
 //# sourceMappingURL=editor.js.map
 
@@ -1265,6 +1269,113 @@ function registerAssetWithMetadataEditor(globalRegistry) {
 }
 exports.registerAssetWithMetadataEditor = registerAssetWithMetadataEditor;
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/metaContext.js":
+/*!********************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/metaContext.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function get() {
+                return m[k];
+            } };
+    }
+    Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+var __setModuleDefault = undefined && undefined.__setModuleDefault || (Object.create ? function (o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+} : function (o, v) {
+    o["default"] = v;
+});
+var __importStar = undefined && undefined.__importStar || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) {
+        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    }__setModuleDefault(result, mod);
+    return result;
+};
+var __read = undefined && undefined.__read || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o),
+        r,
+        ar = [],
+        e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) {
+            ar.push(r.value);
+        }
+    } catch (error) {
+        e = { error: error };
+    } finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally {
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+};
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MetaContextProvider = exports.useMetaContext = void 0;
+var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var MetaContext = React.createContext(undefined);
+var useMetaContext = function useMetaContext() {
+    var context = React.useContext(MetaContext);
+    if (!context) throw new Error('useMetaContext needs to be wrapt in the MetaContextProvider');
+    return context;
+};
+exports.useMetaContext = useMetaContext;
+var MetaContextProvider = function MetaContextProvider(_a) {
+    var children = _a.children;
+    var _b = __read(React.useState([]), 2),
+        meta = _b[0],
+        setMeta = _b[1];
+    var onChange = function onChange(metaToUpdate) {
+        var metaExist = meta.findIndex(function (meta) {
+            return meta.id === metaToUpdate.id;
+        });
+        if (metaExist === -1) {
+            return setMeta(function (old) {
+                return __spreadArray(__spreadArray([], __read(old), false), [metaToUpdate], false);
+            });
+        }
+        setMeta(function (old) {
+            return old.map(function (meta) {
+                if (meta.id === metaToUpdate.id) {
+                    return metaToUpdate;
+                }
+                return meta;
+            });
+        });
+    };
+    return React.createElement(MetaContext.Provider, { value: { meta: meta, setMeta: onChange } }, children);
+};
+exports.MetaContextProvider = MetaContextProvider;
+//# sourceMappingURL=metaContext.js.map
 
 /***/ }),
 
