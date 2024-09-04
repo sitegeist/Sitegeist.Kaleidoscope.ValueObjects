@@ -1,17 +1,16 @@
-import {
-    Label,
-    MultiSelectBox,
-    SelectBox_Option_MultiLineWithThumbnail,
-    TextInput,
-} from '@neos-project/react-ui-components'
-import * as React from 'react'
+import { MultiSelectBox } from '@neos-project/react-ui-components'
+import React, { useEffect, useRef, useState } from 'react'
 
-import { MetaContextProvider, useMetaContext } from './metaContext'
+import { EditorContextProvider, useEditorContext } from './editorContext'
+import { SelectBox_With_Meta } from './selectBox_with_meta'
+import { AssetWithMeta, Option } from './types'
+
+const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
 
 type Props = {
     identifier: string
     className: string
-    value: any
+    value: AssetWithMeta[]
     options: {
         multiple: boolean
         placeholder: string
@@ -23,57 +22,47 @@ type Props = {
     neos: {
         globalRegistry: any
     }
-    commit: (value: any) => void
-}
-
-type Option = {
-    dataType: string
-    identifier: string
-    label: string
-    loaderUri: string
-    preview: string
+    commit: (value: AssetWithMeta[]) => void
 }
 
 export const Editor = ({
-    value: valueExtern,
+    value: valueExtern = [],
     neos: { globalRegistry },
     renderSecondaryInspector,
     options: { multiple, placeholder, disabled, threshold },
     commit,
 }: Props) => {
-    const [isLoading, setIsLoading] = React.useState(false)
-    const [options, setOptions] = React.useState<Option[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [options, setOptions] = useState<Option[]>([])
 
-    const valueRef = React.useRef(valueExtern)
+    const valueRef = useRef<AssetWithMeta[]>(valueExtern)
 
     const i18nRegistry = globalRegistry.get('i18n')
     const assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup')
 
-    React.useEffect(() => {
+    useEffect(() => {
         valueRef.current = valueExtern
     }, [valueExtern])
 
-    const getIdentity = (value: any) => {
+    const getIdentity = (value: AssetWithMeta) => {
         // Information coming from metadata
-        if (value && value.__identity) {
-            return value.__identity
-        }
-        // Information coming from upload endpoint
-        if (value && value.assetUuid) {
-            return value.assetUuid
+        if (value && value.asset.__identity) {
+            return value.asset.__identity
         }
         return value
     }
 
     const getValue = () => {
-        return getIdentity(valueRef.current)
+        return getIdentity(valueRef.current[0])
     }
 
     const getValues = () => {
-        return Array.isArray(valueRef.current) ? valueRef.current.map(getIdentity) : []
+        return Array.isArray(valueRef.current) && Boolean(valueRef.current.length)
+            ? valueRef.current.map(getIdentity)
+            : []
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const resolver = async () => {
             if (valueExtern) {
                 setIsLoading(true)
@@ -93,9 +82,14 @@ export const Editor = ({
     }, [valueExtern])
 
     const handleMediaSelection = (assetIdentifier: any) => {
-        if (multiple) return commit([...getValues(), assetIdentifier])
-
-        commit(assetIdentifier)
+        commit([
+            ...valueRef.current,
+            {
+                asset: { __identity: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                title: '',
+                alt: '',
+            },
+        ])
     }
 
     const handleChooseFromMedia = () => {
@@ -126,12 +120,12 @@ export const Editor = ({
     }
 
     return (
-        <MetaContextProvider>
+        <EditorContextProvider extern={valueExtern} update={commit}>
             <MultiSelectBox
                 optionValueField="identifier"
                 loadingLabel={i18nRegistry.translate('Neos.Neos:Main:loading')}
                 displaySearchBox={true}
-                ListPreviewElement={Test}
+                ListPreviewElement={SelectBox_With_Meta}
                 placeholder={i18nRegistry.translate(placeholder)}
                 options={options}
                 values={getValues()}
@@ -149,29 +143,6 @@ export const Editor = ({
             />
             <button onClick={handleChooseFromMedia}>Media</button>
             <button onClick={handleChooseFile}>File</button>
-        </MetaContextProvider>
-    )
-}
-
-const Test = (props: any) => {
-    const { setMeta, meta } = useMetaContext()
-
-    const onChangeTitle = (value: string) => {}
-    return (
-        <>
-            <SelectBox_Option_MultiLineWithThumbnail
-                {...props}
-                imageUri={props.option.preview}
-                label={props.option.label}
-            />
-            <Label htmlFor="title">
-                Title
-                <TextInput type="text" id="title" />
-            </Label>
-            <Label htmlFor="alt">
-                Alt
-                <TextInput type="text" id="alt" />
-            </Label>
-        </>
+        </EditorContextProvider>
     )
 }

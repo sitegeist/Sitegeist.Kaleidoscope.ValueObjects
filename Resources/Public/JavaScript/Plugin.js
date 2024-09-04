@@ -943,18 +943,6 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 "use strict";
 
 
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -1098,46 +1086,46 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Editor = void 0;
 var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
-var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var metaContext_1 = __webpack_require__(/*! ./metaContext */ "../asset-with-metadata-editor/lib/metaContext.js");
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var editorContext_1 = __webpack_require__(/*! ./editorContext */ "../asset-with-metadata-editor/lib/editorContext.js");
+var selectBox_with_meta_1 = __webpack_require__(/*! ./selectBox_with_meta */ "../asset-with-metadata-editor/lib/selectBox_with_meta.js");
+var MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image';
 var Editor = function Editor(_a) {
-    var valueExtern = _a.value,
+    var _b = _a.value,
+        valueExtern = _b === void 0 ? [] : _b,
         globalRegistry = _a.neos.globalRegistry,
         renderSecondaryInspector = _a.renderSecondaryInspector,
-        _b = _a.options,
-        multiple = _b.multiple,
-        placeholder = _b.placeholder,
-        disabled = _b.disabled,
-        threshold = _b.threshold,
+        _c = _a.options,
+        multiple = _c.multiple,
+        placeholder = _c.placeholder,
+        disabled = _c.disabled,
+        threshold = _c.threshold,
         commit = _a.commit;
-    var _c = __read(React.useState(false), 2),
-        isLoading = _c[0],
-        setIsLoading = _c[1];
-    var _d = __read(React.useState([]), 2),
-        options = _d[0],
-        setOptions = _d[1];
-    var valueRef = React.useRef(valueExtern);
+    var _d = __read((0, react_1.useState)(false), 2),
+        isLoading = _d[0],
+        setIsLoading = _d[1];
+    var _e = __read((0, react_1.useState)([]), 2),
+        options = _e[0],
+        setOptions = _e[1];
+    var valueRef = (0, react_1.useRef)(valueExtern);
     var i18nRegistry = globalRegistry.get('i18n');
     var assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup');
-    React.useEffect(function () {
+    (0, react_1.useEffect)(function () {
         valueRef.current = valueExtern;
     }, [valueExtern]);
     var getIdentity = function getIdentity(value) {
-        if (value && value.__identity) {
-            return value.__identity;
-        }
-        if (value && value.assetUuid) {
-            return value.assetUuid;
+        if (value && value.asset.__identity) {
+            return value.asset.__identity;
         }
         return value;
     };
     var getValue = function getValue() {
-        return getIdentity(valueRef.current);
+        return getIdentity(valueRef.current[0]);
     };
     var getValues = function getValues() {
-        return Array.isArray(valueRef.current) ? valueRef.current.map(getIdentity) : [];
+        return Array.isArray(valueRef.current) && Boolean(valueRef.current.length) ? valueRef.current.map(getIdentity) : [];
     };
-    React.useEffect(function () {
+    (0, react_1.useEffect)(function () {
         var resolver = function resolver() {
             return __awaiter(void 0, void 0, void 0, function () {
                 var values, options_1;
@@ -1164,34 +1152,162 @@ var Editor = function Editor(_a) {
         resolver();
     }, [valueExtern]);
     var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
-        if (multiple) return commit(__spreadArray(__spreadArray([], __read(getValues()), false), [assetIdentifier], false));
-        commit(assetIdentifier);
+        commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
+            asset: { __identity: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+            title: '',
+            alt: ''
+        }], false));
     };
     var handleChooseFromMedia = function handleChooseFromMedia() {
         var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
-            return React.createElement(MediaSelectionScreen, { constraints: {}, onComplete: handleMediaSelection });
+            return react_1.default.createElement(MediaSelectionScreen, { constraints: {}, onComplete: handleMediaSelection });
         });
     };
     var handleChooseFile = function handleChooseFile() {
         var AssetUploadScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/AssetUploadScreen').component;
         renderSecondaryInspector('ASSET_UPLOAD_MEDIA', function () {
-            return React.createElement(AssetUploadScreen, { type: 'images', constraints: {}, onComplete: function onComplete(props) {
+            return react_1.default.createElement(AssetUploadScreen, { type: 'images', constraints: {}, onComplete: function onComplete(props) {
                     return console.log('handleChooseFile.onComplete', props);
                 }, additionalData: {} });
         });
     };
-    return React.createElement(metaContext_1.MetaContextProvider, null, React.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: true, ListPreviewElement: Test, placeholder: i18nRegistry.translate(placeholder), options: options, values: getValues(), onValuesChange: commit, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: threshold, disabled: disabled }), React.createElement("button", { onClick: handleChooseFromMedia }, "Media"), React.createElement("button", { onClick: handleChooseFile }, "File"));
+    return react_1.default.createElement(editorContext_1.EditorContextProvider, { extern: valueExtern, update: commit }, react_1.default.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: true, ListPreviewElement: selectBox_with_meta_1.SelectBox_With_Meta, placeholder: i18nRegistry.translate(placeholder), options: options, values: getValues(), onValuesChange: commit, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: threshold, disabled: disabled }), react_1.default.createElement("button", { onClick: handleChooseFromMedia }, "Media"), react_1.default.createElement("button", { onClick: handleChooseFile }, "File"));
 };
 exports.Editor = Editor;
-var Test = function Test(props) {
-    var _a = (0, metaContext_1.useMetaContext)(),
-        setMeta = _a.setMeta,
-        meta = _a.meta;
-    var onChangeTitle = function onChangeTitle(value) {};
-    return React.createElement(React.Fragment, null, React.createElement(react_ui_components_1.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), React.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", React.createElement(react_ui_components_1.TextInput, { type: "text", id: "title" })), React.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", React.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt" })));
-};
 //# sourceMappingURL=editor.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/editorContext.js":
+/*!**********************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/editorContext.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function get() {
+                return m[k];
+            } };
+    }
+    Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+var __setModuleDefault = undefined && undefined.__setModuleDefault || (Object.create ? function (o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+} : function (o, v) {
+    o["default"] = v;
+});
+var __importStar = undefined && undefined.__importStar || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) {
+        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    }__setModuleDefault(result, mod);
+    return result;
+};
+var __read = undefined && undefined.__read || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o),
+        r,
+        ar = [],
+        e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) {
+            ar.push(r.value);
+        }
+    } catch (error) {
+        e = { error: error };
+    } finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally {
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+};
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EditorContextProvider = exports.useEditorContext = void 0;
+var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var react_1 = __webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
+var EditorContext = (0, react_1.createContext)(undefined);
+var useEditorContext = function useEditorContext() {
+    var context = (0, react_1.useContext)(EditorContext);
+    if (!context) throw new Error('useEditorContext needs to be wrapt in the EditorContextProvider');
+    return context;
+};
+exports.useEditorContext = useEditorContext;
+var EditorContextProvider = function EditorContextProvider(_a) {
+    var children = _a.children,
+        extern = _a.extern,
+        update = _a.update;
+    var _b = __read((0, react_1.useState)([]), 2),
+        meta = _b[0],
+        setMeta = _b[1];
+    (0, react_1.useEffect)(function () {
+        if (!meta.length) return;
+        update(extern.map(function (ve) {
+            var metaExist = meta.find(function (m) {
+                return m.id === ve.asset.__identity;
+            });
+            if (!metaExist) return ve;
+            return __assign(__assign({}, ve), { alt: metaExist.alt, title: metaExist.title });
+        }));
+    }, [meta]);
+    var onChange = function onChange(metaToUpdate) {
+        var metaExist = meta.findIndex(function (meta) {
+            return meta.id === metaToUpdate.id;
+        });
+        if (metaExist === -1) {
+            return setMeta(function (old) {
+                return __spreadArray(__spreadArray([], __read(old), false), [metaToUpdate], false);
+            });
+        }
+        setMeta(function (old) {
+            return old.map(function (meta) {
+                if (meta.id === metaToUpdate.id) {
+                    return metaToUpdate;
+                }
+                return meta;
+            });
+        });
+    };
+    return React.createElement(EditorContext.Provider, { value: { meta: meta, extern: extern, setMeta: onChange, update: update } }, children);
+};
+exports.EditorContextProvider = EditorContextProvider;
+//# sourceMappingURL=editorContext.js.map
 
 /***/ }),
 
@@ -1272,16 +1388,28 @@ exports.registerAssetWithMetadataEditor = registerAssetWithMetadataEditor;
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/metaContext.js":
-/*!********************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/metaContext.js ***!
-  \********************************************************/
+/***/ "../asset-with-metadata-editor/lib/selectBox_with_meta.js":
+/*!****************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/selectBox_with_meta.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -1330,52 +1458,51 @@ var __read = undefined && undefined.__read || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MetaContextProvider = exports.useMetaContext = void 0;
-var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var MetaContext = React.createContext(undefined);
-var useMetaContext = function useMetaContext() {
-    var context = React.useContext(MetaContext);
-    if (!context) throw new Error('useMetaContext needs to be wrapt in the MetaContextProvider');
-    return context;
-};
-exports.useMetaContext = useMetaContext;
-var MetaContextProvider = function MetaContextProvider(_a) {
-    var children = _a.children;
-    var _b = __read(React.useState([]), 2),
-        meta = _b[0],
-        setMeta = _b[1];
-    var onChange = function onChange(metaToUpdate) {
-        var metaExist = meta.findIndex(function (meta) {
-            return meta.id === metaToUpdate.id;
+exports.SelectBox_With_Meta = void 0;
+var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var editorContext_1 = __webpack_require__(/*! ./editorContext */ "../asset-with-metadata-editor/lib/editorContext.js");
+var SelectBox_With_Meta = function SelectBox_With_Meta(props) {
+    var _a = (0, editorContext_1.useEditorContext)(),
+        setMeta = _a.setMeta,
+        meta = _a.meta,
+        extern = _a.extern;
+    var _b = __read((0, react_1.useState)(''), 2),
+        altValue = _b[0],
+        setAltValue = _b[1];
+    var _c = __read((0, react_1.useState)(''), 2),
+        titleValue = _c[0],
+        setTitleValue = _c[1];
+    (0, react_1.useEffect)(function () {
+        var _a, _b;
+        var currentExtern = extern.find(function (e) {
+            return e.asset.__identity === props.option.identifier;
         });
-        if (metaExist === -1) {
-            return setMeta(function (old) {
-                return __spreadArray(__spreadArray([], __read(old), false), [metaToUpdate], false);
-            });
+        if (!currentExtern) return;
+        setTitleValue((_a = currentExtern.title) !== null && _a !== void 0 ? _a : '');
+        setAltValue((_b = currentExtern.alt) !== null && _b !== void 0 ? _b : '');
+    }, [extern, props.option.identifier]);
+    var currenAssetId = props.option.identifier;
+    var currentMeta = meta.find(function (meta) {
+        return meta.id === currenAssetId;
+    });
+    var onChangeTitle = function onChangeTitle() {
+        if (currentMeta) {
+            return setMeta(__assign(__assign({}, currentMeta), { title: titleValue }));
         }
-        setMeta(function (old) {
-            return old.map(function (meta) {
-                if (meta.id === metaToUpdate.id) {
-                    return metaToUpdate;
-                }
-                return meta;
-            });
-        });
+        setMeta({ id: currenAssetId, title: titleValue });
     };
-    return React.createElement(MetaContext.Provider, { value: { meta: meta, setMeta: onChange } }, children);
+    var onChangeAlt = function onChangeAlt() {
+        if (currentMeta) {
+            return setMeta(__assign(__assign({}, currentMeta), { alt: altValue }));
+        }
+        setMeta({ id: currenAssetId, alt: altValue });
+    };
+    return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(react_ui_components_1.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", onChange: setTitleValue, onBlur: onChangeTitle, value: titleValue })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", onChange: setAltValue, onBlur: onChangeAlt, value: altValue })));
 };
-exports.MetaContextProvider = MetaContextProvider;
-//# sourceMappingURL=metaContext.js.map
+exports.SelectBox_With_Meta = SelectBox_With_Meta;
+//# sourceMappingURL=selectBox_with_meta.js.map
 
 /***/ }),
 
