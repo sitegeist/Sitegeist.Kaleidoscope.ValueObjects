@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Sitegeist\Kaleidoscope\ValueObjects;
 
 use Traversable;
+use Neos\Flow\Annotations as Flow;
 
-class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \JsonSerializable
+#[Flow\Proxy(false)]
+class AssetWithMetadataCollection implements \IteratorAggregate, \Countable
 {
     /**
      * @var AssetWithMetadata[]
@@ -29,15 +31,5 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public function count(): int
     {
         return count($this->items);
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new self(...array_map(fn(array $item) => AssetWithMetadata::fromArray($item), $data));
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return $this->items;
     }
 }

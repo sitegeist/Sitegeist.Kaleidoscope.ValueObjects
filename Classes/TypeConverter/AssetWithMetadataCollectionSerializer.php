@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace Sitegeist\Kaleidoscope\ValueObjects\TypeConverter;
 
+use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\Property\PropertyMappingConfigurationInterface;
 use Neos\Flow\Property\TypeConverter\AbstractTypeConverter;
+use Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata;
 use Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection;
 
-class AssetWithMetadataCollectionConverter extends AbstractTypeConverter
+class AssetWithMetadataCollectionSerializer extends AbstractTypeConverter
 {
-    use arrayToItemTrait;
+    use itemToArrayTrait;
 
     /**
      * The source types this converter can convert.
@@ -17,7 +19,7 @@ class AssetWithMetadataCollectionConverter extends AbstractTypeConverter
      * @var array<string>
      * @api
      */
-    protected $sourceTypes = ['array'];
+    protected $sourceTypes = [AssetWithMetadataCollection::class];
 
     /**
      * The target type this converter can convert to.
@@ -25,34 +27,26 @@ class AssetWithMetadataCollectionConverter extends AbstractTypeConverter
      * @var string
      * @api
      */
-    protected $targetType = AssetWithMetadataCollection::class;
+    protected $targetType = 'array';
 
     public function __construct(
+        private readonly PersistenceManagerInterface $persistenceManager,
     ) {
     }
 
     public function canConvertFrom($source, $targetType)
     {
-        return is_array($source);
+        return ($source instanceof AssetWithMetadataCollection);
     }
 
     public function convertFrom($source, $targetType, array $convertedChildProperties = [], PropertyMappingConfigurationInterface $configuration = null)
     {
-        if (is_array($source)) {
-            return new AssetWithMetadataCollection( ...array_filter(array_map(
-                function($itemArray) {
-                    if (is_array($itemArray)) {
-                        return $this->arrayToItem($itemArray);
-                    }
-                },
-                $source
-            )));
-        }
-
         if ($source instanceof AssetWithMetadataCollection) {
-            return $source;
+            return array_map(
+                fn(AssetWithMetadata $item) => $this->itemToArray($item, $this->persistenceManager),
+                $source->items
+            );
         }
-
-        throw new \Exception('WTF');
+        throw new \Exception('a WTF');
     }
 }

@@ -6,8 +6,10 @@ namespace Sitegeist\Kaleidoscope\ValueObjects;
 use Neos\Media\Domain\Model\ImageInterface;
 use Sitegeist\Kaleidoscope\Domain\AssetImageSource;
 use Sitegeist\Kaleidoscope\Domain\ImageSourceInterface;
+use Neos\Flow\Annotations as Flow;
 
-final class AssetWithMetadata implements \JsonSerializable
+#[Flow\Proxy(false)]
+final class AssetWithMetadata
 {
     public function __construct(
         public readonly ImageInterface $asset,
@@ -16,26 +18,8 @@ final class AssetWithMetadata implements \JsonSerializable
     ) {
     }
 
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['asset'],
-            $data['alt'] ?? '',
-            $data['title'] ?? '',
-        );
-    }
-
     public function getImageSource(): ImageSourceInterface
     {
         return new AssetImageSource($this->asset, $this->title, $this->alt);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'asset' => $this->asset,
-            'alt' => $this->alt,
-            'title' => $this->title
-        ];
     }
 }
