@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Sitegeist\Kaleidoscope\ValueObjects\TypeConverter;
+namespace Sitegeist\Kaleidoscope\ValueObjects;
 
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Utility\TypeHandling;
-use Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata;
 
-trait itemToArrayTrait
+trait SerializeItemTrait
 {
-    protected function itemToArray(AssetWithMetadata $source, PersistenceManagerInterface $persistenceManager): array
+    protected static function serializeItem(AssetWithMetadata $source, PersistenceManagerInterface $persistenceManager): array
     {
         $assetClassName = TypeHandling::getTypeForValue($source->asset);
         $assetIdentifier = $persistenceManager->getIdentifierByObject($source->asset);
