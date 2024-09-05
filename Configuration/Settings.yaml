@@ -16,3 +16,4 @@ Neos:
                         editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
                         editorOptions:
                           multiple: true
+

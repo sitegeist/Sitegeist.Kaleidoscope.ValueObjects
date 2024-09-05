@@ -35,7 +35,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public static function fromArray(array $data): self
     {
         $items = array_map(
-            fn(array $item) => ItemSerializationService::unserializeItem($item),
+            fn(array $item) => AssetWithMetadata::fromArray($item),
             $data
         );
         return new self(...array_filter($items));
@@ -44,7 +44,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public function jsonSerialize(): array
     {
         return array_map(
-            fn(AssetWithMetadata $item) => ItemSerializationService::serializeItem($item),
+            fn(AssetWithMetadata $item) => $item->jsonSerialize(),
             $this->items,
         );
     }

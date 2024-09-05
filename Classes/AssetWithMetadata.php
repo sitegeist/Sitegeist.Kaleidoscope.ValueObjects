@@ -12,25 +12,38 @@ use Neos\Flow\Annotations as Flow;
 final class AssetWithMetadata implements \JsonSerializable
 {
     public function __construct(
-        public readonly ImageInterface $asset,
+        public readonly ImageReference $image,
         public readonly string $alt = '',
         public readonly string $title = '',
     ) {
     }
 
+    public function getImageInterface(): ImageInterface
+    {
+        return$this->image->toImageInterface();
+    }
+
     public function getImageSource(): ImageSourceInterface
     {
-        return new AssetImageSource($this->asset, $this->title, $this->alt);
+        return new AssetImageSource($this->image->toImageInterface(), $this->title, $this->alt);
     }
 
     public static function fromArray(array $data): self
     {
-        return ItemSerializationService::unserializeItem($data);
+        return new self(
+            ImageReference::fromArray($data['asset']),
+            $data['alt'] ?? '',
+            $data['title'] ?? '',
+        );
     }
 
     public function jsonSerialize(): array
     {
-        return ItemSerializationService::serializeItem($this);
+        return [
+            'asset' => $this->image->toArray(),
+            'alt' => $this->alt,
+            'title' => $this->title,
+        ];
     }
 
 }
