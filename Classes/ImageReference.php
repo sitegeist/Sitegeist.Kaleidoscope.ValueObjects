@@ -13,13 +13,6 @@ use Neos\Flow\Annotations as Flow;
 #[Flow\Proxy(false)]
 final class ImageReference implements \JsonSerializable
 {
-    /**
-     * The name ensures this is skipped in debug outputs
-     * to avoid confusion
-     * @var PersistenceManagerInterface|null
-     */
-    private static ?PersistenceManagerInterface $Flow_Aop_PersistenceManager = null;
-
     public function __construct(
         public readonly string $identifier,
         public readonly string $classname
@@ -28,7 +21,7 @@ final class ImageReference implements \JsonSerializable
 
     public function toImageInterface(): ?ImageInterface
     {
-        $persistenceManager = self::getPersistenceManager();
+        $persistenceManager = Bootstrap::$staticObjectManager->get(PersistenceManager::class);
         $image = $persistenceManager->getObjectByIdentifier(
             $this->identifier,
             $this->classname,
@@ -42,7 +35,7 @@ final class ImageReference implements \JsonSerializable
 
     public static function fromImageInterface(ImageInterface $image): self
     {
-        $persistenceManager = self::getPersistenceManager();
+        $persistenceManager = Bootstrap::$staticObjectManager->get(PersistenceManager::class);
         $assetClassName = TypeHandling::getTypeForValue($image);
         $assetIdentifier = $persistenceManager->getIdentifierByObject($image);
         return new self($assetIdentifier, $assetClassName);
@@ -71,13 +64,4 @@ final class ImageReference implements \JsonSerializable
           '__identifier' => $this->identifier
         ];
     }
-
-    private static function getPersistenceManager(): PersistenceManager
-    {
-        if (self::$Flow_Aop_PersistenceManager === null) {
-            self::$Flow_Aop_PersistenceManager = Bootstrap::$staticObjectManager->get(PersistenceManager::class);
-        }
-        return self::$Flow_Aop_PersistenceManager;
-    }
-
 }
