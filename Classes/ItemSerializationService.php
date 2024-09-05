@@ -36,7 +36,11 @@ class ItemSerializationService
             && array_key_exists('__flow_object_type', $asset)
             && (array_key_exists('__identifier', $asset) || array_key_exists('__identity', $asset))
         ) {
-            $asset = $persistenceManager->getObjectByIdentifier($asset['__identifier'] ?? $asset['__identity'], $asset['__flow_object_type']);
+            $asset = $persistenceManager->getObjectByIdentifier(
+                $asset['__identifier'] ?? $asset['__identity'],
+                $asset['__flow_object_type'],
+                true
+            );
         }
 
         if ($asset instanceof ImageInterface) {
