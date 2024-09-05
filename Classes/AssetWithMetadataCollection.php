@@ -8,10 +8,6 @@ use Neos\Flow\Annotations as Flow;
 #[Flow\Proxy(false)]
 class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
-    use SerializeItemTrait;
-    use UnserializeItemTrait;
-    use GetPersistenceManagerTrait;
-
     /**
      * @var AssetWithMetadata[]
      */
@@ -38,9 +34,8 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
 
     public static function fromArray(array $data): self
     {
-        $persistenceManager = self::getPersistenceManager();
         $items = array_map(
-            fn(array $item) => self::unserializeItem($item, $persistenceManager),
+            fn(array $item) => ItemSerializationService::unserializeItem($item),
             $data
         );
         return new self(...array_filter($items));
@@ -48,9 +43,8 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
 
     public function jsonSerialize(): array
     {
-        $persistenceManager = self::getPersistenceManager();
         return array_map(
-            fn(AssetWithMetadata $item) => self::serializeItem($item, $persistenceManager),
+            fn(AssetWithMetadata $item) => ItemSerializationService::serializeItem($item),
             $this->items,
         );
     }

@@ -11,10 +11,6 @@ use Neos\Flow\Annotations as Flow;
 #[Flow\Proxy(false)]
 final class AssetWithMetadata implements \JsonSerializable
 {
-    use SerializeItemTrait;
-    use UnserializeItemTrait;
-    use GetPersistenceManagerTrait;
-
     public function __construct(
         public readonly ImageInterface $asset,
         public readonly string $alt = '',
@@ -29,14 +25,12 @@ final class AssetWithMetadata implements \JsonSerializable
 
     public static function fromArray(array $data): self
     {
-        $persistenceManager = self::getPersistenceManager();
-        return self::unserializeItem($data, $persistenceManager);
+        return ItemSerializationService::unserializeItem($data);
     }
 
     public function jsonSerialize(): array
     {
-        $persistenceManager = self::getPersistenceManager();
-        return self::serializeItem($this, $persistenceManager);
+        return ItemSerializationService::serializeItem($this);
     }
 
 }
