@@ -46,8 +46,8 @@ export const Editor = ({
 
     const getIdentity = (value: AssetWithMeta) => {
         // Information coming from metadata
-        if (value && value.asset.__identity) {
-            return value.asset.__identity
+        if (value && value.asset.__identifier) {
+            return value.asset.__identifier
         }
         return value
     }
@@ -85,7 +85,7 @@ export const Editor = ({
         commit([
             ...valueRef.current,
             {
-                asset: { __identity: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
                 title: '',
                 alt: '',
             },

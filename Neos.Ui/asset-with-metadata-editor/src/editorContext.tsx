@@ -38,7 +38,7 @@ export const EditorContextProvider = ({ children, extern, update }: EditorContex
 
         update(
             extern.map((ve) => {
-                const metaExist = meta.find((m) => m.id === ve.asset.__identity)
+                const metaExist = meta.find((m) => m.id === ve.asset.__identifier)
                 if (!metaExist) return ve
                 return {
                     ...ve,

@@ -14,7 +14,7 @@ export const SelectBox_With_Meta = (props: any) => {
     const [titleValue, setTitleValue] = useState('')
 
     useEffect(() => {
-        const currentExtern = extern.find((e) => e.asset.__identity === props.option.identifier)
+        const currentExtern = extern.find((e) => e.asset.__identifier === props.option.identifier)
         if (!currentExtern) return
 
         setTitleValue(currentExtern.title ?? '')

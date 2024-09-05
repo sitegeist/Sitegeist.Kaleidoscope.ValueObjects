@@ -1,5 +1,5 @@
 export type Asset = {
-    __identity: string
+    __identifier: string
     __flow_object_type: string
 }
 

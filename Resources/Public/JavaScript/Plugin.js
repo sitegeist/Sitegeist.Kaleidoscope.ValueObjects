@@ -1114,8 +1114,8 @@ var Editor = function Editor(_a) {
         valueRef.current = valueExtern;
     }, [valueExtern]);
     var getIdentity = function getIdentity(value) {
-        if (value && value.asset.__identity) {
-            return value.asset.__identity;
+        if (value && value.asset.__identifier) {
+            return value.asset.__identifier;
         }
         return value;
     };
@@ -1153,7 +1153,7 @@ var Editor = function Editor(_a) {
     }, [valueExtern]);
     var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
         commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
-            asset: { __identity: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+            asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
             title: '',
             alt: ''
         }], false));
@@ -1280,7 +1280,7 @@ var EditorContextProvider = function EditorContextProvider(_a) {
         if (!meta.length) return;
         update(extern.map(function (ve) {
             var metaExist = meta.find(function (m) {
-                return m.id === ve.asset.__identity;
+                return m.id === ve.asset.__identifier;
             });
             if (!metaExist) return ve;
             return __assign(__assign({}, ve), { alt: metaExist.alt, title: metaExist.title });
@@ -1477,7 +1477,7 @@ var SelectBox_With_Meta = function SelectBox_With_Meta(props) {
     (0, react_1.useEffect)(function () {
         var _a, _b;
         var currentExtern = extern.find(function (e) {
-            return e.asset.__identity === props.option.identifier;
+            return e.asset.__identifier === props.option.identifier;
         });
         if (!currentExtern) return;
         setTitleValue((_a = currentExtern.title) !== null && _a !== void 0 ? _a : '');
