@@ -44,8 +44,8 @@ final class ImageReference implements \JsonSerializable
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['__flow_object_type'],
             $data['__identifier'],
+            $data['__flow_object_type'],
         );
     }
 
