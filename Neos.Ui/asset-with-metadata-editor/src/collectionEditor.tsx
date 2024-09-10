@@ -1,7 +1,7 @@
-import { IconButton, SelectBox } from '@neos-project/react-ui-components'
+import { IconButton, MultiSelectBox } from '@neos-project/react-ui-components'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { EditorContextProvider } from './editorContext'
+import { EditorContextProvider, useEditorContext } from './editorContext'
 import { SelectBox_With_Meta } from './selectBox_with_meta'
 import { AssetWithMeta, Option } from './types'
 
@@ -10,8 +10,8 @@ const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
 type Props = {
     identifier: string
     className: string
-    value?: AssetWithMeta
-    options?: {
+    value: AssetWithMeta[]
+    options: {
         placeholder: string
         disabled?: boolean
         threshold?: any
@@ -21,11 +21,11 @@ type Props = {
     neos: {
         globalRegistry: any
     }
-    commit: (value?: AssetWithMeta) => void
+    commit: (value: AssetWithMeta[]) => void
 }
 
-export const Editor = ({
-    value: valueExtern,
+export const CollectionEditor = ({
+    value: valueExtern = [],
     neos: { globalRegistry },
     renderSecondaryInspector,
     options: editorOptions,
@@ -34,7 +34,7 @@ export const Editor = ({
     const [isLoading, setIsLoading] = useState(false)
     const [options, setOptions] = useState<Option[]>([])
 
-    const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
+    const valueRef = useRef<AssetWithMeta[]>(valueExtern)
 
     const i18nRegistry = globalRegistry.get('i18n')
     const assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup')
@@ -44,16 +44,17 @@ export const Editor = ({
     }, [valueExtern])
 
     const getIdentity = (value: AssetWithMeta) => {
+        // Information coming from metadata
         if (value && value.asset.__identifier) {
             return value.asset.__identifier
         }
         return value
     }
 
-    const getValue = () => {
-        if (!valueRef.current) return
-
-        return getIdentity(valueRef.current)
+    const getValues = () => {
+        return Array.isArray(valueRef.current) && Boolean(valueRef.current.length)
+            ? valueRef.current.map(getIdentity)
+            : []
     }
 
     useEffect(() => {
@@ -61,9 +62,11 @@ export const Editor = ({
             if (valueExtern) {
                 setIsLoading(true)
 
-                const value = getValue()
+                const values = getValues()
 
-                const options = await assetLookupDataLoader.resolveValue({}, value)
+                const options = await Promise.all(
+                    values.map((value) => assetLookupDataLoader.resolveValue({}, value))
+                )
 
                 setIsLoading(false)
                 setOptions([].concat(...options))
@@ -74,11 +77,14 @@ export const Editor = ({
     }, [valueExtern])
 
     const handleMediaSelection = (assetIdentifier: any) => {
-        commit({
-            asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
-            title: '',
-            alt: '',
-        })
+        commit([
+            ...valueRef.current,
+            {
+                asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                title: '',
+                alt: '',
+            },
+        ])
     }
 
     const handleChooseFromMedia = () => {
@@ -92,12 +98,14 @@ export const Editor = ({
         ))
     }
 
+    const handleDelete = (values: string[]) => {
+        const filteredValues = valueRef.current.filter((v) => values.includes(v.asset.__identifier))
+        commit(filteredValues)
+    }
+
     return (
-        <EditorContextProvider
-            extern={valueExtern ? [valueExtern] : []}
-            update={(value) => commit(value[0])}
-        >
-            <SelectBox
+        <EditorContextProvider extern={valueExtern} update={commit}>
+            <MultiSelectBox
                 optionValueField="identifier"
                 loadingLabel={i18nRegistry.translate('Neos.Neos:Main:loading')}
                 displaySearchBox={false}
@@ -107,15 +115,12 @@ export const Editor = ({
                         ? i18nRegistry.translate(editorOptions.placeholder)
                         : ''
                 }
-                options={valueExtern ? options : undefined}
-                value={getValue()}
-                onHeaderClick={() => {
-                    /* prevent toggling of select box dropdown */
-                }}
-                onValueChange={() => commit()}
+                options={options}
+                values={getValues()}
+                onValuesChange={handleDelete}
                 displayLoadingIndicator={isLoading}
+                searchOptions={[]}
                 showDropDownToggle={false}
-                allowEmpty={true}
                 onSearchTermChange={() => {}}
                 noMatchesFoundLabel={i18nRegistry.translate('Neos.Neos:Main:noMatchesFound')}
                 searchBoxLeftToTypeLabel={i18nRegistry.translate(

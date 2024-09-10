@@ -1,6 +1,7 @@
 import { SynchronousRegistry } from '@neos-project/neos-ui-extensibility'
 import * as React from 'react'
 
+import { CollectionEditor } from './collectionEditor'
 import { Editor } from './editor'
 import { IGlobalRegistry } from './globalRegistry'
 
@@ -31,6 +32,16 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
             component: (props: any) => {
                 console.log('Editor Props', props)
                 return <Editor {...props} />
+            },
+        }
+    )
+
+    editorsRegistry.set(
+        'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor',
+        {
+            component: (props: any) => {
+                console.log('Editor Props', props)
+                return <CollectionEditor {...props} />
             },
         }
     )

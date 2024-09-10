@@ -53,26 +53,28 @@ export const SelectBox_With_Meta = (props: any) => {
                 imageUri={props.option.preview}
                 label={props.option.label}
             />
-            <Label htmlFor="title">
-                Title
-                <TextInput
-                    type="text"
-                    id="title"
-                    onChange={setTitleValue}
-                    onBlur={onChangeTitle}
-                    value={titleValue}
-                />
-            </Label>
-            <Label htmlFor="alt">
-                Alt
-                <TextInput
-                    type="text"
-                    id="alt"
-                    onChange={setAltValue}
-                    onBlur={onChangeAlt}
-                    value={altValue}
-                />
-            </Label>
+            <div style={{ backgroundColor: '#141414' }}>
+                <Label htmlFor="title">
+                    Title
+                    <TextInput
+                        type="text"
+                        id="title"
+                        onChange={setTitleValue}
+                        onBlur={onChangeTitle}
+                        value={titleValue}
+                    />
+                </Label>
+                <Label htmlFor="alt">
+                    Alt
+                    <TextInput
+                        type="text"
+                        id="alt"
+                        onChange={setAltValue}
+                        onBlur={onChangeAlt}
+                        value={altValue}
+                    />
+                </Label>
+            </div>
         </>
     )
 }

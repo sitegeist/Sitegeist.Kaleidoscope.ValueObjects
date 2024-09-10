@@ -11,9 +11,6 @@ Neos:
                     'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
                         editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
                         editorOptions:
-                          multiple: false
                     'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
-                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
+                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
                         editorOptions:
-                          multiple: true
-
