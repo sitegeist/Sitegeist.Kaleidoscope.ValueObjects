@@ -12,7 +12,7 @@ use Neos\Flow\Annotations as Flow;
 use Sitegeist\Kaleidoscope\Domain\ScalableImageSourceInterface;
 
 #[Flow\Proxy(false)]
-final class AssetWithMetadata implements \JsonSerializable, ScalableImageSourceInterface, ProtectedContextAwareInterface
+final class ImageSourceProxy implements \JsonSerializable, ScalableImageSourceInterface, ProtectedContextAwareInterface
 {
     private ScalableImageSourceInterface $imageSourceRuntimeCache;
 
@@ -54,8 +54,11 @@ final class AssetWithMetadata implements \JsonSerializable, ScalableImageSourceI
         return $this->imageSourceRuntimeCache;
     }
 
-
-    // proxy methods for ImageSourceInterface
+    /*
+     * ##########################################
+     * # Proxy methods for ImageSourceInterface #
+     * ##########################################
+     */
 
     public function withAlt(?string $alt): ScalableImageSourceInterface
     {
@@ -147,6 +150,12 @@ final class AssetWithMetadata implements \JsonSerializable, ScalableImageSourceI
         return $this->createAndCacheImageSource()->scale($factor);
     }
 
+    /*
+     * ########################
+     * # Eel Helper Interface #
+     * ########################
+     */
+
     public function allowsCallOfMethod($methodName)
     {
         if (
@@ -184,9 +193,6 @@ final class AssetWithMetadata implements \JsonSerializable, ScalableImageSourceI
         ) {
             return true;
         }
-
         return false;
     }
-
-
 }

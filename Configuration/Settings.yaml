@@ -8,9 +8,9 @@ Neos:
         userInterface:
             inspector:
                 dataTypes:
-                    'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadata':
+                    'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':
                         editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
                         editorOptions:
-                    'Sitegeist\Kaleidoscope\ValueObjects\AssetWithMetadataCollection':
+                    'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection':
                         editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
                         editorOptions:

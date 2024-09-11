@@ -6,21 +6,21 @@ namespace Sitegeist\Kaleidoscope\ValueObjects;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \JsonSerializable
+class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
     /**
-     * @var AssetWithMetadata[]
+     * @var ImageSourceProxy[]
      */
     public readonly array $items;
 
     public function __construct(
-        AssetWithMetadata ...$items,
+        ImageSourceProxy ...$items,
     ) {
         $this->items = $items;
     }
 
     /**
-     * @return \Traversable<AssetWithMetadata>
+     * @return \Traversable<ImageSourceProxy>
      */
     public function getIterator(): \Traversable
     {
@@ -35,7 +35,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public static function fromArray(array $data): self
     {
         $items = array_map(
-            fn(array $item) => AssetWithMetadata::fromArray($item),
+            fn(array $item) => ImageSourceProxy::fromArray($item),
             $data
         );
         return new self(...array_filter($items));
@@ -44,7 +44,7 @@ class AssetWithMetadataCollection implements \IteratorAggregate, \Countable, \Js
     public function jsonSerialize(): array
     {
         return array_map(
-            fn(AssetWithMetadata $item) => $item->jsonSerialize(),
+            fn(ImageSourceProxy $item) => $item->jsonSerialize(),
             $this->items,
         );
     }
