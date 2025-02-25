@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
-import { AssetWithMeta, Meta } from './types'
+import { AssetWithMeta, Meta } from '../types'
 
 type MetaWithId = {
     id: string

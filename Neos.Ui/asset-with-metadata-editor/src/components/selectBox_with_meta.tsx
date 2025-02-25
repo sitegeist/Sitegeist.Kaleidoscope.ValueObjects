@@ -5,7 +5,7 @@ import {
 } from '@neos-project/react-ui-components'
 import React, { useEffect, useState } from 'react'
 
-import { useEditorContext } from './editorContext'
+import { useEditorContext } from '../context/editorContext'
 
 export const SelectBox_With_Meta = (props: any) => {
     const { setMeta, meta, extern } = useEditorContext()

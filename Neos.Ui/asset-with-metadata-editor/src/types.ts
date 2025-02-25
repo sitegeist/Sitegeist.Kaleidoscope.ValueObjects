@@ -12,22 +12,22 @@ export type AssetWithMeta = {
     asset: Asset
 } & Meta
 
-export type Props = {
+export type Props<T> = {
     identifier: string
     className: string
-    value: AssetWithMeta[]
+    value: T
     options: {
-        multiple: boolean
         placeholder: string
         disabled?: boolean
         threshold?: any
+        constraints?: any
     }
     editor: string
     renderSecondaryInspector: Function
     neos: {
         globalRegistry: any
     }
-    commit: (value: AssetWithMeta[]) => void
+    commit: (value: T) => void
 }
 
 export type Option = {

@@ -1,28 +1,12 @@
 import { IconButton, SelectBox } from '@neos-project/react-ui-components'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { EditorContextProvider } from './editorContext'
-import { SelectBox_With_Meta } from './selectBox_with_meta'
-import { AssetWithMeta, Option } from './types'
+import { SelectBox_With_Meta } from '../components/selectBox_with_meta'
+import { EditorContextProvider } from '../context/editorContext'
+import { useImageMetadata } from '../hooks/useImageMetadata'
+import { AssetWithMeta, Option, Props } from '../types'
 
 const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
-
-type Props = {
-    identifier: string
-    className: string
-    value?: AssetWithMeta
-    options?: {
-        placeholder: string
-        disabled?: boolean
-        threshold?: any
-    }
-    editor: string
-    renderSecondaryInspector: Function
-    neos: {
-        globalRegistry: any
-    }
-    commit: (value?: AssetWithMeta) => void
-}
 
 export const Editor = ({
     value: valueExtern,
@@ -30,9 +14,10 @@ export const Editor = ({
     renderSecondaryInspector,
     options: editorOptions,
     commit,
-}: Props) => {
+}: Props<AssetWithMeta | undefined>) => {
     const [isLoading, setIsLoading] = useState(false)
     const [options, setOptions] = useState<Option[]>([])
+    const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
 
     const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
 
@@ -87,8 +72,32 @@ export const Editor = ({
             .get('secondaryEditors')
             .get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen')
 
+        const constraints = {
+            ...editorOptions?.constraints,
+            mediaTypes: editorOptions?.constraints?.mediaTypes || ['image/*'],
+        }
+
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', () => (
-            <MediaSelectionScreen constraints={{}} onComplete={handleMediaSelection} />
+            <MediaSelectionScreen
+                type="images"
+                constraints={constraints}
+                onComplete={handleMediaSelection}
+            />
+        ))
+    }
+
+    const handleOpenImageCropper = () => {
+        const { component: ImageCropper } = globalRegistry
+            .get('inspector')
+            .get('secondaryEditors')
+            .get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper')
+
+        renderSecondaryInspector('IMAGE_CROP', () => (
+            <ImageCropper
+                sourceImage={imageMetadata}
+                options={options}
+                onComplete={(data: any) => console.log('ImageCropper', data)}
+            />
         ))
     }
 
@@ -112,7 +121,7 @@ export const Editor = ({
                 onHeaderClick={() => {
                     /* prevent toggling of select box dropdown */
                 }}
-                onValueChange={() => commit()}
+                onValueChange={() => commit(undefined)}
                 displayLoadingIndicator={isLoading}
                 showDropDownToggle={false}
                 allowEmpty={true}
@@ -129,6 +138,15 @@ export const Editor = ({
                 size="small"
                 style="lighter"
                 onClick={handleChooseFromMedia}
+                className={''}
+                title={i18nRegistry.translate('Neos.Neos:Main:media')}
+                disabled={editorOptions?.disabled}
+            />{' '}
+            <IconButton
+                icon="crop"
+                size="small"
+                style="lighter"
+                onClick={handleOpenImageCropper}
                 className={''}
                 title={i18nRegistry.translate('Neos.Neos:Main:media')}
                 disabled={editorOptions?.disabled}

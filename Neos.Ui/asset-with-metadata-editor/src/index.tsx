@@ -1,9 +1,9 @@
 import { SynchronousRegistry } from '@neos-project/neos-ui-extensibility'
 import * as React from 'react'
 
-import { CollectionEditor } from './collectionEditor'
-import { Editor } from './editor'
-import { IGlobalRegistry } from './globalRegistry'
+import { CollectionEditor } from './editors/collectionEditor'
+import { Editor } from './editors/editor'
+import { IGlobalRegistry } from './neos-bridge/globalRegistry'
 
 export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry): void {
     const inspectorRegistry = globalRegistry.get('inspector')

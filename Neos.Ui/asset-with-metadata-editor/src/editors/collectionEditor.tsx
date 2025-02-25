@@ -1,28 +1,11 @@
 import { IconButton, MultiSelectBox } from '@neos-project/react-ui-components'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { EditorContextProvider, useEditorContext } from './editorContext'
-import { SelectBox_With_Meta } from './selectBox_with_meta'
-import { AssetWithMeta, Option } from './types'
+import { SelectBox_With_Meta } from '../components/selectBox_with_meta'
+import { EditorContextProvider } from '../context/editorContext'
+import { AssetWithMeta, Option, Props } from '../types'
 
 const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
-
-type Props = {
-    identifier: string
-    className: string
-    value: AssetWithMeta[]
-    options: {
-        placeholder: string
-        disabled?: boolean
-        threshold?: any
-    }
-    editor: string
-    renderSecondaryInspector: Function
-    neos: {
-        globalRegistry: any
-    }
-    commit: (value: AssetWithMeta[]) => void
-}
 
 export const CollectionEditor = ({
     value: valueExtern = [],
@@ -30,7 +13,7 @@ export const CollectionEditor = ({
     renderSecondaryInspector,
     options: editorOptions,
     commit,
-}: Props) => {
+}: Props<AssetWithMeta[]>) => {
     const [isLoading, setIsLoading] = useState(false)
     const [options, setOptions] = useState<Option[]>([])
 
