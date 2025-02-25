@@ -37,3 +37,23 @@ export type Option = {
     loaderUri: string
     preview: string
 }
+
+export type ImageMetadata = {
+    mediaType: string
+    object: {
+        __identity: string
+        __type: string
+        adjustments: any
+    }
+    originalDimensions: {
+        width: number
+        height: number
+        aspectRatio: number
+    }
+    originalImageResourceUri: string
+    previewDimensions: {
+        width: number
+        height: number
+    }
+    previewImageResourceUri: string
+}

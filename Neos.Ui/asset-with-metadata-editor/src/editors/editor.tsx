@@ -5,6 +5,7 @@ import { SelectBox_With_Meta } from '../components/selectBox_with_meta'
 import { EditorContextProvider } from '../context/editorContext'
 import { useImageMetadata } from '../hooks/useImageMetadata'
 import { AssetWithMeta, Option, Props } from '../types'
+import { Image } from '../utils/image'
 
 const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
 
@@ -92,10 +93,23 @@ export const Editor = ({
             .get('secondaryEditors')
             .get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper')
 
+        if (!imageMetadata) return
+
         renderSecondaryInspector('IMAGE_CROP', () => (
             <ImageCropper
-                sourceImage={imageMetadata}
-                options={options}
+                sourceImage={Image.fromImageData(imageMetadata)}
+                options={{
+                    crop: {
+                        aspectRatio: {
+                            options: {},
+                            forceCrop: true,
+                            locked: {
+                                width: 16,
+                                height: 9,
+                            },
+                        },
+                    },
+                }}
                 onComplete={(data: any) => console.log('ImageCropper', data)}
             />
         ))

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import { endpoints } from '../neos-bridge/backend'
-
-const { loadImageMetadata } = endpoints()
+import { ImageMetadata } from '../types'
 
 export const useImageMetadata = (assetIdentifier?: string) => {
-    const [imageMetadata, setImageMetadata] = useState<any | undefined>()
+    const [imageMetadata, setImageMetadata] = useState<ImageMetadata>()
 
     useEffect(() => {
         if (!assetIdentifier) return
+        const { loadImageMetadata } = endpoints()
 
         const getImageMetadata = async () => {
             const image = await loadImageMetadata(assetIdentifier)
