@@ -21,9 +21,11 @@ export const Editor = ({
     const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
     const i18nRegistry = globalRegistry.get('i18n')
 
+    console.log(valueExtern, valueRef.current)
+
     useEffect(() => {
         if (
-            valueExtern?.asset.__identifier !== valueRef.current?.asset.__identifier &&
+            valueExtern?.asset.__identifier !== valueRef.current?.asset?.__identifier &&
             editorOptions.crop?.aspectRatio.forceCrop
         ) {
             handleOpenImageCropper()
@@ -115,6 +117,7 @@ export const Editor = ({
                 image={valueExtern && getImageMeta()}
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
+                onClick={handleChooseFromMedia}
                 onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
                 onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
             />
@@ -145,7 +148,7 @@ export const Editor = ({
                         onClick={handleOpenImageCropper}
                         className={''}
                         title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                        disabled={editorOptions?.disabled}
+                        disabled={editorOptions?.disabled || !valueExtern}
                     />
                 )}
             </ControlBar>

@@ -6,12 +6,25 @@ import { ImageMetadata } from '../types'
 import { debounce } from '../utils/debounce'
 import { Thumbnail } from '../utils/thumbnail'
 
-const Container = styled.div`
+const IconContainer = styled.div<{ show?: boolean }>`
+    position: relative;
+    height: 100%;
+    display: ${({ show }) => (show ? 'flex' : 'none')};
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0.7;
+`
+
+const CropArea = styled.div`
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 12px;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    transition: var(--transition-Default) ease-out;
 `
 
 const ImageContainer = styled.div`
@@ -23,16 +36,37 @@ const ImageContainer = styled.div`
     border-radius: 2px;
     padding: 1px;
     overflow: hidden;
+    transition: var(--transition-Default) ease-out;
 `
 
-const CropArea = styled.div`
+const Overlay = styled.div`
+    transition: var(--transition-Default) ease-out;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+        height: 100%;
+        width: 100%;
+        background-color: var(--colors-PrimaryBlue);
+    }
+    &:hover ${CropArea} {
+        opacity: 0.7;
+    }
+
+    &:hover ${ImageContainer} {
+        background-color: var(--colors-PrimaryBlue);
+    }
+    &:hover ${IconContainer} {
+        display: flex;
+    }
+`
+
+const Container = styled.div`
     width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
 `
 
 const StyledImage = styled.img`
@@ -67,11 +101,19 @@ type PreviewProps = {
     image?: ImageMetadata
     title?: string
     alt?: string
+    onClick: () => void
     onTitleChange: (title: string) => void
     onAltChange: (alt: string) => void
 }
 
-export const Preview = ({ image, title, alt, onTitleChange, onAltChange }: PreviewProps) => {
+export const Preview = ({
+    image,
+    title,
+    alt,
+    onClick,
+    onTitleChange,
+    onAltChange,
+}: PreviewProps) => {
     const [altValue, setAltValue] = useState('')
     const [titleValue, setTitleValue] = useState('')
 
@@ -104,17 +146,27 @@ export const Preview = ({ image, title, alt, onTitleChange, onAltChange }: Previ
 
     return (
         <Container>
-            <ImageContainer>
-                <CropArea style={thumbnail ? thumbnail.styles.cropArea : {}}>
-                    {thumbnail && (
-                        <StyledImage
-                            style={thumbnail ? thumbnail.styles.thumbnail : {}}
-                            src={thumbnail.uri}
-                            alt="Preview"
+            <Overlay onClick={onClick}>
+                <ImageContainer>
+                    <IconContainer show={!thumbnail}>
+                        <Icon
+                            icon="camera"
+                            size="5x"
+                            mask={['fas', 'circle']}
+                            transform="shrink-8"
                         />
+                    </IconContainer>
+                    {thumbnail && (
+                        <CropArea style={thumbnail.styles.cropArea}>
+                            <StyledImage
+                                style={thumbnail.styles.thumbnail}
+                                src={thumbnail.uri}
+                                alt="Preview"
+                            />
+                        </CropArea>
                     )}
-                </CropArea>
-            </ImageContainer>
+                </ImageContainer>
+            </Overlay>
             <TextContainer>
                 <Label htmlFor="title">
                     Title
@@ -123,11 +175,18 @@ export const Preview = ({ image, title, alt, onTitleChange, onAltChange }: Previ
                         id="title"
                         value={titleValue}
                         onChange={handleTitleChange}
+                        disabled={!image}
                     />
                 </Label>
                 <Label htmlFor="alt">
                     Alt
-                    <TextInput type="text" id="alt" value={altValue} onChange={handleAltChange} />
+                    <TextInput
+                        type="text"
+                        id="alt"
+                        value={altValue}
+                        onChange={handleAltChange}
+                        disabled={!image}
+                    />
                 </Label>
             </TextContainer>
         </Container>

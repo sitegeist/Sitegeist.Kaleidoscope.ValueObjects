@@ -3747,17 +3747,23 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var debounce_1 = __webpack_require__(/*! ../utils/debounce */ "../asset-with-metadata-editor/lib/utils/debounce.js");
 var thumbnail_1 = __webpack_require__(/*! ../utils/thumbnail */ "../asset-with-metadata-editor/lib/utils/thumbnail.js");
-var Container = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"])));
-var ImageContainer = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n"], ["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n"])));
-var CropArea = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n"], ["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n"])));
-var StyledImage = styled_components_1.default.img(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
-var TextContainer = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
+var IconContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"], ["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"])), function (_a) {
+    var show = _a.show;
+    return show ? 'flex' : 'none';
+});
+var CropArea = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])));
+var ImageContainer = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])));
+var Overlay = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"], ["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"])), CropArea, ImageContainer, IconContainer);
+var Container = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"])));
+var StyledImage = styled_components_1.default.img(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
+var TextContainer = styled_components_1.default.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
 var debounceAlt = (0, debounce_1.debounce)(300);
 var debounceTitle = (0, debounce_1.debounce)(300);
 var Preview = function Preview(_a) {
     var image = _a.image,
         title = _a.title,
         alt = _a.alt,
+        onClick = _a.onClick,
         onTitleChange = _a.onTitleChange,
         onAltChange = _a.onAltChange;
     var _b = __read((0, react_1.useState)(''), 2),
@@ -3785,10 +3791,10 @@ var Preview = function Preview(_a) {
             onAltChange(value);
         });
     };
-    return react_1.default.createElement(Container, null, react_1.default.createElement(ImageContainer, null, react_1.default.createElement(CropArea, { style: thumbnail ? thumbnail.styles.cropArea : {} }, thumbnail && react_1.default.createElement(StyledImage, { style: thumbnail ? thumbnail.styles.thumbnail : {}, src: thumbnail.uri, alt: "Preview" }))), react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange }))));
+    return react_1.default.createElement(Container, null, react_1.default.createElement(Overlay, { onClick: onClick }, react_1.default.createElement(ImageContainer, null, react_1.default.createElement(IconContainer, { show: !thumbnail }, react_1.default.createElement(react_ui_components_1.Icon, { icon: "camera", size: "5x", mask: ['fas', 'circle'], transform: "shrink-8" })), thumbnail && react_1.default.createElement(CropArea, { style: thumbnail.styles.cropArea }, react_1.default.createElement(StyledImage, { style: thumbnail.styles.thumbnail, src: thumbnail.uri, alt: "Preview" })))), react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange, disabled: !image })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange, disabled: !image }))));
 };
 exports.Preview = Preview;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
 //# sourceMappingURL=preview.js.map
 
 /***/ }),
@@ -4358,9 +4364,10 @@ var Editor = function Editor(_a) {
     var imageMetadata = (0, useImageMetadata_1.useImageMetadata)(valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier);
     var valueRef = (0, react_1.useRef)(valueExtern);
     var i18nRegistry = globalRegistry.get('i18n');
+    console.log(valueExtern, valueRef.current);
     (0, react_1.useEffect)(function () {
-        var _a, _b;
-        if ((valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier) !== ((_a = valueRef.current) === null || _a === void 0 ? void 0 : _a.asset.__identifier) && ((_b = editorOptions.crop) === null || _b === void 0 ? void 0 : _b.aspectRatio.forceCrop)) {
+        var _a, _b, _c;
+        if ((valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier) !== ((_b = (_a = valueRef.current) === null || _a === void 0 ? void 0 : _a.asset) === null || _b === void 0 ? void 0 : _b.__identifier) && ((_c = editorOptions.crop) === null || _c === void 0 ? void 0 : _c.aspectRatio.forceCrop)) {
             handleOpenImageCropper();
         }
         valueRef.current = valueExtern;
@@ -4409,13 +4416,13 @@ var Editor = function Editor(_a) {
                 }, onComplete: handleMediaCrop });
         });
     };
-    return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, onAltChange: function onAltChange(alt) {
+    return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, onClick: handleChooseFromMedia, onAltChange: function onAltChange(alt) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(ControlBar_1.ControlBar, null, react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: handleChooseFromMedia, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled }), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "times", size: "small", style: "lighter", onClick: function onClick() {
             return commit();
-        }, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled) || !valueExtern }), ((_b = editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop) && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: handleOpenImageCropper, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled })));
+        }, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled) || !valueExtern }), ((_b = editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop) && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: handleOpenImageCropper, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled) || !valueExtern })));
 };
 exports.Editor = Editor;
 //# sourceMappingURL=editor.js.map
@@ -4674,7 +4681,9 @@ exports.endpoints = void 0;
 var neos_ui_backend_connector_1 = __importDefault(__webpack_require__(/*! @neos-project/neos-ui-backend-connector */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-backend-connector/index.js"));
 var endpoints = function endpoints() {
     console.log('backend', neos_ui_backend_connector_1.default.get);
-    return neos_ui_backend_connector_1.default.get().endpoints;
+    var test = neos_ui_backend_connector_1.default.get().endpoints;
+    console.log('endpoints', test);
+    return test;
 };
 exports.endpoints = endpoints;
 //# sourceMappingURL=backend.js.map

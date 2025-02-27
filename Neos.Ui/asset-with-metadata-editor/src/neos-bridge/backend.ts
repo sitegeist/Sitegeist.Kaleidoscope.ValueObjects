@@ -4,7 +4,12 @@ import { ImageMetadata } from '../types'
 
 export const endpoints = () => {
     console.log('backend', backend.get)
-    return backend.get().endpoints as {
+
+    const test = backend.get().endpoints as {
         loadImageMetadata: (assetIdentifier: string) => Promise<ImageMetadata>
     }
+
+    console.log('endpoints', test)
+
+    return test
 }
