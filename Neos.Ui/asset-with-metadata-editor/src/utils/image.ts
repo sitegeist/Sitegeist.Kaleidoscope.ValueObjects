@@ -2,8 +2,6 @@ import { Maybe } from 'monet'
 
 import { ImageMetadata } from '../types'
 
-const DEFAULT_OFFSET = { x: 0, y: 0 }
-
 const extractOriginalDimensions = (image: ImageMetadata) => ({
     width: image?.originalDimensions?.width,
     height: image?.originalDimensions?.height,

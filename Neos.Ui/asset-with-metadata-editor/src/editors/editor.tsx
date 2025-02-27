@@ -1,70 +1,66 @@
-import { IconButton, SelectBox } from '@neos-project/react-ui-components'
+import { IconButton } from '@neos-project/react-ui-components'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { SelectBox_With_Meta } from '../components/selectBox_with_meta'
-import { EditorContextProvider } from '../context/editorContext'
+import { ControlBar } from '../components/ControlBar'
+import { Preview } from '../components/preview'
 import { useImageMetadata } from '../hooks/useImageMetadata'
-import { AssetWithMeta, Option, Props } from '../types'
+import { AssetWithMeta, CropArea, Props } from '../types'
+import { MEDIA_TYPE_IMAGE } from '../utils/constants'
+import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { Image } from '../utils/image'
-
-const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
 
 export const Editor = ({
     value: valueExtern,
     neos: { globalRegistry },
     renderSecondaryInspector,
     options: editorOptions,
+    hooks,
     commit,
-}: Props<AssetWithMeta | undefined>) => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [options, setOptions] = useState<Option[]>([])
+}: Props<AssetWithMeta>) => {
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
-
     const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
-
     const i18nRegistry = globalRegistry.get('i18n')
-    const assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup')
 
     useEffect(() => {
+        if (
+            valueExtern?.asset.__identifier !== valueRef.current?.asset.__identifier &&
+            editorOptions.crop?.aspectRatio.forceCrop
+        ) {
+            handleOpenImageCropper()
+        }
+
         valueRef.current = valueExtern
     }, [valueExtern])
 
-    const getIdentity = (value: AssetWithMeta) => {
-        if (value && value.asset.__identifier) {
-            return value.asset.__identifier
-        }
-        return value
+    const getImageMeta = () => {
+        if (!hooks) return imageMetadata
+
+        const croppedImage = hooks['Neos.UI:Hook.BeforeSave.CreateImageVariant']
+        if (!croppedImage) return imageMetadata
+
+        return croppedImage
     }
 
-    const getValue = () => {
-        if (!valueRef.current) return
-
-        return getIdentity(valueRef.current)
+    const handleCloseSecondaryScreen = () => {
+        renderSecondaryInspector(undefined, undefined)
     }
 
-    useEffect(() => {
-        const resolver = async () => {
-            if (valueExtern) {
-                setIsLoading(true)
-
-                const value = getValue()
-
-                const options = await assetLookupDataLoader.resolveValue({}, value)
-
-                setIsLoading(false)
-                setOptions([].concat(...options))
-            }
-        }
-
-        resolver()
-    }, [valueExtern])
-
-    const handleMediaSelection = (assetIdentifier: any) => {
+    const handleMediaSelection = (assetIdentifier: string) => {
         commit({
             asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
             title: '',
             alt: '',
         })
+        handleCloseSecondaryScreen()
+    }
+
+    const handleMediaCrop = (cropArea: CropArea) => {
+        if (!imageMetadata) return
+
+        const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, cropArea)
+        if (!changed) return
+
+        commit(valueExtern, cropAdjustments)
     }
 
     const handleChooseFromMedia = () => {
@@ -93,78 +89,66 @@ export const Editor = ({
             .get('secondaryEditors')
             .get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper')
 
-        if (!imageMetadata) return
+        const image = getImageMeta()
+        if (!image) return
 
         renderSecondaryInspector('IMAGE_CROP', () => (
             <ImageCropper
-                sourceImage={Image.fromImageData(imageMetadata)}
+                sourceImage={Image.fromImageData(image)}
                 options={{
                     crop: {
+                        ...editorOptions?.crop,
                         aspectRatio: {
-                            options: {},
-                            forceCrop: true,
-                            locked: {
-                                width: 16,
-                                height: 9,
-                            },
+                            ...editorOptions?.crop?.aspectRatio,
+                            options: editorOptions?.crop?.aspectRatio?.options || {},
                         },
                     },
                 }}
-                onComplete={(data: any) => console.log('ImageCropper', data)}
+                onComplete={handleMediaCrop}
             />
         ))
     }
 
     return (
-        <EditorContextProvider
-            extern={valueExtern ? [valueExtern] : []}
-            update={(value) => commit(value[0])}
-        >
-            <SelectBox
-                optionValueField="identifier"
-                loadingLabel={i18nRegistry.translate('Neos.Neos:Main:loading')}
-                displaySearchBox={false}
-                ListPreviewElement={SelectBox_With_Meta}
-                placeholder={
-                    editorOptions?.placeholder
-                        ? i18nRegistry.translate(editorOptions.placeholder)
-                        : ''
-                }
-                options={valueExtern ? options : undefined}
-                value={getValue()}
-                onHeaderClick={() => {
-                    /* prevent toggling of select box dropdown */
-                }}
-                onValueChange={() => commit(undefined)}
-                displayLoadingIndicator={isLoading}
-                showDropDownToggle={false}
-                allowEmpty={true}
-                onSearchTermChange={() => {}}
-                noMatchesFoundLabel={i18nRegistry.translate('Neos.Neos:Main:noMatchesFound')}
-                searchBoxLeftToTypeLabel={i18nRegistry.translate(
-                    'Neos.Neos:Main:searchBoxLeftToType'
+        <>
+            <Preview
+                image={valueExtern && getImageMeta()}
+                alt={valueExtern?.alt}
+                title={valueExtern?.title}
+                onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
+                onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
+            />
+            <ControlBar>
+                <IconButton
+                    icon="camera"
+                    size="small"
+                    style="lighter"
+                    onClick={handleChooseFromMedia}
+                    className={''}
+                    title={i18nRegistry.translate('Neos.Neos:Main:media')}
+                    disabled={editorOptions?.disabled}
+                />
+                <IconButton
+                    icon="times"
+                    size="small"
+                    style="lighter"
+                    onClick={() => commit()}
+                    className={''}
+                    title={i18nRegistry.translate('Neos.Neos:Main:media')}
+                    disabled={editorOptions?.disabled || !valueExtern}
+                />
+                {editorOptions.features?.crop && (
+                    <IconButton
+                        icon="crop"
+                        size="small"
+                        style="lighter"
+                        onClick={handleOpenImageCropper}
+                        className={''}
+                        title={i18nRegistry.translate('Neos.Neos:Main:media')}
+                        disabled={editorOptions?.disabled}
+                    />
                 )}
-                threshold={editorOptions?.threshold}
-                disabled={editorOptions?.disabled}
-            />
-            <IconButton
-                icon="camera"
-                size="small"
-                style="lighter"
-                onClick={handleChooseFromMedia}
-                className={''}
-                title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                disabled={editorOptions?.disabled}
-            />{' '}
-            <IconButton
-                icon="crop"
-                size="small"
-                style="lighter"
-                onClick={handleOpenImageCropper}
-                className={''}
-                title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                disabled={editorOptions?.disabled}
-            />
-        </EditorContextProvider>
+            </ControlBar>
+        </>
     )
 }

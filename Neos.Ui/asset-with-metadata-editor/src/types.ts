@@ -1,3 +1,4 @@
+// Editor
 export type Asset = {
     __identifier: string
     __flow_object_type: string
@@ -16,18 +17,32 @@ export type Props<T> = {
     identifier: string
     className: string
     value: T
+    hooks: Record<string, ImageMetadata>
     options: {
         placeholder: string
         disabled?: boolean
         threshold?: any
         constraints?: any
+        features?: {
+            crop?: boolean
+        }
+        crop?: {
+            aspectRatio: {
+                options?: any
+                forceCrop?: boolean
+                locked?: {
+                    width?: number
+                    height?: number
+                }
+            }
+        }
     }
     editor: string
     renderSecondaryInspector: Function
     neos: {
         globalRegistry: any
     }
-    commit: (value: T) => void
+    commit: (value?: T | '' | [], ...args: any[]) => void
 }
 
 export type Option = {
@@ -37,6 +52,8 @@ export type Option = {
     loaderUri: string
     preview: string
 }
+
+//Image
 
 export type ImageMetadata = {
     mediaType: string
@@ -56,4 +73,12 @@ export type ImageMetadata = {
         height: number
     }
     previewImageResourceUri: string
+}
+
+export type CropArea = {
+    x: number
+    y: number
+    width: number
+    height: number
+    aspect: number
 }

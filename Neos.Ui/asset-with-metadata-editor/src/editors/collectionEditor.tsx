@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { SelectBox_With_Meta } from '../components/selectBox_with_meta'
 import { EditorContextProvider } from '../context/editorContext'
 import { AssetWithMeta, Option, Props } from '../types'
-
-const MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image'
+import { MEDIA_TYPE_IMAGE } from '../utils/constants'
+import { getIdentity } from '../utils/getIdentity'
 
 export const CollectionEditor = ({
     value: valueExtern = [],
@@ -25,14 +25,6 @@ export const CollectionEditor = ({
     useEffect(() => {
         valueRef.current = valueExtern
     }, [valueExtern])
-
-    const getIdentity = (value: AssetWithMeta) => {
-        // Information coming from metadata
-        if (value && value.asset.__identifier) {
-            return value.asset.__identifier
-        }
-        return value
-    }
 
     const getValues = () => {
         return Array.isArray(valueRef.current) && Boolean(valueRef.current.length)
@@ -76,8 +68,13 @@ export const CollectionEditor = ({
             .get('secondaryEditors')
             .get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen')
 
+        const constraints = {
+            ...editorOptions?.constraints,
+            mediaTypes: editorOptions?.constraints?.mediaTypes || ['image/*'],
+        }
+
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', () => (
-            <MediaSelectionScreen constraints={{}} onComplete={handleMediaSelection} />
+            <MediaSelectionScreen constraints={constraints} onComplete={handleMediaSelection} />
         ))
     }
 
