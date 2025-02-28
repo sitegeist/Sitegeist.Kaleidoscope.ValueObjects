@@ -1,0 +1,5 @@
+# This prototype will convert objects of type `Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection` to `ImageSourceInterface[]`
+# other values remain untouched
+prototype(Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyCollectionUnwrapper) < prototype(Neos.Fusion:Value) {
+    value = ${Type.instance(value, 'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection') ?  Kaleidoscope.VaulueObjects.unwrapProxyCollection(value) : value}
+}

@@ -1,16 +1,22 @@
 Neos:
-    Neos:
-        Ui:
-            resources:
-                javascript:
-                    '@sitegeist/kaleidoscope-valueobjects-plugin':
-                        resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
-        userInterface:
-            inspector:
-                dataTypes:
-                    'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':
-                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
-                        editorOptions:
-                    'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection':
-                        editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
-                        editorOptions:
+  Neos:
+    fusion:
+      autoInclude:
+        Sitegeist.Kaleidoscope.ValueObjects: true
+    Ui:
+      resources:
+        javascript:
+          '@sitegeist/kaleidoscope-valueobjects-plugin':
+            resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
+    userInterface:
+      inspector:
+        dataTypes:
+          'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':
+            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
+            editorOptions:
+          'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection':
+            editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
+            editorOptions:
+  Fusion:
+    defaultContext:
+      Kaleidoscope.VaulueObjects: 'Sitegeist\Kaleidoscope\ValueObjects\Eel\ValueObjectHelper'
