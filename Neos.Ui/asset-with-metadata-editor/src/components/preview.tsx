@@ -38,26 +38,30 @@ const ImageContainer = styled.div<{ small?: boolean }>`
     transition: var(--transition-Default) ease-out;
 `
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ hover?: boolean }>`
     transition: var(--transition-Default) ease-out;
     border-radius: 2px;
     cursor: pointer;
 
-    &:hover {
-        height: 100%;
-        width: 100%;
-        background-color: var(--colors-PrimaryBlue);
-    }
-    &:hover ${CropArea} {
-        opacity: 0.7;
-    }
+    ${({ hover }) =>
+        hover &&
+        `
+        &:hover {
+            height: 100%;
+            width: 100%;
+            background-color: var(--colors-PrimaryBlue);
+        }
+        &:hover ${CropArea} {
+            opacity: 0.7;
+        }
 
-    &:hover ${ImageContainer} {
-        background-color: var(--colors-PrimaryBlue);
-    }
-    &:hover ${IconContainer} {
-        display: flex;
-    }
+        &:hover ${ImageContainer} {
+            background-color: var(--colors-PrimaryBlue);
+        }
+        &:hover ${IconContainer} {
+            display: flex;
+        }
+    `}
 `
 
 const StyledImage = styled.img`
@@ -81,20 +85,24 @@ const StyledImage = styled.img`
 type PreviewProps = {
     image?: ImageMetadata
     onClick?: () => void
-    selectedImageIdentifier?: string
     small?: boolean
 }
 
-export const Preview = ({ image, selectedImageIdentifier, onClick, small }: PreviewProps) => {
+export const Preview = ({ image, onClick, small }: PreviewProps) => {
     const thumbnail = image
         ? Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216)
         : null
 
     return (
-        <Overlay onClick={onClick}>
+        <Overlay onClick={onClick} hover={Boolean(onClick)}>
             <ImageContainer small={small}>
                 <IconContainer show={!thumbnail}>
-                    <Icon icon="camera" size="5x" mask={['fas', 'circle']} transform="shrink-8" />
+                    <Icon
+                        icon="camera"
+                        size={small ? '3xl' : '5x'}
+                        mask={['fas', 'circle']}
+                        transform="shrink-8"
+                    />
                 </IconContainer>
                 {thumbnail && (
                     <CropArea style={thumbnail.styles.cropArea}>

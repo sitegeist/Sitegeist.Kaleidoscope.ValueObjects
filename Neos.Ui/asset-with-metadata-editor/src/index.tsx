@@ -62,7 +62,13 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
 
             const imageVariant = await createImageVariant(__identity, adjustments)
 
-            return { ...value, asset: imageVariant }
+            return {
+                ...value,
+                asset: {
+                    __identifier: imageVariant.__identity,
+                    __flow_object_type: imageVariant.__type,
+                },
+            }
         }
     )
 }

@@ -18,7 +18,7 @@ export type Props<T> = {
     className: string
     value: T
     hooks: Record<string, ImageMetadata>
-    options: {
+    options?: {
         placeholder: string
         disabled?: boolean
         threshold?: any
@@ -87,5 +87,11 @@ export type CropArea = {
 
 export type BackendEndpoints = {
     loadImageMetadata: (assetIdentifier: string) => Promise<ImageMetadata>
-    createImageVariant: (uuidOfImage: string, image: ImageMetadata) => Promise<Asset>
+    createImageVariant: (
+        uuidOfImage: string,
+        image: ImageMetadata
+    ) => Promise<{
+        __identity: '8201810d-4690-4f9f-9d68-d17b22e338c9'
+        __type: string
+    }>
 }

@@ -3700,7 +3700,7 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EditorContainer = void 0;
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
-exports.EditorContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
+exports.EditorContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 24px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 24px;\n"])));
 var templateObject_1;
 //# sourceMappingURL=editorContainer.js.map
 
@@ -3858,15 +3858,17 @@ var ImageContainer = styled_components_1.default.div(templateObject_3 || (templa
     var small = _a.small;
     return small ? '72px' : '216px';
 });
-var Overlay = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"], ["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"])), CropArea, ImageContainer, IconContainer);
+var Overlay = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    ", "\n"], ["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    ", "\n"])), function (_a) {
+    var hover = _a.hover;
+    return hover && "\n        &:hover {\n            height: 100%;\n            width: 100%;\n            background-color: var(--colors-PrimaryBlue);\n        }\n        &:hover ".concat(CropArea, " {\n            opacity: 0.7;\n        }\n\n        &:hover ").concat(ImageContainer, " {\n            background-color: var(--colors-PrimaryBlue);\n        }\n        &:hover ").concat(IconContainer, " {\n            display: flex;\n        }\n    ");
+});
 var StyledImage = styled_components_1.default.img(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
 var Preview = function Preview(_a) {
     var image = _a.image,
-        selectedImageIdentifier = _a.selectedImageIdentifier,
         onClick = _a.onClick,
         small = _a.small;
     var thumbnail = image ? thumbnail_1.Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216) : null;
-    return react_1.default.createElement(Overlay, { onClick: onClick }, react_1.default.createElement(ImageContainer, { small: small }, react_1.default.createElement(IconContainer, { show: !thumbnail }, react_1.default.createElement(react_ui_components_1.Icon, { icon: "camera", size: "5x", mask: ['fas', 'circle'], transform: "shrink-8" })), thumbnail && react_1.default.createElement(CropArea, { style: thumbnail.styles.cropArea }, react_1.default.createElement(StyledImage, { style: thumbnail.styles.thumbnail, src: thumbnail.uri, alt: "Preview" }))));
+    return react_1.default.createElement(Overlay, { onClick: onClick, hover: Boolean(onClick) }, react_1.default.createElement(ImageContainer, { small: small }, react_1.default.createElement(IconContainer, { show: !thumbnail }, react_1.default.createElement(react_ui_components_1.Icon, { icon: "camera", size: small ? '3xl' : '5x', mask: ['fas', 'circle'], transform: "shrink-8" })), thumbnail && react_1.default.createElement(CropArea, { style: thumbnail.styles.cropArea }, react_1.default.createElement(StyledImage, { style: thumbnail.styles.thumbnail, src: thumbnail.uri, alt: "Preview" }))));
 };
 exports.Preview = Preview;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
@@ -3874,128 +3876,58 @@ var templateObject_1, templateObject_2, templateObject_3, templateObject_4, temp
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/components/selectBox_with_meta.js":
-/*!***************************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/components/selectBox_with_meta.js ***!
-  \***************************************************************************/
+/***/ "../asset-with-metadata-editor/lib/components/previewGrid.js":
+/*!*******************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/previewGrid.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function get() {
-                return m[k];
-            } };
+var __makeTemplateObject = undefined && undefined.__makeTemplateObject || function (cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", { value: raw });
+    } else {
+        cooked.raw = raw;
     }
-    Object.defineProperty(o, k2, desc);
-} : function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-});
-var __setModuleDefault = undefined && undefined.__setModuleDefault || (Object.create ? function (o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-} : function (o, v) {
-    o["default"] = v;
-});
-var __importStar = undefined && undefined.__importStar || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) {
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    }__setModuleDefault(result, mod);
-    return result;
+    return cooked;
 };
-var __read = undefined && undefined.__read || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o),
-        r,
-        ar = [],
-        e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) {
-            ar.push(r.value);
-        }
-    } catch (error) {
-        e = { error: error };
-    } finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        } finally {
-            if (e) throw e.error;
-        }
-    }
-    return ar;
+var __importDefault = undefined && undefined.__importDefault || function (mod) {
+    return mod && mod.__esModule ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SelectBox_With_Meta = void 0;
-var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
-var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var editorContext_1 = __webpack_require__(/*! ../context/editorContext */ "../asset-with-metadata-editor/lib/context/editorContext.js");
-var SelectBox_With_Meta = function SelectBox_With_Meta(props) {
-    var _a = (0, editorContext_1.useEditorContext)(),
-        setMeta = _a.setMeta,
-        meta = _a.meta,
-        extern = _a.extern;
-    var _b = __read((0, react_1.useState)(''), 2),
-        altValue = _b[0],
-        setAltValue = _b[1];
-    var _c = __read((0, react_1.useState)(''), 2),
-        titleValue = _c[0],
-        setTitleValue = _c[1];
-    (0, react_1.useEffect)(function () {
-        var _a, _b;
-        var currentExtern = extern.find(function (e) {
-            return e.asset.__identifier === props.option.identifier;
-        });
-        if (!currentExtern) return;
-        setTitleValue((_a = currentExtern.title) !== null && _a !== void 0 ? _a : '');
-        setAltValue((_b = currentExtern.alt) !== null && _b !== void 0 ? _b : '');
-    }, [extern, props.option.identifier]);
-    var currenAssetId = props.option.identifier;
-    var currentMeta = meta.find(function (meta) {
-        return meta.id === currenAssetId;
-    });
-    var onChangeTitle = function onChangeTitle() {
-        if (currentMeta) {
-            return setMeta(__assign(__assign({}, currentMeta), { title: titleValue }));
-        }
-        setMeta({ id: currenAssetId, title: titleValue });
-    };
-    var onChangeAlt = function onChangeAlt() {
-        if (currentMeta) {
-            return setMeta(__assign(__assign({}, currentMeta), { alt: altValue }));
-        }
-        setMeta({ id: currenAssetId, alt: altValue });
-    };
-    return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(react_ui_components_1.SelectBox_Option_MultiLineWithThumbnail, __assign({}, props, { imageUri: props.option.preview, label: props.option.label })), react_1.default.createElement("div", { style: { backgroundColor: '#141414' } }, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", onChange: setTitleValue, onBlur: onChangeTitle, value: titleValue })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", onChange: setAltValue, onBlur: onChangeAlt, value: altValue }))));
+exports.PreviewGrid = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+var preview_1 = __webpack_require__(/*! ./preview */ "../asset-with-metadata-editor/lib/components/preview.js");
+var Grid = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"], ["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"])));
+var GridItem = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"], ["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"])), function (_a) {
+    var selected = _a.selected;
+    return selected ? 'var(--colors-PrimaryBlue)' : 'transparent';
+});
+var PreviewGrid = function PreviewGrid(_a) {
+    var images = _a.images,
+        selectedImageIdentifier = _a.selectedImageIdentifier,
+        onSelect = _a.onSelect,
+        onEmptyPreviewClick = _a.onEmptyPreviewClick;
+    return react_1.default.createElement(Grid, null, images.length === 0 && react_1.default.createElement(preview_1.Preview, { small: true, onClick: onEmptyPreviewClick }), images.map(function (image) {
+        return react_1.default.createElement(GridItem, { key: image.object.__identity, selected: selectedImageIdentifier === image.object.__identity, onClick: function onClick() {
+                return onSelect(image.object.__identity);
+            } }, react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
+    }));
 };
-exports.SelectBox_With_Meta = SelectBox_With_Meta;
-//# sourceMappingURL=selectBox_with_meta.js.map
+exports.PreviewGrid = PreviewGrid;
+var templateObject_1, templateObject_2;
+//# sourceMappingURL=previewGrid.js.map
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/context/editorContext.js":
-/*!******************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/context/editorContext.js ***!
-  \******************************************************************/
+/***/ "../asset-with-metadata-editor/lib/editors/collectionEditor.js":
+/*!*********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/editors/collectionEditor.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4072,62 +4004,122 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EditorContextProvider = exports.useEditorContext = void 0;
-var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var react_1 = __webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
-var EditorContext = (0, react_1.createContext)(undefined);
-var useEditorContext = function useEditorContext() {
-    var context = (0, react_1.useContext)(EditorContext);
-    if (!context) throw new Error('useEditorContext needs to be wrapt in the EditorContextProvider');
-    return context;
-};
-exports.useEditorContext = useEditorContext;
-var EditorContextProvider = function EditorContextProvider(_a) {
-    var children = _a.children,
-        extern = _a.extern,
-        update = _a.update;
-    var _b = __read((0, react_1.useState)([]), 2),
-        meta = _b[0],
-        setMeta = _b[1];
-    (0, react_1.useEffect)(function () {
-        if (!meta.length) return;
-        update(extern.map(function (ve) {
-            var metaExist = meta.find(function (m) {
-                return m.id === ve.asset.__identifier;
-            });
-            if (!metaExist) return ve;
-            return __assign(__assign({}, ve), { alt: metaExist.alt, title: metaExist.title });
-        }));
-    }, [meta]);
-    var onChange = function onChange(metaToUpdate) {
-        var metaExist = meta.findIndex(function (meta) {
-            return meta.id === metaToUpdate.id;
+exports.CollectionEditor = void 0;
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
+var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
+var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
+var previewGrid_1 = __webpack_require__(/*! ../components/previewGrid */ "../asset-with-metadata-editor/lib/components/previewGrid.js");
+var useImageMetaDataCollection_1 = __webpack_require__(/*! ../hooks/useImageMetaDataCollection */ "../asset-with-metadata-editor/lib/hooks/useImageMetaDataCollection.js");
+var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
+var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
+var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
+var CollectionEditor = function CollectionEditor(_a) {
+    var _b, _c;
+    var _d = _a.value,
+        valueExtern = _d === void 0 ? [] : _d,
+        globalRegistry = _a.neos.globalRegistry,
+        renderSecondaryInspector = _a.renderSecondaryInspector,
+        editorOptions = _a.options,
+        commit = _a.commit;
+    var imagesIdentifiers = (0, react_1.useMemo)(function () {
+        return valueExtern.map(function (v) {
+            return v.asset.__identifier;
         });
-        if (metaExist === -1) {
-            return setMeta(function (old) {
-                return __spreadArray(__spreadArray([], __read(old), false), [metaToUpdate], false);
-            });
-        }
-        setMeta(function (old) {
-            return old.map(function (meta) {
-                if (meta.id === metaToUpdate.id) {
-                    return metaToUpdate;
-                }
-                return meta;
-            });
+    }, [valueExtern]);
+    var imageMetadataCollection = (0, useImageMetaDataCollection_1.useImageMetadataCollection)(imagesIdentifiers);
+    var valueRef = (0, react_1.useRef)(valueExtern);
+    var _e = __read((0, react_1.useState)((_b = valueExtern[0]) === null || _b === void 0 ? void 0 : _b.asset.__identifier), 2),
+        selectedImageIdentifier = _e[0],
+        setSelectedImageIdentifier = _e[1];
+    var selectedImage = valueExtern.find(function (v) {
+        return v.asset.__identifier === selectedImageIdentifier;
+    });
+    (0, react_1.useEffect)(function () {
+        valueRef.current = valueExtern;
+    }, [valueExtern]);
+    var getImageMetadata = (0, react_1.useCallback)(function (assetIdentifier) {
+        return imageMetadataCollection.find(function (image) {
+            return image.object.__identity === assetIdentifier;
+        });
+    }, [imageMetadataCollection]);
+    var handleDelete = function handleDelete() {
+        var _a;
+        if (!selectedImageIdentifier) return;
+        var filteredValues = valueExtern.filter(function (v) {
+            return v.asset.__identifier !== selectedImageIdentifier;
+        });
+        commit(filteredValues);
+        setSelectedImageIdentifier((_a = filteredValues[0]) === null || _a === void 0 ? void 0 : _a.asset.__identifier);
+    };
+    var handleAltChange = function handleAltChange(alt) {
+        if (!selectedImageIdentifier) return;
+        var updatedImages = valueExtern.map(function (image) {
+            if (image.asset.__identifier !== selectedImageIdentifier) return image;
+            return __assign(__assign({}, image), { alt: alt });
+        });
+        commit(updatedImages);
+    };
+    var handleTitleChange = function handleTitleChange(title) {
+        if (!selectedImageIdentifier) return;
+        var updatedImages = valueExtern.map(function (image) {
+            if (image.asset.__identifier !== selectedImageIdentifier) return image;
+            return __assign(__assign({}, image), { title: title });
+        });
+        commit(updatedImages);
+    };
+    var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
+        commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
+            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
+            title: '',
+            alt: ''
+        }], false));
+    };
+    var handleMediaCrop = function handleMediaCrop(cropArea) {
+        if (!selectedImageIdentifier) return;
+        var imageMetadata = getImageMetadata(selectedImageIdentifier);
+        if (!imageMetadata) return;
+        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
+            changed = _a.changed,
+            cropAdjustments = _a.cropAdjustments;
+        if (!changed) return;
+        commit(valueExtern, cropAdjustments);
+    };
+    var handleOpenMediaSelection = function handleOpenMediaSelection() {
+        var _a;
+        var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
+        var constraints = __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints), { mediaTypes: ((_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints) === null || _a === void 0 ? void 0 : _a.mediaTypes) || ['image/*'] });
+        renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
+            return react_1.default.createElement(MediaSelectionScreen, { type: "images", constraints: constraints, onComplete: handleMediaSelection });
         });
     };
-    return React.createElement(EditorContext.Provider, { value: { meta: meta, extern: extern, setMeta: onChange, update: update } }, children);
+    var handleOpenImageCropper = function handleOpenImageCropper() {
+        var ImageCropper = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper').component;
+        var image = getImageMetadata(selectedImageIdentifier);
+        if (!image) return;
+        renderSecondaryInspector('IMAGE_CROP', function () {
+            var _a, _b, _c;
+            return react_1.default.createElement(ImageCropper, { sourceImage: image_1.Image.fromImageData(image), options: {
+                    crop: __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop), { aspectRatio: __assign(__assign({}, (_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _a === void 0 ? void 0 : _a.aspectRatio), { options: ((_c = (_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _b === void 0 ? void 0 : _b.aspectRatio) === null || _c === void 0 ? void 0 : _c.options) || {} }) })
+                }, onComplete: handleMediaCrop });
+        });
+    };
+    var images = (0, react_1.useMemo)(function () {
+        return valueExtern.map(function (v) {
+            return getImageMetadata(v.asset.__identifier);
+        }).filter(Boolean);
+    }, [valueExtern, getImageMetadata]);
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: setSelectedImageIdentifier, onEmptyPreviewClick: handleOpenMediaSelection }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(ControlBar_1.ControlBar, { cropEnabled: Boolean((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _c === void 0 ? void 0 : _c.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
 };
-exports.EditorContextProvider = EditorContextProvider;
-//# sourceMappingURL=editorContext.js.map
+exports.CollectionEditor = CollectionEditor;
+//# sourceMappingURL=collectionEditor.js.map
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/editors/collectionEditor.js":
-/*!*********************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/editors/collectionEditor.js ***!
-  \*********************************************************************/
+/***/ "../asset-with-metadata-editor/lib/editors/editor.js":
+/*!***********************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/editors/editor.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4172,6 +4164,102 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
     }__setModuleDefault(result, mod);
     return result;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Editor = void 0;
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
+var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
+var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
+var preview_1 = __webpack_require__(/*! ../components/preview */ "../asset-with-metadata-editor/lib/components/preview.js");
+var useImageMetadata_1 = __webpack_require__(/*! ../hooks/useImageMetadata */ "../asset-with-metadata-editor/lib/hooks/useImageMetadata.js");
+var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
+var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
+var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
+var Editor = function Editor(_a) {
+    var _b;
+    var valueExtern = _a.value,
+        globalRegistry = _a.neos.globalRegistry,
+        renderSecondaryInspector = _a.renderSecondaryInspector,
+        editorOptions = _a.options,
+        hooks = _a.hooks,
+        commit = _a.commit;
+    var imageMetadata = (0, useImageMetadata_1.useImageMetadata)(valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier);
+    var valueRef = (0, react_1.useRef)(valueExtern);
+    (0, react_1.useEffect)(function () {
+        var _a, _b, _c;
+        if ((valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier) !== ((_b = (_a = valueRef.current) === null || _a === void 0 ? void 0 : _a.asset) === null || _b === void 0 ? void 0 : _b.__identifier) && ((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _c === void 0 ? void 0 : _c.aspectRatio.forceCrop)) {
+            handleOpenImageCropper();
+        }
+        valueRef.current = valueExtern;
+    }, [valueExtern]);
+    var getImageMeta = function getImageMeta() {
+        if (!hooks) return imageMetadata;
+        var croppedImage = hooks[constants_1.HOOK_BEFORE_SAVE];
+        if (!croppedImage) return imageMetadata;
+        return croppedImage;
+    };
+    var handleCloseSecondaryScreen = function handleCloseSecondaryScreen() {
+        renderSecondaryInspector(undefined, undefined);
+    };
+    var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
+        commit({
+            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
+            title: '',
+            alt: ''
+        });
+        handleCloseSecondaryScreen();
+    };
+    var handleMediaCrop = function handleMediaCrop(cropArea) {
+        if (!imageMetadata) return;
+        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
+            changed = _a.changed,
+            cropAdjustments = _a.cropAdjustments;
+        if (!changed) return;
+        commit(valueExtern, cropAdjustments);
+    };
+    var handleOpenMediaSelection = function handleOpenMediaSelection() {
+        var _a;
+        var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
+        var constraints = __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints), { mediaTypes: ((_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints) === null || _a === void 0 ? void 0 : _a.mediaTypes) || ['image/*'] });
+        renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
+            return react_1.default.createElement(MediaSelectionScreen, { type: "images", constraints: constraints, onComplete: handleMediaSelection });
+        });
+    };
+    var handleOpenImageCropper = function handleOpenImageCropper() {
+        var ImageCropper = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper').component;
+        var image = getImageMeta();
+        console.log('image', image);
+        if (!image) return;
+        renderSecondaryInspector('IMAGE_CROP', function () {
+            var _a, _b, _c;
+            return react_1.default.createElement(ImageCropper, { sourceImage: image_1.Image.fromImageData(image), options: {
+                    crop: __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop), { aspectRatio: __assign(__assign({}, (_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _a === void 0 ? void 0 : _a.aspectRatio), { options: ((_c = (_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _b === void 0 ? void 0 : _b.aspectRatio) === null || _c === void 0 ? void 0 : _c.options) || {} }) })
+                }, onComplete: handleMediaCrop });
+        });
+    };
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, onAltChange: function onAltChange(alt) {
+            return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
+        }, onTitleChange: function onTitleChange(title) {
+            return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
+        } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
+            return commit();
+        }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
+};
+exports.Editor = Editor;
+//# sourceMappingURL=editor.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/hooks/useImageMetaDataCollection.js":
+/*!*****************************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/hooks/useImageMetaDataCollection.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function (resolve) {
@@ -4287,220 +4375,51 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CollectionEditor = void 0;
-var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
-var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var selectBox_with_meta_1 = __webpack_require__(/*! ../components/selectBox_with_meta */ "../asset-with-metadata-editor/lib/components/selectBox_with_meta.js");
-var editorContext_1 = __webpack_require__(/*! ../context/editorContext */ "../asset-with-metadata-editor/lib/context/editorContext.js");
-var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
-var getIdentity_1 = __webpack_require__(/*! ../utils/getIdentity */ "../asset-with-metadata-editor/lib/utils/getIdentity.js");
-var CollectionEditor = function CollectionEditor(_a) {
-    var _b = _a.value,
-        valueExtern = _b === void 0 ? [] : _b,
-        globalRegistry = _a.neos.globalRegistry,
-        renderSecondaryInspector = _a.renderSecondaryInspector,
-        editorOptions = _a.options,
-        commit = _a.commit;
-    var _c = __read((0, react_1.useState)(false), 2),
-        isLoading = _c[0],
-        setIsLoading = _c[1];
-    var _d = __read((0, react_1.useState)([]), 2),
-        options = _d[0],
-        setOptions = _d[1];
-    var valueRef = (0, react_1.useRef)(valueExtern);
-    var i18nRegistry = globalRegistry.get('i18n');
-    var assetLookupDataLoader = globalRegistry.get('dataLoaders').get('AssetLookup');
+exports.useImageMetadataCollection = void 0;
+var react_1 = __webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
+var getImageMetaData_1 = __webpack_require__(/*! ../utils/getImageMetaData */ "../asset-with-metadata-editor/lib/utils/getImageMetaData.js");
+var metadataCache = new Map();
+var useImageMetadataCollection = function useImageMetadataCollection(assetIdentifiers) {
+    var _a = __read((0, react_1.useState)([]), 2),
+        imageMetadata = _a[0],
+        setImageMetadata = _a[1];
     (0, react_1.useEffect)(function () {
-        valueRef.current = valueExtern;
-    }, [valueExtern]);
-    var getValues = function getValues() {
-        return Array.isArray(valueRef.current) && Boolean(valueRef.current.length) ? valueRef.current.map(getIdentity_1.getIdentity) : [];
-    };
-    (0, react_1.useEffect)(function () {
-        var resolver = function resolver() {
+        if (assetIdentifiers.length === 0) return;
+        var cachedMetadata = assetIdentifiers.filter(function (assetIdentifier) {
+            return metadataCache.has(assetIdentifier);
+        }).map(function (assetIdentifier) {
+            return metadataCache.get(assetIdentifier);
+        });
+        var uncachedMetadataIdentifiers = assetIdentifiers.filter(function (assetIdentifier) {
+            return !metadataCache.has(assetIdentifier);
+        });
+        var imageMetadataPromises = uncachedMetadataIdentifiers.map(function (assetIdentifier) {
+            return (0, getImageMetaData_1.getImageMetaData)(assetIdentifier);
+        });
+        var fn = function fn() {
             return __awaiter(void 0, void 0, void 0, function () {
-                var values, options_1;
+                var image;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            if (!valueExtern) return [3, 2];
-                            setIsLoading(true);
-                            values = getValues();
-                            return [4, Promise.all(values.map(function (value) {
-                                return assetLookupDataLoader.resolveValue({}, value);
-                            }))];
+                            return [4, Promise.all(imageMetadataPromises)];
                         case 1:
-                            options_1 = _a.sent();
-                            setIsLoading(false);
-                            setOptions([].concat.apply([], __spreadArray([], __read(options_1), false)));
-                            _a.label = 2;
-                        case 2:
+                            image = _a.sent();
+                            image.forEach(function (metadata) {
+                                return metadataCache.set(metadata.object.__identity, metadata);
+                            });
+                            setImageMetadata(__spreadArray(__spreadArray([], __read(cachedMetadata), false), __read(image), false));
                             return [2];
                     }
                 });
             });
         };
-        resolver();
-    }, [valueExtern]);
-    var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
-        commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
-            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
-            title: '',
-            alt: ''
-        }], false));
-    };
-    var handleChooseFromMedia = function handleChooseFromMedia() {
-        var _a;
-        var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
-        var constraints = __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints), { mediaTypes: ((_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints) === null || _a === void 0 ? void 0 : _a.mediaTypes) || ['image/*'] });
-        renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
-            return react_1.default.createElement(MediaSelectionScreen, { constraints: constraints, onComplete: handleMediaSelection });
-        });
-    };
-    var handleDelete = function handleDelete(values) {
-        var filteredValues = valueRef.current.filter(function (v) {
-            return values.includes(v.asset.__identifier);
-        });
-        commit(filteredValues);
-    };
-    return react_1.default.createElement(editorContext_1.EditorContextProvider, { extern: valueExtern, update: commit }, react_1.default.createElement(react_ui_components_1.MultiSelectBox, { optionValueField: "identifier", loadingLabel: i18nRegistry.translate('Neos.Neos:Main:loading'), displaySearchBox: false, ListPreviewElement: selectBox_with_meta_1.SelectBox_With_Meta, placeholder: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.placeholder) ? i18nRegistry.translate(editorOptions.placeholder) : '', options: options, values: getValues(), onValuesChange: handleDelete, displayLoadingIndicator: isLoading, searchOptions: [], showDropDownToggle: false, onSearchTermChange: function onSearchTermChange() {}, noMatchesFoundLabel: i18nRegistry.translate('Neos.Neos:Main:noMatchesFound'), searchBoxLeftToTypeLabel: i18nRegistry.translate('Neos.Neos:Main:searchBoxLeftToType'), threshold: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.threshold, disabled: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled }), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: handleChooseFromMedia, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled }));
+        fn();
+    }, [assetIdentifiers]);
+    return imageMetadata;
 };
-exports.CollectionEditor = CollectionEditor;
-//# sourceMappingURL=collectionEditor.js.map
-
-/***/ }),
-
-/***/ "../asset-with-metadata-editor/lib/editors/editor.js":
-/*!***********************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/editors/editor.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __createBinding = undefined && undefined.__createBinding || (Object.create ? function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function get() {
-                return m[k];
-            } };
-    }
-    Object.defineProperty(o, k2, desc);
-} : function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-});
-var __setModuleDefault = undefined && undefined.__setModuleDefault || (Object.create ? function (o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-} : function (o, v) {
-    o["default"] = v;
-});
-var __importStar = undefined && undefined.__importStar || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) {
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    }__setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Editor = void 0;
-var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
-var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
-var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
-var preview_1 = __webpack_require__(/*! ../components/preview */ "../asset-with-metadata-editor/lib/components/preview.js");
-var useImageMetadata_1 = __webpack_require__(/*! ../hooks/useImageMetadata */ "../asset-with-metadata-editor/lib/hooks/useImageMetadata.js");
-var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
-var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
-var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
-var Editor = function Editor(_a) {
-    var _b;
-    var valueExtern = _a.value,
-        globalRegistry = _a.neos.globalRegistry,
-        renderSecondaryInspector = _a.renderSecondaryInspector,
-        editorOptions = _a.options,
-        hooks = _a.hooks,
-        commit = _a.commit;
-    var imageMetadata = (0, useImageMetadata_1.useImageMetadata)(valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier);
-    var valueRef = (0, react_1.useRef)(valueExtern);
-    var i18nRegistry = globalRegistry.get('i18n');
-    (0, react_1.useEffect)(function () {
-        var _a, _b, _c;
-        if ((valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier) !== ((_b = (_a = valueRef.current) === null || _a === void 0 ? void 0 : _a.asset) === null || _b === void 0 ? void 0 : _b.__identifier) && ((_c = editorOptions.crop) === null || _c === void 0 ? void 0 : _c.aspectRatio.forceCrop)) {
-            handleOpenImageCropper();
-        }
-        valueRef.current = valueExtern;
-    }, [valueExtern]);
-    var getImageMeta = function getImageMeta() {
-        if (!hooks) return imageMetadata;
-        var croppedImage = hooks[constants_1.HOOK_BEFORE_SAVE];
-        if (!croppedImage) return imageMetadata;
-        return croppedImage;
-    };
-    var handleCloseSecondaryScreen = function handleCloseSecondaryScreen() {
-        renderSecondaryInspector(undefined, undefined);
-    };
-    var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
-        commit({
-            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
-            title: '',
-            alt: ''
-        });
-        handleCloseSecondaryScreen();
-    };
-    var handleMediaCrop = function handleMediaCrop(cropArea) {
-        if (!imageMetadata) return;
-        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
-            changed = _a.changed,
-            cropAdjustments = _a.cropAdjustments;
-        if (!changed) return;
-        commit(valueExtern, cropAdjustments);
-    };
-    var handleOpenMediaSelection = function handleOpenMediaSelection() {
-        var _a;
-        var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
-        var constraints = __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints), { mediaTypes: ((_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints) === null || _a === void 0 ? void 0 : _a.mediaTypes) || ['image/*'] });
-        renderSecondaryInspector('IMAGE_SELECT_MEDIA', function () {
-            return react_1.default.createElement(MediaSelectionScreen, { type: "images", constraints: constraints, onComplete: handleMediaSelection });
-        });
-    };
-    var handleOpenImageCropper = function handleOpenImageCropper() {
-        var ImageCropper = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper').component;
-        var image = getImageMeta();
-        if (!image) return;
-        renderSecondaryInspector('IMAGE_CROP', function () {
-            var _a, _b, _c;
-            return react_1.default.createElement(ImageCropper, { sourceImage: image_1.Image.fromImageData(image), options: {
-                    crop: __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop), { aspectRatio: __assign(__assign({}, (_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _a === void 0 ? void 0 : _a.aspectRatio), { options: ((_c = (_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop) === null || _b === void 0 ? void 0 : _b.aspectRatio) === null || _c === void 0 ? void 0 : _c.options) || {} }) })
-                }, onComplete: handleMediaCrop });
-        });
-    };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, onAltChange: function onAltChange(alt) {
-            return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
-        }, onTitleChange: function onTitleChange(title) {
-            return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
-        } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            return commit();
-        }, cropEnabled: Boolean((_b = editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
-};
-exports.Editor = Editor;
-//# sourceMappingURL=editor.js.map
+exports.useImageMetadataCollection = useImageMetadataCollection;
+//# sourceMappingURL=useImageMetaDataCollection.js.map
 
 /***/ }),
 
@@ -4622,21 +4541,20 @@ var __read = undefined && undefined.__read || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useImageMetadata = void 0;
 var react_1 = __webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
-var backend_1 = __webpack_require__(/*! ../neos-bridge/backend */ "../asset-with-metadata-editor/lib/neos-bridge/backend.js");
+var getImageMetaData_1 = __webpack_require__(/*! ../utils/getImageMetaData */ "../asset-with-metadata-editor/lib/utils/getImageMetaData.js");
 var useImageMetadata = function useImageMetadata(assetIdentifier) {
     var _a = __read((0, react_1.useState)(), 2),
         imageMetadata = _a[0],
         setImageMetadata = _a[1];
     (0, react_1.useEffect)(function () {
         if (!assetIdentifier) return;
-        var loadImageMetadata = (0, backend_1.endpoints)().loadImageMetadata;
-        var getImageMetadata = function getImageMetadata() {
+        var fn = function fn() {
             return __awaiter(void 0, void 0, void 0, function () {
                 var image;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            return [4, loadImageMetadata(assetIdentifier)];
+                            return [4, (0, getImageMetaData_1.getImageMetaData)(assetIdentifier)];
                         case 1:
                             image = _a.sent();
                             setImageMetadata(image);
@@ -4645,7 +4563,7 @@ var useImageMetadata = function useImageMetadata(assetIdentifier) {
                 });
             });
         };
-        getImageMetadata();
+        fn();
     }, [assetIdentifier]);
     return imageMetadata;
 };
@@ -4833,7 +4751,10 @@ function registerAssetWithMetadataEditor(globalRegistry) {
                         return [4, createImageVariant(__identity, adjustments)];
                     case 1:
                         imageVariant = _b.sent();
-                        return [2, __assign(__assign({}, value), { asset: imageVariant })];
+                        return [2, __assign(__assign({}, value), { asset: {
+                                __identifier: imageVariant.__identity,
+                                __flow_object_type: imageVariant.__type
+                            } })];
                 }
             });
         });
@@ -4971,26 +4892,118 @@ exports.getCropAdjustments = getCropAdjustments;
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/utils/getIdentity.js":
-/*!**************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/utils/getIdentity.js ***!
-  \**************************************************************/
+/***/ "../asset-with-metadata-editor/lib/utils/getImageMetaData.js":
+/*!*******************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/utils/getImageMetaData.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getIdentity = void 0;
-var getIdentity = function getIdentity(value) {
-    if (value && value.asset.__identifier) {
-        return value.asset.__identifier;
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
     }
-    return value;
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-exports.getIdentity = getIdentity;
-//# sourceMappingURL=getIdentity.js.map
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getImageMetaData = void 0;
+var backend_1 = __webpack_require__(/*! ../neos-bridge/backend */ "../asset-with-metadata-editor/lib/neos-bridge/backend.js");
+var getImageMetaData = function getImageMetaData(assetIdentifier) {
+    return __awaiter(void 0, void 0, void 0, function () {
+        var loadImageMetadata;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    loadImageMetadata = (0, backend_1.endpoints)().loadImageMetadata;
+                    return [4, loadImageMetadata(assetIdentifier)];
+                case 1:
+                    return [2, _a.sent()];
+            }
+        });
+    });
+};
+exports.getImageMetaData = getImageMetaData;
+//# sourceMappingURL=getImageMetaData.js.map
 
 /***/ }),
 

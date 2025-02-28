@@ -24,7 +24,7 @@ export const Editor = ({
     useEffect(() => {
         if (
             valueExtern?.asset.__identifier !== valueRef.current?.asset?.__identifier &&
-            editorOptions.crop?.aspectRatio.forceCrop
+            editorOptions?.crop?.aspectRatio.forceCrop
         ) {
             handleOpenImageCropper()
         }
@@ -54,6 +54,7 @@ export const Editor = ({
         handleCloseSecondaryScreen()
     }
 
+    // todo crash after saved crop cropping
     const handleMediaCrop = (cropArea: CropArea) => {
         if (!imageMetadata) return
 
@@ -90,6 +91,7 @@ export const Editor = ({
             .get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper')
 
         const image = getImageMeta()
+        console.log('image', image)
         if (!image) return
 
         renderSecondaryInspector('IMAGE_CROP', () => (
@@ -111,11 +113,7 @@ export const Editor = ({
 
     return (
         <EditorContainer>
-            <Preview
-                image={valueExtern && getImageMeta()}
-                onClick={handleOpenMediaSelection}
-                selectedImageIdentifier={valueExtern?.asset.__identifier}
-            />
+            <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
             <MetaDataInput
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
@@ -127,7 +125,7 @@ export const Editor = ({
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
                 onDelete={() => commit()}
-                cropEnabled={Boolean(editorOptions.features?.crop)}
+                cropEnabled={Boolean(editorOptions?.features?.crop)}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />
         </EditorContainer>
