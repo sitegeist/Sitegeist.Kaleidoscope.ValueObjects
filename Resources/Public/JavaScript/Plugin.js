@@ -3658,12 +3658,17 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ControlBar = void 0;
+var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
-var Container = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: flex;\n    gap: 4px;\n"], ["\n    display: flex;\n    gap: 4px;\n"])));
+var Container = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: flex;\n    gap: 4px;\n    justify-content: space-between;\n    margin-top: 6px;\n"], ["\n    display: flex;\n    gap: 4px;\n    justify-content: space-between;\n    margin-top: 6px;\n"])));
 var ControlBar = function ControlBar(_a) {
-    var children = _a.children;
-    return react_1.default.createElement(Container, null, children);
+    var onOpenImageSelector = _a.onOpenImageSelector,
+        onOpenImageCropper = _a.onOpenImageCropper,
+        onDelete = _a.onDelete,
+        cropEnabled = _a.cropEnabled,
+        selectedImageIdentifier = _a.selectedImageIdentifier;
+    return react_1.default.createElement(Container, null, react_1.default.createElement("div", null, react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: onOpenImageSelector }), cropEnabled && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: onOpenImageCropper, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "times", size: "small", style: "lighter", onClick: onDelete, disabled: !selectedImageIdentifier }));
 };
 exports.ControlBar = ControlBar;
 var templateObject_1;
@@ -3671,10 +3676,40 @@ var templateObject_1;
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/components/preview.js":
-/*!***************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/components/preview.js ***!
-  \***************************************************************/
+/***/ "../asset-with-metadata-editor/lib/components/editorContainer.js":
+/*!***********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/editorContainer.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = undefined && undefined.__makeTemplateObject || function (cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", { value: raw });
+    } else {
+        cooked.raw = raw;
+    }
+    return cooked;
+};
+var __importDefault = undefined && undefined.__importDefault || function (mod) {
+    return mod && mod.__esModule ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EditorContainer = void 0;
+var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+exports.EditorContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
+var templateObject_1;
+//# sourceMappingURL=editorContainer.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/components/metaDataInput.js":
+/*!*********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/metaDataInput.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3741,38 +3776,26 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
     return mod && mod.__esModule ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Preview = void 0;
+exports.MetaDataInput = void 0;
 var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var debounce_1 = __webpack_require__(/*! ../utils/debounce */ "../asset-with-metadata-editor/lib/utils/debounce.js");
-var thumbnail_1 = __webpack_require__(/*! ../utils/thumbnail */ "../asset-with-metadata-editor/lib/utils/thumbnail.js");
-var IconContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"], ["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"])), function (_a) {
-    var show = _a.show;
-    return show ? 'flex' : 'none';
-});
-var CropArea = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])));
-var ImageContainer = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    position: relative;\n    width: 100%;\n    height: 216px;\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])));
-var Overlay = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"], ["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"])), CropArea, ImageContainer, IconContainer);
-var Container = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-bottom: 12px;\n"])));
-var StyledImage = styled_components_1.default.img(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
-var TextContainer = styled_components_1.default.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
+var TextContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n"])));
 var debounceAlt = (0, debounce_1.debounce)(300);
 var debounceTitle = (0, debounce_1.debounce)(300);
-var Preview = function Preview(_a) {
-    var image = _a.image,
-        title = _a.title,
+var MetaDataInput = function MetaDataInput(_a) {
+    var title = _a.title,
         alt = _a.alt,
-        onClick = _a.onClick,
         onTitleChange = _a.onTitleChange,
-        onAltChange = _a.onAltChange;
+        onAltChange = _a.onAltChange,
+        selectedImageIdentifier = _a.selectedImageIdentifier;
     var _b = __read((0, react_1.useState)(''), 2),
         altValue = _b[0],
         setAltValue = _b[1];
     var _c = __read((0, react_1.useState)(''), 2),
         titleValue = _c[0],
         setTitleValue = _c[1];
-    var thumbnail = image ? thumbnail_1.Thumbnail.fromImageData(image, 273, 216) : null;
     (0, react_1.useEffect)(function () {
         setAltValue(alt !== null && alt !== void 0 ? alt : '');
         setTitleValue(title !== null && title !== void 0 ? title : '');
@@ -3791,10 +3814,62 @@ var Preview = function Preview(_a) {
             onAltChange(value);
         });
     };
-    return react_1.default.createElement(Container, null, react_1.default.createElement(Overlay, { onClick: onClick }, react_1.default.createElement(ImageContainer, null, react_1.default.createElement(IconContainer, { show: !thumbnail }, react_1.default.createElement(react_ui_components_1.Icon, { icon: "camera", size: "5x", mask: ['fas', 'circle'], transform: "shrink-8" })), thumbnail && react_1.default.createElement(CropArea, { style: thumbnail.styles.cropArea }, react_1.default.createElement(StyledImage, { style: thumbnail.styles.thumbnail, src: thumbnail.uri, alt: "Preview" })))), react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange, disabled: !image })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange, disabled: !image }))));
+    return react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange, disabled: !selectedImageIdentifier })));
+};
+exports.MetaDataInput = MetaDataInput;
+var templateObject_1;
+//# sourceMappingURL=metaDataInput.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/components/preview.js":
+/*!***************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/preview.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = undefined && undefined.__makeTemplateObject || function (cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", { value: raw });
+    } else {
+        cooked.raw = raw;
+    }
+    return cooked;
+};
+var __importDefault = undefined && undefined.__importDefault || function (mod) {
+    return mod && mod.__esModule ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Preview = void 0;
+var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
+var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+var thumbnail_1 = __webpack_require__(/*! ../utils/thumbnail */ "../asset-with-metadata-editor/lib/utils/thumbnail.js");
+var IconContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"], ["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"])), function (_a) {
+    var show = _a.show;
+    return show ? 'flex' : 'none';
+});
+var CropArea = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])));
+var ImageContainer = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    position: relative;\n    width: 100%;\n    height: ", ";\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"], ["\n    position: relative;\n    width: 100%;\n    height: ", ";\n    background-color: #141414;\n    border: 1px dashed #323232;\n    border-radius: 2px;\n    padding: 1px;\n    overflow: hidden;\n    transition: var(--transition-Default) ease-out;\n"])), function (_a) {
+    var small = _a.small;
+    return small ? '72px' : '216px';
+});
+var Overlay = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"], ["\n    transition: var(--transition-Default) ease-out;\n    border-radius: 2px;\n    cursor: pointer;\n\n    &:hover {\n        height: 100%;\n        width: 100%;\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        opacity: 0.7;\n    }\n\n    &:hover ", " {\n        background-color: var(--colors-PrimaryBlue);\n    }\n    &:hover ", " {\n        display: flex;\n    }\n"])), CropArea, ImageContainer, IconContainer);
+var StyledImage = styled_components_1.default.img(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
+var Preview = function Preview(_a) {
+    var image = _a.image,
+        selectedImageIdentifier = _a.selectedImageIdentifier,
+        onClick = _a.onClick,
+        small = _a.small;
+    var thumbnail = image ? thumbnail_1.Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216) : null;
+    return react_1.default.createElement(Overlay, { onClick: onClick }, react_1.default.createElement(ImageContainer, { small: small }, react_1.default.createElement(IconContainer, { show: !thumbnail }, react_1.default.createElement(react_ui_components_1.Icon, { icon: "camera", size: "5x", mask: ['fas', 'circle'], transform: "shrink-8" })), thumbnail && react_1.default.createElement(CropArea, { style: thumbnail.styles.cropArea }, react_1.default.createElement(StyledImage, { style: thumbnail.styles.thumbnail, src: thumbnail.uri, alt: "Preview" }))));
 };
 exports.Preview = Preview;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
 //# sourceMappingURL=preview.js.map
 
 /***/ }),
@@ -4345,9 +4420,10 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Editor = void 0;
-var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-components */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
+var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
+var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
 var preview_1 = __webpack_require__(/*! ../components/preview */ "../asset-with-metadata-editor/lib/components/preview.js");
 var useImageMetadata_1 = __webpack_require__(/*! ../hooks/useImageMetadata */ "../asset-with-metadata-editor/lib/hooks/useImageMetadata.js");
 var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
@@ -4364,7 +4440,6 @@ var Editor = function Editor(_a) {
     var imageMetadata = (0, useImageMetadata_1.useImageMetadata)(valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier);
     var valueRef = (0, react_1.useRef)(valueExtern);
     var i18nRegistry = globalRegistry.get('i18n');
-    console.log(valueExtern, valueRef.current);
     (0, react_1.useEffect)(function () {
         var _a, _b, _c;
         if ((valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier) !== ((_b = (_a = valueRef.current) === null || _a === void 0 ? void 0 : _a.asset) === null || _b === void 0 ? void 0 : _b.__identifier) && ((_c = editorOptions.crop) === null || _c === void 0 ? void 0 : _c.aspectRatio.forceCrop)) {
@@ -4374,7 +4449,7 @@ var Editor = function Editor(_a) {
     }, [valueExtern]);
     var getImageMeta = function getImageMeta() {
         if (!hooks) return imageMetadata;
-        var croppedImage = hooks['Neos.UI:Hook.BeforeSave.CreateImageVariant'];
+        var croppedImage = hooks[constants_1.HOOK_BEFORE_SAVE];
         if (!croppedImage) return imageMetadata;
         return croppedImage;
     };
@@ -4397,7 +4472,7 @@ var Editor = function Editor(_a) {
         if (!changed) return;
         commit(valueExtern, cropAdjustments);
     };
-    var handleChooseFromMedia = function handleChooseFromMedia() {
+    var handleOpenMediaSelection = function handleOpenMediaSelection() {
         var _a;
         var MediaSelectionScreen = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/MediaSelectionScreen').component;
         var constraints = __assign(__assign({}, editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints), { mediaTypes: ((_a = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.constraints) === null || _a === void 0 ? void 0 : _a.mediaTypes) || ['image/*'] });
@@ -4416,13 +4491,13 @@ var Editor = function Editor(_a) {
                 }, onComplete: handleMediaCrop });
         });
     };
-    return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, onClick: handleChooseFromMedia, onAltChange: function onAltChange(alt) {
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, onAltChange: function onAltChange(alt) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
-        } }), react_1.default.createElement(ControlBar_1.ControlBar, null, react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: handleChooseFromMedia, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled }), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "times", size: "small", style: "lighter", onClick: function onClick() {
+        } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
             return commit();
-        }, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled) || !valueExtern }), ((_b = editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop) && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: handleOpenImageCropper, className: '', title: i18nRegistry.translate('Neos.Neos:Main:media'), disabled: (editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.disabled) || !valueExtern })));
+        }, cropEnabled: Boolean((_b = editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;
 //# sourceMappingURL=editor.js.map
@@ -4627,13 +4702,102 @@ var __importStar = undefined && undefined.__importStar || function (mod) {
     }__setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerAssetWithMetadataEditor = void 0;
 var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var collectionEditor_1 = __webpack_require__(/*! ./editors/collectionEditor */ "../asset-with-metadata-editor/lib/editors/collectionEditor.js");
 var editor_1 = __webpack_require__(/*! ./editors/editor */ "../asset-with-metadata-editor/lib/editors/editor.js");
+var backend_1 = __webpack_require__(/*! ./neos-bridge/backend */ "../asset-with-metadata-editor/lib/neos-bridge/backend.js");
+var constants_1 = __webpack_require__(/*! ./utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
 function registerAssetWithMetadataEditor(globalRegistry) {
+    var _this = this;
+    var _a;
     var inspectorRegistry = globalRegistry.get('inspector');
+    var saveHooksRegistry = (_a = globalRegistry.get('inspector')) === null || _a === void 0 ? void 0 : _a.get('saveHooks');
+    var createImageVariant = (0, backend_1.endpoints)().createImageVariant;
     if (!inspectorRegistry) {
         console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Could not find inspector registry.');
         console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Skipping registration of AssetWithMetadataEditor...');
@@ -4656,6 +4820,23 @@ function registerAssetWithMetadataEditor(globalRegistry) {
             console.log('Editor Props', props);
             return React.createElement(collectionEditor_1.CollectionEditor, __assign({}, props));
         }
+    });
+    saveHooksRegistry === null || saveHooksRegistry === void 0 ? void 0 : saveHooksRegistry.set(constants_1.HOOK_BEFORE_SAVE, function (value, options) {
+        return __awaiter(_this, void 0, void 0, function () {
+            var _a, __identity, adjustments, imageVariant;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = options.object, __identity = _a.__identity, adjustments = _a.adjustments;
+                        if (!__identity) throw new Error('Received malformed originalImageUuid.');
+                        if (!adjustments) throw new Error('Received malformed adjustments.');
+                        return [4, createImageVariant(__identity, adjustments)];
+                    case 1:
+                        imageVariant = _b.sent();
+                        return [2, __assign(__assign({}, value), { asset: imageVariant })];
+                }
+            });
+        });
     });
 }
 exports.registerAssetWithMetadataEditor = registerAssetWithMetadataEditor;
@@ -4680,10 +4861,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.endpoints = void 0;
 var neos_ui_backend_connector_1 = __importDefault(__webpack_require__(/*! @neos-project/neos-ui-backend-connector */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-backend-connector/index.js"));
 var endpoints = function endpoints() {
-    console.log('backend', neos_ui_backend_connector_1.default.get);
-    var test = neos_ui_backend_connector_1.default.get().endpoints;
-    console.log('endpoints', test);
-    return test;
+    return neos_ui_backend_connector_1.default.get().endpoints;
 };
 exports.endpoints = endpoints;
 //# sourceMappingURL=backend.js.map
@@ -4701,8 +4879,9 @@ exports.endpoints = endpoints;
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MEDIA_TYPE_IMAGE = void 0;
+exports.HOOK_BEFORE_SAVE = exports.MEDIA_TYPE_IMAGE = void 0;
 exports.MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image';
+exports.HOOK_BEFORE_SAVE = 'Neos.UI:Hook.BeforeSave.CreateImageVariantWithMetadata';
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
@@ -4759,15 +4938,17 @@ var __assign = undefined && undefined.__assign || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCropAdjustments = void 0;
+var constants_1 = __webpack_require__(/*! ./constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
 var getCropAdjustments = function getCropAdjustments(imageMetadata, cropArea) {
-    var _a, _b, _c;
+    var _a;
+    var _b, _c, _d;
     if (!imageMetadata) return {
         changed: false,
         cropAdjustments: null
     };
     var imageWidth = imageMetadata.originalDimensions.width;
     var imageHeight = imageMetadata.originalDimensions.height;
-    var currentCropAdjustments = (_b = (_a = imageMetadata === null || imageMetadata === void 0 ? void 0 : imageMetadata.object) === null || _a === void 0 ? void 0 : _a.adjustments) === null || _b === void 0 ? void 0 : _b['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'];
+    var currentCropAdjustments = (_c = (_b = imageMetadata === null || imageMetadata === void 0 ? void 0 : imageMetadata.object) === null || _b === void 0 ? void 0 : _b.adjustments) === null || _c === void 0 ? void 0 : _c['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'];
     var nextCropAdjustments = {
         x: Math.round(cropArea.x / 100 * imageWidth),
         y: Math.round(cropArea.y / 100 * imageHeight),
@@ -4779,10 +4960,10 @@ var getCropAdjustments = function getCropAdjustments(imageMetadata, cropArea) {
         changed: false,
         cropAdjustments: nextCropAdjustments
     };
-    var nextImage = __assign(__assign({}, imageMetadata), { object: __assign(__assign({}, imageMetadata.object), { adjustments: __assign(__assign({}, (_c = imageMetadata.object) === null || _c === void 0 ? void 0 : _c.adjustments), { 'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment': nextCropAdjustments }) }) });
+    var nextImage = __assign(__assign({}, imageMetadata), { object: __assign(__assign({}, imageMetadata.object), { adjustments: __assign(__assign({}, (_d = imageMetadata.object) === null || _d === void 0 ? void 0 : _d.adjustments), { 'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment': nextCropAdjustments }) }) });
     return {
         changed: true,
-        cropAdjustments: { 'Neos.UI:Hook.BeforeSave.CreateImageVariant': nextImage }
+        cropAdjustments: (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE] = nextImage, _a)
     };
 };
 exports.getCropAdjustments = getCropAdjustments;

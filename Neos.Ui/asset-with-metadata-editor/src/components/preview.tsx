@@ -1,9 +1,8 @@
-import { Icon, Label, TextInput } from '@neos-project/react-ui-components'
-import React, { useEffect, useState } from 'react'
+import { Icon } from '@neos-project/react-ui-components'
+import React from 'react'
 import styled from 'styled-components'
 
 import { ImageMetadata } from '../types'
-import { debounce } from '../utils/debounce'
 import { Thumbnail } from '../utils/thumbnail'
 
 const IconContainer = styled.div<{ show?: boolean }>`
@@ -27,10 +26,10 @@ const CropArea = styled.div`
     transition: var(--transition-Default) ease-out;
 `
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<{ small?: boolean }>`
     position: relative;
     width: 100%;
-    height: 216px;
+    height: ${({ small }) => (small ? '72px' : '216px')};
     background-color: #141414;
     border: 1px dashed #323232;
     border-radius: 2px;
@@ -61,14 +60,6 @@ const Overlay = styled.div`
     }
 `
 
-const Container = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 12px;
-`
-
 const StyledImage = styled.img`
     position: absolute;
     background-color: #fff;
@@ -87,108 +78,34 @@ const StyledImage = styled.img`
         linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);
 `
 
-const TextContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-`
-
-const debounceAlt = debounce(300)
-const debounceTitle = debounce(300)
-
 type PreviewProps = {
     image?: ImageMetadata
-    title?: string
-    alt?: string
-    onClick: () => void
-    onTitleChange: (title: string) => void
-    onAltChange: (alt: string) => void
+    onClick?: () => void
+    selectedImageIdentifier?: string
+    small?: boolean
 }
 
-export const Preview = ({
-    image,
-    title,
-    alt,
-    onClick,
-    onTitleChange,
-    onAltChange,
-}: PreviewProps) => {
-    const [altValue, setAltValue] = useState('')
-    const [titleValue, setTitleValue] = useState('')
-
-    const thumbnail = image ? Thumbnail.fromImageData(image, 273, 216) : null
-
-    useEffect(() => {
-        setAltValue(alt ?? '')
-        setTitleValue(title ?? '')
-    }, [title, alt])
-
-    const handleTitleChange = (value: string) => {
-        if (title === value) return
-
-        setTitleValue(value)
-
-        debounceTitle(() => {
-            onTitleChange(value)
-        })
-    }
-
-    const handleAltChange = (value: string) => {
-        if (alt === value) return
-
-        setAltValue(value)
-
-        debounceAlt(() => {
-            onAltChange(value)
-        })
-    }
+export const Preview = ({ image, selectedImageIdentifier, onClick, small }: PreviewProps) => {
+    const thumbnail = image
+        ? Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216)
+        : null
 
     return (
-        <Container>
-            <Overlay onClick={onClick}>
-                <ImageContainer>
-                    <IconContainer show={!thumbnail}>
-                        <Icon
-                            icon="camera"
-                            size="5x"
-                            mask={['fas', 'circle']}
-                            transform="shrink-8"
+        <Overlay onClick={onClick}>
+            <ImageContainer small={small}>
+                <IconContainer show={!thumbnail}>
+                    <Icon icon="camera" size="5x" mask={['fas', 'circle']} transform="shrink-8" />
+                </IconContainer>
+                {thumbnail && (
+                    <CropArea style={thumbnail.styles.cropArea}>
+                        <StyledImage
+                            style={thumbnail.styles.thumbnail}
+                            src={thumbnail.uri}
+                            alt="Preview"
                         />
-                    </IconContainer>
-                    {thumbnail && (
-                        <CropArea style={thumbnail.styles.cropArea}>
-                            <StyledImage
-                                style={thumbnail.styles.thumbnail}
-                                src={thumbnail.uri}
-                                alt="Preview"
-                            />
-                        </CropArea>
-                    )}
-                </ImageContainer>
-            </Overlay>
-            <TextContainer>
-                <Label htmlFor="title">
-                    Title
-                    <TextInput
-                        type="text"
-                        id="title"
-                        value={titleValue}
-                        onChange={handleTitleChange}
-                        disabled={!image}
-                    />
-                </Label>
-                <Label htmlFor="alt">
-                    Alt
-                    <TextInput
-                        type="text"
-                        id="alt"
-                        value={altValue}
-                        onChange={handleAltChange}
-                        disabled={!image}
-                    />
-                </Label>
-            </TextContainer>
-        </Container>
+                    </CropArea>
+                )}
+            </ImageContainer>
+        </Overlay>
     )
 }

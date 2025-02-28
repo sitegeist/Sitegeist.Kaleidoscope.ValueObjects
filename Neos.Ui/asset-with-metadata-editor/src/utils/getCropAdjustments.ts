@@ -1,4 +1,5 @@
 import { CropArea, ImageMetadata } from '../types'
+import { HOOK_BEFORE_SAVE } from './constants'
 
 export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropArea) => {
     if (!imageMetadata)
@@ -47,6 +48,6 @@ export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropA
 
     return {
         changed: true,
-        cropAdjustments: { 'Neos.UI:Hook.BeforeSave.CreateImageVariant': nextImage },
+        cropAdjustments: { [HOOK_BEFORE_SAVE]: nextImage },
     }
 }

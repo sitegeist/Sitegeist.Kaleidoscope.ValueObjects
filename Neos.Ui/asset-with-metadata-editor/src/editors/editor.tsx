@@ -1,11 +1,12 @@
-import { IconButton } from '@neos-project/react-ui-components'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { ControlBar } from '../components/ControlBar'
+import { EditorContainer } from '../components/editorContainer'
+import { MetaDataInput } from '../components/metaDataInput'
 import { Preview } from '../components/preview'
 import { useImageMetadata } from '../hooks/useImageMetadata'
 import { AssetWithMeta, CropArea, Props } from '../types'
-import { MEDIA_TYPE_IMAGE } from '../utils/constants'
+import { HOOK_BEFORE_SAVE, MEDIA_TYPE_IMAGE } from '../utils/constants'
 import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { Image } from '../utils/image'
 
@@ -19,9 +20,6 @@ export const Editor = ({
 }: Props<AssetWithMeta>) => {
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
     const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
-    const i18nRegistry = globalRegistry.get('i18n')
-
-    console.log(valueExtern, valueRef.current)
 
     useEffect(() => {
         if (
@@ -37,7 +35,7 @@ export const Editor = ({
     const getImageMeta = () => {
         if (!hooks) return imageMetadata
 
-        const croppedImage = hooks['Neos.UI:Hook.BeforeSave.CreateImageVariant']
+        const croppedImage = hooks[HOOK_BEFORE_SAVE]
         if (!croppedImage) return imageMetadata
 
         return croppedImage
@@ -65,7 +63,7 @@ export const Editor = ({
         commit(valueExtern, cropAdjustments)
     }
 
-    const handleChooseFromMedia = () => {
+    const handleOpenMediaSelection = () => {
         const { component: MediaSelectionScreen } = globalRegistry
             .get('inspector')
             .get('secondaryEditors')
@@ -112,46 +110,26 @@ export const Editor = ({
     }
 
     return (
-        <>
+        <EditorContainer>
             <Preview
                 image={valueExtern && getImageMeta()}
+                onClick={handleOpenMediaSelection}
+                selectedImageIdentifier={valueExtern?.asset.__identifier}
+            />
+            <MetaDataInput
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
-                onClick={handleChooseFromMedia}
+                selectedImageIdentifier={valueExtern?.asset.__identifier}
                 onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
                 onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
             />
-            <ControlBar>
-                <IconButton
-                    icon="camera"
-                    size="small"
-                    style="lighter"
-                    onClick={handleChooseFromMedia}
-                    className={''}
-                    title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                    disabled={editorOptions?.disabled}
-                />
-                <IconButton
-                    icon="times"
-                    size="small"
-                    style="lighter"
-                    onClick={() => commit()}
-                    className={''}
-                    title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                    disabled={editorOptions?.disabled || !valueExtern}
-                />
-                {editorOptions.features?.crop && (
-                    <IconButton
-                        icon="crop"
-                        size="small"
-                        style="lighter"
-                        onClick={handleOpenImageCropper}
-                        className={''}
-                        title={i18nRegistry.translate('Neos.Neos:Main:media')}
-                        disabled={editorOptions?.disabled || !valueExtern}
-                    />
-                )}
-            </ControlBar>
-        </>
+            <ControlBar
+                onOpenImageSelector={handleOpenMediaSelection}
+                onOpenImageCropper={handleOpenImageCropper}
+                onDelete={() => commit()}
+                cropEnabled={Boolean(editorOptions.features?.crop)}
+                selectedImageIdentifier={valueExtern?.asset.__identifier}
+            />
+        </EditorContainer>
     )
 }

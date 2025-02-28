@@ -82,3 +82,10 @@ export type CropArea = {
     height: number
     aspect: number
 }
+
+//Neos Bridge
+
+export type BackendEndpoints = {
+    loadImageMetadata: (assetIdentifier: string) => Promise<ImageMetadata>
+    createImageVariant: (uuidOfImage: string, image: ImageMetadata) => Promise<Asset>
+}
