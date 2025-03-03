@@ -80,7 +80,7 @@ Defaults to the maximum allowed upload size configured in php.ini
         * `[presetIdentifier]`
           * `width` (required integer) the width of the aspect ratio preset
           * `height` (required integer) the height of the aspect ratio preset
-          * `label` (string) uman-readable name of the aspect ratio preset
+          * `label` (string) human-readable name of the aspect ratio preset
       * `enableOriginal` (boolean)
         If `true`, the image ratio of the original image can be chosen in the selector.
         Only effective if `locked` is not set. Default `true`.
