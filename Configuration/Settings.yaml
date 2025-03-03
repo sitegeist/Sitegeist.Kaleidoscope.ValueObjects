@@ -19,4 +19,4 @@ Neos:
             editorOptions:
   Fusion:
     defaultContext:
-      Kaleidoscope.VaulueObjects: 'Sitegeist\Kaleidoscope\ValueObjects\Eel\ValueObjectHelper'
+      Sitegeist.Kaleidoscope.ValueObjects: 'Sitegeist\Kaleidoscope\ValueObjects\Eel\ValueObjectHelper'

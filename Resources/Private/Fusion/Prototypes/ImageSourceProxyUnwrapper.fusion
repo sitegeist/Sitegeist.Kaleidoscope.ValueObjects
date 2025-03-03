@@ -1,5 +1,5 @@
 # This prototype will convert objects of type `Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy` to `ImageSources`
 # other values remain untouched
 prototype(Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyUnwrapper) < prototype(Neos.Fusion:Value) {
-    value = ${Type.instance(value, 'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy') ? Kaleidoscope.VaulueObjects.unwrapProxy(value) : value}
+    value = ${Type.instance(value, 'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy') ? Sitegeist.Kaleidoscope.ValueObjects.unwrapProxy(value) : value}
 }
