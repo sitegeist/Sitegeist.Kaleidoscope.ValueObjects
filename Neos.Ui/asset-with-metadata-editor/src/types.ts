@@ -61,6 +61,9 @@ export type ImageMetadata = {
         __identity: string
         __type: string
         adjustments: any
+        originalAsset?: {
+            __identity: string
+        }
     }
     originalDimensions: {
         width: number

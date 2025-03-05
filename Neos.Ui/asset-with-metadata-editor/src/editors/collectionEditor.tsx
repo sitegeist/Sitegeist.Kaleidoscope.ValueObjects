@@ -150,6 +150,13 @@ export const CollectionEditor = ({
         return valueExtern.map((v) => getImageMetadata(v.asset.__identifier)!).filter(Boolean)
     }, [valueExtern, getImageMetadata])
 
+    const handleImageSorting = (imageIdentifiers: string[]) => {
+        const sortedImages = imageIdentifiers.map(
+            (identifier) => valueExtern.find((v) => v.asset.__identifier === identifier)!
+        )
+        commit(sortedImages)
+    }
+
     return (
         <EditorContainer>
             <PreviewGrid
@@ -157,6 +164,7 @@ export const CollectionEditor = ({
                 selectedImageIdentifier={selectedImageIdentifier}
                 onSelect={setSelectedImageIdentifier}
                 onEmptyPreviewClick={handleOpenMediaSelection}
+                onSort={handleImageSorting}
             />
             <MetaDataInput
                 alt={selectedImage?.alt}

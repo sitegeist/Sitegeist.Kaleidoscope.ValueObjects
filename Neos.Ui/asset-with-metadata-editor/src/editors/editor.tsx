@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { ControlBar } from '../components/ControlBar'
 import { EditorContainer } from '../components/editorContainer'
@@ -18,19 +18,18 @@ export const Editor = ({
     hooks,
     commit,
 }: Props<AssetWithMeta>) => {
+    const [openCropper, setOpenCropper] = useState(false)
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
-    const valueRef = useRef<AssetWithMeta | undefined>(valueExtern)
 
     useEffect(() => {
-        if (
-            valueExtern?.asset.__identifier !== valueRef.current?.asset?.__identifier &&
-            editorOptions?.crop?.aspectRatio.forceCrop
-        ) {
-            handleOpenImageCropper()
+        if (openCropper) {
+            setTimeout(() => {
+                renderSecondaryInspector(undefined, undefined)
+                handleOpenImageCropper()
+                setOpenCropper(false)
+            }, 300)
         }
-
-        valueRef.current = valueExtern
-    }, [valueExtern])
+    }, [openCropper, imageMetadata?.object.__identity])
 
     const getImageMeta = () => {
         if (!hooks) return imageMetadata
@@ -52,6 +51,7 @@ export const Editor = ({
             alt: '',
         })
         handleCloseSecondaryScreen()
+        setOpenCropper(true)
     }
 
     // todo crash after saved crop cropping
