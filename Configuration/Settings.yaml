@@ -14,9 +14,77 @@ Neos:
           'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':
             editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
             editorOptions:
+              # This is a 1:1 copy of the default image editor settings from Neos
+              maximumFileSize: null
+              features:
+                crop: true
+                upload: true
+                mediaBrowser: true
+                resize: false
+              crop:
+                aspectRatio:
+                  options:
+                    square:
+                      width: 1
+                      height: 1
+                      label: Square
+                    fourFive:
+                      width: 4
+                      height: 5
+                    fiveSeven:
+                      width: 5
+                      height: 7
+                    twoThree:
+                      width: 2
+                      height: 3
+                    fourThree:
+                      width: 4
+                      height: 3
+                    sixteenNine:
+                      width: 16
+                      height: 9
+                  enableOriginal: true
+                  allowCustom: true
+                  locked:
+                    width: 0
+                    height: 0
           'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection':
             editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
             editorOptions:
+              # This is a 1:1 copy of the default image editor settings from Neos
+              maximumFileSize: null
+              features:
+                crop: true
+                upload: true
+                mediaBrowser: true
+                resize: false
+              crop:
+                aspectRatio:
+                  options:
+                    square:
+                      width: 1
+                      height: 1
+                      label: Square
+                    fourFive:
+                      width: 4
+                      height: 5
+                    fiveSeven:
+                      width: 5
+                      height: 7
+                    twoThree:
+                      width: 2
+                      height: 3
+                    fourThree:
+                      width: 4
+                      height: 3
+                    sixteenNine:
+                      width: 16
+                      height: 9
+                  enableOriginal: true
+                  allowCustom: true
+                  locked:
+                    width: 0
+                    height: 0
   Fusion:
     defaultContext:
       Sitegeist.Kaleidoscope.ValueObjects: 'Sitegeist\Kaleidoscope\ValueObjects\Eel\ValueObjectHelper'
