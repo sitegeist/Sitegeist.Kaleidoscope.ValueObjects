@@ -16,6 +16,17 @@ final class ImageSourceProxy implements \JsonSerializable
     ) {
     }
 
+    // this is a workaround as properties are deleted by setting to "" string by the NeosUi instead of
+    // removing the property or setting to null ... here the string "delete" us used and will convert to null
+    public static function fromString(string $string): null
+    {
+        if ($string === 'delete') {
+            return null;
+        } else {
+            throw new \Exception("ImageSourceProxy cannot be converted from strings other than 'delete'.");
+        }
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
