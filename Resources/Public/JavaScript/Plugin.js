@@ -8979,6 +8979,39 @@ var templateObject_1;
 
 /***/ }),
 
+/***/ "../asset-with-metadata-editor/lib/components/changeIndicator.js":
+/*!***********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/changeIndicator.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = undefined && undefined.__makeTemplateObject || function (cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", { value: raw });
+    } else {
+        cooked.raw = raw;
+    }
+    return cooked;
+};
+var __importDefault = undefined && undefined.__importDefault || function (mod) {
+    return mod && mod.__esModule ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ChangeIndicator = void 0;
+var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+exports.ChangeIndicator = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    box-shadow: ", ";\n    border-radius: 2px;\n"], ["\n    box-shadow: ", ";\n    border-radius: 2px;\n"])), function (_a) {
+    var changed = _a.changed;
+    return changed ? '0 0 0 2px orange' : 'none';
+});
+var templateObject_1;
+//# sourceMappingURL=changeIndicator.js.map
+
+/***/ }),
+
 /***/ "../asset-with-metadata-editor/lib/components/editorContainer.js":
 /*!***********************************************************************!*\
   !*** ../asset-with-metadata-editor/lib/components/editorContainer.js ***!
@@ -9246,6 +9279,7 @@ var sortable_2 = __webpack_require__(/*! @dnd-kit/sortable */ "../../node_module
 var utilities_1 = __webpack_require__(/*! @dnd-kit/utilities */ "../../node_modules/@dnd-kit/utilities/dist/utilities.esm.js");
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+var changeIndicator_1 = __webpack_require__(/*! ./changeIndicator */ "../asset-with-metadata-editor/lib/components/changeIndicator.js");
 var preview_1 = __webpack_require__(/*! ./preview */ "../asset-with-metadata-editor/lib/components/preview.js");
 var Grid = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"], ["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"])));
 var GridItem = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"], ["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"])), function (_a) {
@@ -9255,6 +9289,7 @@ var GridItem = styled_components_1.default.div(templateObject_2 || (templateObje
 var PreviewGrid = function PreviewGrid(_a) {
     var images = _a.images,
         selectedImageIdentifier = _a.selectedImageIdentifier,
+        changed = _a.changed,
         onSelect = _a.onSelect,
         onEmptyPreviewClick = _a.onEmptyPreviewClick,
         onSort = _a.onSort;
@@ -9278,11 +9313,11 @@ var PreviewGrid = function PreviewGrid(_a) {
             onSort((0, sortable_1.arrayMove)(imageIdentifiers, oldIndex, newIndex));
         }
     };
-    return react_1.default.createElement(core_1.DndContext, { sensors: sensors, collisionDetection: core_1.closestCenter, onDragEnd: handleDragEnd }, react_1.default.createElement(sortable_1.SortableContext, { items: imageIdentifiers }, react_1.default.createElement(Grid, null, images.length === 0 && react_1.default.createElement(preview_1.Preview, { small: true, onClick: onEmptyPreviewClick }), images.map(function (image) {
+    return react_1.default.createElement(changeIndicator_1.ChangeIndicator, { changed: changed }, react_1.default.createElement(core_1.DndContext, { sensors: sensors, collisionDetection: core_1.closestCenter, onDragEnd: handleDragEnd }, react_1.default.createElement(sortable_1.SortableContext, { items: imageIdentifiers }, react_1.default.createElement(Grid, null, images.length === 0 && react_1.default.createElement(preview_1.Preview, { small: true, onClick: onEmptyPreviewClick }), images.map(function (image) {
         return react_1.default.createElement(SortableGridItem, { key: image.object.__identity, image: image, selected: selectedImageIdentifier === image.object.__identity, onClick: function onClick() {
                 return onSelect(image.object.__identity);
             } });
-    }))));
+    })))));
 };
 exports.PreviewGrid = PreviewGrid;
 var SortableGridItem = function SortableGridItem(_a) {
@@ -9410,6 +9445,7 @@ var CollectionEditor = function CollectionEditor(_a) {
         globalRegistry = _a.neos.globalRegistry,
         renderSecondaryInspector = _a.renderSecondaryInspector,
         editorOptions = _a.options,
+        highlight = _a.highlight,
         hooks = _a.hooks,
         commit = _a.commit;
     var imagesIdentifiers = (0, react_1.useMemo)(function () {
@@ -9418,16 +9454,12 @@ var CollectionEditor = function CollectionEditor(_a) {
         });
     }, [valueExtern]);
     var imageMetadataCollection = (0, useImageMetaDataCollection_1.useImageMetadataCollection)(imagesIdentifiers);
-    var valueRef = (0, react_1.useRef)(valueExtern);
     var _e = __read((0, react_1.useState)((_b = valueExtern[0]) === null || _b === void 0 ? void 0 : _b.asset.__identifier), 2),
         selectedImageIdentifier = _e[0],
         setSelectedImageIdentifier = _e[1];
     var selectedImage = valueExtern.find(function (v) {
         return v.asset.__identifier === selectedImageIdentifier;
     });
-    (0, react_1.useEffect)(function () {
-        valueRef.current = valueExtern;
-    }, [valueExtern]);
     var getImageMetadata = (0, react_1.useCallback)(function (assetIdentifier) {
         var imageMetaData = imageMetadataCollection.find(function (image) {
             return image.object.__identity === assetIdentifier;
@@ -9467,7 +9499,10 @@ var CollectionEditor = function CollectionEditor(_a) {
         commit(updatedImages);
     };
     var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
-        commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
+        if (valueExtern.some(function (v) {
+            return v.asset.__identifier === assetIdentifier;
+        })) return;
+        commit(__spreadArray(__spreadArray([], __read(valueExtern), false), [{
             asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
             title: '',
             alt: ''
@@ -9526,7 +9561,11 @@ var CollectionEditor = function CollectionEditor(_a) {
         });
         commit(sortedImages);
     };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: setSelectedImageIdentifier, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(ControlBar_1.ControlBar, { cropEnabled: Boolean((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _c === void 0 ? void 0 : _c.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
+    var handleSelectImage = function handleSelectImage(identifier) {
+        setSelectedImageIdentifier(identifier);
+        renderSecondaryInspector(undefined, undefined);
+    };
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: handleSelectImage, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting, changed: highlight }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(ControlBar_1.ControlBar, { cropEnabled: Boolean((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _c === void 0 ? void 0 : _c.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
 };
 exports.CollectionEditor = CollectionEditor;
 //# sourceMappingURL=collectionEditor.js.map
@@ -9607,6 +9646,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Editor = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
+var changeIndicator_1 = __webpack_require__(/*! ../components/changeIndicator */ "../asset-with-metadata-editor/lib/components/changeIndicator.js");
 var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
 var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
 var preview_1 = __webpack_require__(/*! ../components/preview */ "../asset-with-metadata-editor/lib/components/preview.js");
@@ -9621,6 +9661,7 @@ var Editor = function Editor(_a) {
         renderSecondaryInspector = _a.renderSecondaryInspector,
         editorOptions = _a.options,
         hooks = _a.hooks,
+        highlight = _a.highlight,
         commit = _a.commit;
     var _c = __read((0, react_1.useState)(false), 2),
         openCropper = _c[0],
@@ -9682,12 +9723,12 @@ var Editor = function Editor(_a) {
                 }, onComplete: handleMediaCrop });
         });
     };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, onAltChange: function onAltChange(alt) {
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(changeIndicator_1.ChangeIndicator, { changed: highlight }, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection })), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, onAltChange: function onAltChange(alt) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            return commit('');
+            return commit('delete');
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;

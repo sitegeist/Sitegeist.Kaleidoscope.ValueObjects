@@ -23,6 +23,7 @@ export type Props<T> = {
         [HOOK_BEFORE_SAVE]: ImageMetadata
         [HOOK_BEFORE_SAVE_COLLECTION]: ImageMetadata[]
     }
+    highlight?: boolean
     options?: {
         placeholder: string
         disabled?: boolean
@@ -47,7 +48,7 @@ export type Props<T> = {
     neos: {
         globalRegistry: any
     }
-    commit: (value?: T | null | '', ...args: any[]) => void
+    commit: (value?: T | null | 'delete', ...args: any[]) => void
 }
 
 export type Option = {

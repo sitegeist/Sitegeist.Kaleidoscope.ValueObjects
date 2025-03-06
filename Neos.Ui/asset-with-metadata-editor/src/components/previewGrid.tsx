@@ -6,6 +6,7 @@ import React, { MouseEventHandler, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { ImageMetadata } from '../types'
+import { ChangeIndicator } from './changeIndicator'
 import { Preview } from './preview'
 
 const Grid = styled.div`
@@ -23,6 +24,7 @@ const GridItem = styled.div<{ selected?: boolean }>`
 type PreviewGridProps = {
     images: ImageMetadata[]
     selectedImageIdentifier?: string
+    changed?: boolean
     onSelect: (imageIdentifier: string) => void
     onEmptyPreviewClick: () => void
     onSort: (imageIdentifiers: string[]) => void
@@ -31,6 +33,7 @@ type PreviewGridProps = {
 export const PreviewGrid = ({
     images,
     selectedImageIdentifier,
+    changed,
     onSelect,
     onEmptyPreviewClick,
     onSort,
@@ -58,21 +61,23 @@ export const PreviewGrid = ({
     }
 
     return (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={imageIdentifiers}>
-                <Grid>
-                    {images.length === 0 && <Preview small onClick={onEmptyPreviewClick} />}
-                    {images.map((image) => (
-                        <SortableGridItem
-                            key={image.object.__identity}
-                            image={image}
-                            selected={selectedImageIdentifier === image.object.__identity}
-                            onClick={() => onSelect(image.object.__identity)}
-                        />
-                    ))}
-                </Grid>
-            </SortableContext>
-        </DndContext>
+        <ChangeIndicator changed={changed}>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={imageIdentifiers}>
+                    <Grid>
+                        {images.length === 0 && <Preview small onClick={onEmptyPreviewClick} />}
+                        {images.map((image) => (
+                            <SortableGridItem
+                                key={image.object.__identity}
+                                image={image}
+                                selected={selectedImageIdentifier === image.object.__identity}
+                                onClick={() => onSelect(image.object.__identity)}
+                            />
+                        ))}
+                    </Grid>
+                </SortableContext>
+            </DndContext>
+        </ChangeIndicator>
     )
 }
 

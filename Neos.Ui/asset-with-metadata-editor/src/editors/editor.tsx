@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import { ControlBar } from '../components/ControlBar'
+import { ChangeIndicator } from '../components/changeIndicator'
 import { EditorContainer } from '../components/editorContainer'
 import { MetaDataInput } from '../components/metaDataInput'
 import { Preview } from '../components/preview'
@@ -16,6 +17,7 @@ export const Editor = ({
     renderSecondaryInspector,
     options: editorOptions,
     hooks,
+    highlight,
     commit,
 }: Props<AssetWithMeta>) => {
     const [openCropper, setOpenCropper] = useState(false)
@@ -108,7 +110,9 @@ export const Editor = ({
 
     return (
         <EditorContainer>
-            <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+            <ChangeIndicator changed={highlight}>
+                <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+            </ChangeIndicator>
             <MetaDataInput
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
@@ -119,7 +123,7 @@ export const Editor = ({
             <ControlBar
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
-                onDelete={() => commit('')}
+                onDelete={() => commit('delete')}
                 cropEnabled={Boolean(editorOptions?.features?.crop)}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />

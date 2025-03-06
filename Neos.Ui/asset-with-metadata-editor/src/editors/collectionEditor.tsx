@@ -15,6 +15,7 @@ export const CollectionEditor = ({
     neos: { globalRegistry },
     renderSecondaryInspector,
     options: editorOptions,
+    highlight,
     hooks,
     commit,
 }: Props<AssetWithMeta[]>) => {
@@ -23,14 +24,9 @@ export const CollectionEditor = ({
     }, [valueExtern])
 
     const imageMetadataCollection = useImageMetadataCollection(imagesIdentifiers)
-    const valueRef = useRef<AssetWithMeta[]>(valueExtern)
     const [selectedImageIdentifier, setSelectedImageIdentifier] = useState<string>(valueExtern[0]?.asset.__identifier)
 
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
-
-    useEffect(() => {
-        valueRef.current = valueExtern
-    }, [valueExtern])
 
     const getImageMetadata = useCallback(
         (assetIdentifier: string) => {
@@ -82,8 +78,10 @@ export const CollectionEditor = ({
     }
 
     const handleMediaSelection = (assetIdentifier: any) => {
+        if (valueExtern.some((v) => v.asset.__identifier === assetIdentifier)) return
+
         commit([
-            ...valueRef.current,
+            ...valueExtern,
             {
                 asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
                 title: '',
@@ -173,14 +171,20 @@ export const CollectionEditor = ({
         commit(sortedImages)
     }
 
+    const handleSelectImage = (identifier: string) => {
+        setSelectedImageIdentifier(identifier)
+        renderSecondaryInspector(undefined, undefined)
+    }
+
     return (
         <EditorContainer>
             <PreviewGrid
                 images={images}
                 selectedImageIdentifier={selectedImageIdentifier}
-                onSelect={setSelectedImageIdentifier}
+                onSelect={handleSelectImage}
                 onEmptyPreviewClick={handleOpenMediaSelection}
                 onSort={handleImageSorting}
+                changed={highlight}
             />
             <MetaDataInput
                 alt={selectedImage?.alt}
