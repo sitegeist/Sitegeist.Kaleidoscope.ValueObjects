@@ -5,7 +5,7 @@
     "singleQuote": true,
     "bracketSpacing": true,
     "arrowParens": "always",
-    "printWidth": 100,
+    "printWidth": 120,
     "useTabs": false,
     "proseWrap": "always",
     "endOfLine": "auto",

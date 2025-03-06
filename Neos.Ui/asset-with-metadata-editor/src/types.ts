@@ -1,3 +1,5 @@
+import { HOOK_BEFORE_SAVE, HOOK_BEFORE_SAVE_COLLECTION } from './utils/constants'
+
 // Editor
 export type Asset = {
     __identifier: string
@@ -17,7 +19,10 @@ export type Props<T> = {
     identifier: string
     className: string
     value: T
-    hooks: Record<string, ImageMetadata>
+    hooks: {
+        [HOOK_BEFORE_SAVE]: ImageMetadata
+        [HOOK_BEFORE_SAVE_COLLECTION]: ImageMetadata[]
+    }
     options?: {
         placeholder: string
         disabled?: boolean
@@ -42,7 +47,7 @@ export type Props<T> = {
     neos: {
         globalRegistry: any
     }
-    commit: (value?: T | '' | [], ...args: any[]) => void
+    commit: (value?: T | null, ...args: any[]) => void
 }
 
 export type Option = {
@@ -94,7 +99,7 @@ export type BackendEndpoints = {
         uuidOfImage: string,
         image: ImageMetadata
     ) => Promise<{
-        __identity: '8201810d-4690-4f9f-9d68-d17b22e338c9'
+        __identity: string
         __type: string
     }>
 }

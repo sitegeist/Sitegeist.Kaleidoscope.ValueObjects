@@ -9296,7 +9296,12 @@ var SortableGridItem = function SortableGridItem(_a) {
         transform: utilities_1.CSS.Transform.toString(transform),
         transition: transition
     };
-    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected, onClick: onClick }, attributes, listeners), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
+    var mergedOnClick = function mergedOnClick(e) {
+        console.log('mergedOnClick', listeners, onClick);
+        onClick();
+        listeners === null || listeners === void 0 ? void 0 : listeners.onClick(e);
+    };
+    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
 };
 var templateObject_1, templateObject_2;
 //# sourceMappingURL=previewGrid.js.map
@@ -9400,6 +9405,7 @@ var CollectionEditor = function CollectionEditor(_a) {
         globalRegistry = _a.neos.globalRegistry,
         renderSecondaryInspector = _a.renderSecondaryInspector,
         editorOptions = _a.options,
+        hooks = _a.hooks,
         commit = _a.commit;
     var imagesIdentifiers = (0, react_1.useMemo)(function () {
         return valueExtern.map(function (v) {
@@ -9418,10 +9424,18 @@ var CollectionEditor = function CollectionEditor(_a) {
         valueRef.current = valueExtern;
     }, [valueExtern]);
     var getImageMetadata = (0, react_1.useCallback)(function (assetIdentifier) {
-        return imageMetadataCollection.find(function (image) {
+        var imageMetaData = imageMetadataCollection.find(function (image) {
             return image.object.__identity === assetIdentifier;
         });
-    }, [imageMetadataCollection]);
+        if (!hooks) return imageMetaData;
+        var croppedImages = hooks[constants_1.HOOK_BEFORE_SAVE_COLLECTION];
+        if (!croppedImages) return imageMetaData;
+        var croppedImage = croppedImages.find(function (image) {
+            return image.object.__identity === assetIdentifier;
+        });
+        if (!croppedImage) return imageMetaData;
+        return croppedImage;
+    }, [imageMetadataCollection, hooks]);
     var handleDelete = function handleDelete() {
         var _a;
         if (!selectedImageIdentifier) return;
@@ -9455,14 +9469,25 @@ var CollectionEditor = function CollectionEditor(_a) {
         }], false));
     };
     var handleMediaCrop = function handleMediaCrop(cropArea) {
+        var _a, _b, _c, _d;
         if (!selectedImageIdentifier) return;
         var imageMetadata = getImageMetadata(selectedImageIdentifier);
         if (!imageMetadata) return;
-        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
-            changed = _a.changed,
-            cropAdjustments = _a.cropAdjustments;
+        var _e = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
+            changed = _e.changed,
+            cropAdjustments = _e.cropAdjustments;
         if (!changed) return;
-        commit(valueExtern, cropAdjustments);
+        if (!hooks) return commit(valueExtern, (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = [cropAdjustments], _a));
+        var adjustments = hooks[constants_1.HOOK_BEFORE_SAVE_COLLECTION];
+        if (!adjustments) return commit(valueExtern, (_b = {}, _b[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = [cropAdjustments], _b));
+        var isCropped = adjustments.find(function (a) {
+            return a.object.__identity === selectedImageIdentifier;
+        });
+        if (!isCropped) return commit(valueExtern, (_c = {}, _c[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = __spreadArray(__spreadArray([], __read(adjustments), false), [cropAdjustments], false), _c));
+        commit(valueExtern, (_d = {}, _d[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = __spreadArray([], __read(adjustments.map(function (a) {
+            if (a.object.__identity !== selectedImageIdentifier) return a;
+            return cropAdjustments;
+        })), false), _d));
     };
     var handleOpenMediaSelection = function handleOpenMediaSelection() {
         var _a;
@@ -9624,12 +9649,13 @@ var Editor = function Editor(_a) {
         setOpenCropper(true);
     };
     var handleMediaCrop = function handleMediaCrop(cropArea) {
+        var _a;
         if (!imageMetadata) return;
-        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
-            changed = _a.changed,
-            cropAdjustments = _a.cropAdjustments;
+        var _b = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, cropArea),
+            changed = _b.changed,
+            cropAdjustments = _b.cropAdjustments;
         if (!changed) return;
-        commit(valueExtern, cropAdjustments);
+        commit(valueExtern, (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE] = cropAdjustments, _a));
     };
     var handleOpenMediaSelection = function handleOpenMediaSelection() {
         var _a;
@@ -9656,7 +9682,8 @@ var Editor = function Editor(_a) {
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            return commit();
+            console.log('delete');
+            return commit('');
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;
@@ -10129,7 +10156,6 @@ function registerAssetWithMetadataEditor(globalRegistry) {
     var _a;
     var inspectorRegistry = globalRegistry.get('inspector');
     var saveHooksRegistry = (_a = globalRegistry.get('inspector')) === null || _a === void 0 ? void 0 : _a.get('saveHooks');
-    var createImageVariant = (0, backend_1.endpoints)().createImageVariant;
     if (!inspectorRegistry) {
         console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Could not find inspector registry.');
         console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Skipping registration of AssetWithMetadataEditor...');
@@ -10153,28 +10179,76 @@ function registerAssetWithMetadataEditor(globalRegistry) {
             return React.createElement(collectionEditor_1.CollectionEditor, __assign({}, props));
         }
     });
-    saveHooksRegistry === null || saveHooksRegistry === void 0 ? void 0 : saveHooksRegistry.set(constants_1.HOOK_BEFORE_SAVE, function (value, options) {
+    saveHooksRegistry === null || saveHooksRegistry === void 0 ? void 0 : saveHooksRegistry.set(constants_1.HOOK_BEFORE_SAVE, createImageVariant);
+    saveHooksRegistry === null || saveHooksRegistry === void 0 ? void 0 : saveHooksRegistry.set(constants_1.HOOK_BEFORE_SAVE_COLLECTION, function (values, options) {
         return __awaiter(_this, void 0, void 0, function () {
-            var _a, __identity, adjustments, imageVariant;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var promises, results;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _a = options.object, __identity = _a.__identity, adjustments = _a.adjustments;
-                        if (!__identity) throw new Error('Received malformed originalImageUuid.');
-                        if (!adjustments) throw new Error('Received malformed adjustments.');
-                        return [4, createImageVariant(__identity, adjustments)];
+                        promises = options.map(function (option) {
+                            return __awaiter(_this, void 0, void 0, function () {
+                                var value, imageVariant;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            value = values.find(function (value) {
+                                                return value.asset.__identifier === option.object.__identity;
+                                            });
+                                            if (!value) return [2, Promise.reject(new Error('Received malformed value.'))];
+                                            return [4, createImageVariant(value, option)];
+                                        case 1:
+                                            imageVariant = _a.sent();
+                                            return [2, { originalIdentifier: value.asset.__identifier, imageVariant: imageVariant }];
+                                    }
+                                });
+                            });
+                        });
+                        return [4, Promise.all(promises)];
                     case 1:
-                        imageVariant = _b.sent();
-                        return [2, __assign(__assign({}, value), { asset: {
-                                __identifier: imageVariant.__identity,
-                                __flow_object_type: imageVariant.__type
-                            } })];
+                        results = _a.sent();
+                        return [2, values.map(function (v) {
+                            var imageVariant = results.find(function (r) {
+                                return r.originalIdentifier === v.asset.__identifier;
+                            });
+                            if (imageVariant) return imageVariant.imageVariant;
+                            return v;
+                        })];
                 }
             });
         });
     });
 }
 exports.registerAssetWithMetadataEditor = registerAssetWithMetadataEditor;
+var createImageVariant = function createImageVariant(value, options) {
+    var _a = options.object,
+        __identity = _a.__identity,
+        adjustments = _a.adjustments,
+        originalAsset = _a.originalAsset;
+    var assetId = originalAsset ? originalAsset.__identity : __identity;
+    if (!assetId) return Promise.reject(new Error('Received malformed originalImageUuid.'));
+    if (!adjustments) return Promise.reject(new Error('Received malformed adjustments.'));
+    return getImageVariant(assetId, adjustments, value);
+};
+var getImageVariant = function getImageVariant(assetId, adjustments, value) {
+    return __awaiter(void 0, void 0, void 0, function () {
+        var createImageVariant, imageVariant;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    createImageVariant = (0, backend_1.endpoints)().createImageVariant;
+                    return [4, createImageVariant(assetId, adjustments)];
+                case 1:
+                    imageVariant = _a.sent();
+                    return [2, __assign(__assign({}, value), { asset: {
+                            __identifier: imageVariant.__identity,
+                            __flow_object_type: imageVariant.__type
+                        } })];
+            }
+        });
+    });
+};
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -10214,9 +10288,10 @@ exports.endpoints = endpoints;
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HOOK_BEFORE_SAVE = exports.MEDIA_TYPE_IMAGE = void 0;
+exports.HOOK_BEFORE_SAVE_COLLECTION = exports.HOOK_BEFORE_SAVE = exports.MEDIA_TYPE_IMAGE = void 0;
 exports.MEDIA_TYPE_IMAGE = 'Neos\\Media\\Domain\\Model\\Image';
 exports.HOOK_BEFORE_SAVE = 'Neos.UI:Hook.BeforeSave.CreateImageVariantWithMetadata';
+exports.HOOK_BEFORE_SAVE_COLLECTION = 'Neos.UI:Hook.BeforeSave.CreateImageVariantCollectionWithMetadata';
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
@@ -10273,17 +10348,15 @@ var __assign = undefined && undefined.__assign || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCropAdjustments = void 0;
-var constants_1 = __webpack_require__(/*! ./constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
 var getCropAdjustments = function getCropAdjustments(imageMetadata, cropArea) {
-    var _a;
-    var _b, _c, _d;
+    var _a, _b, _c;
     if (!imageMetadata) return {
         changed: false,
         cropAdjustments: null
     };
     var imageWidth = imageMetadata.originalDimensions.width;
     var imageHeight = imageMetadata.originalDimensions.height;
-    var currentCropAdjustments = (_c = (_b = imageMetadata === null || imageMetadata === void 0 ? void 0 : imageMetadata.object) === null || _b === void 0 ? void 0 : _b.adjustments) === null || _c === void 0 ? void 0 : _c['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'];
+    var currentCropAdjustments = (_b = (_a = imageMetadata === null || imageMetadata === void 0 ? void 0 : imageMetadata.object) === null || _a === void 0 ? void 0 : _a.adjustments) === null || _b === void 0 ? void 0 : _b['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'];
     var nextCropAdjustments = {
         x: Math.round(cropArea.x / 100 * imageWidth),
         y: Math.round(cropArea.y / 100 * imageHeight),
@@ -10293,12 +10366,12 @@ var getCropAdjustments = function getCropAdjustments(imageMetadata, cropArea) {
     var cropAdjustmentsHaveChanged = !currentCropAdjustments || currentCropAdjustments.x !== nextCropAdjustments.x || currentCropAdjustments.y !== nextCropAdjustments.y || currentCropAdjustments.width !== nextCropAdjustments.width || currentCropAdjustments.height !== nextCropAdjustments.height;
     if (!cropAdjustmentsHaveChanged) return {
         changed: false,
-        cropAdjustments: nextCropAdjustments
+        cropAdjustments: null
     };
-    var nextImage = __assign(__assign({}, imageMetadata), { object: __assign(__assign({}, imageMetadata.object), { adjustments: __assign(__assign({}, (_d = imageMetadata.object) === null || _d === void 0 ? void 0 : _d.adjustments), { 'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment': nextCropAdjustments }) }) });
+    var nextImage = __assign(__assign({}, imageMetadata), { object: __assign(__assign({}, imageMetadata.object), { adjustments: __assign(__assign({}, (_c = imageMetadata.object) === null || _c === void 0 ? void 0 : _c.adjustments), { 'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment': nextCropAdjustments }) }) });
     return {
         changed: true,
-        cropAdjustments: (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE] = nextImage, _a)
+        cropAdjustments: nextImage
     };
 };
 exports.getCropAdjustments = getCropAdjustments;

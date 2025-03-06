@@ -1,15 +1,8 @@
-import {
-    DndContext,
-    DragEndEvent,
-    PointerSensor,
-    closestCenter,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core'
+import { DndContext, DragEndEvent, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import React, { useMemo } from 'react'
+import React, { MouseEventHandler, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { ImageMetadata } from '../types'
@@ -92,14 +85,20 @@ const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) =
         transition,
     }
 
+    const mergedOnClick = (e: any) => {
+        console.log('mergedOnClick', listeners, onClick)
+        onClick()
+        listeners?.onClick(e)
+    }
+
     return (
         <GridItem
             ref={setNodeRef}
             style={style}
             selected={selected}
-            onClick={onClick}
             {...attributes}
             {...listeners}
+            onClick={mergedOnClick}
         >
             <Preview image={image} small />
         </GridItem>

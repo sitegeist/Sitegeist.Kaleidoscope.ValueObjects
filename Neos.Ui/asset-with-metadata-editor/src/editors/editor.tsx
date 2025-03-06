@@ -54,14 +54,13 @@ export const Editor = ({
         setOpenCropper(true)
     }
 
-    // todo crash after saved crop cropping
     const handleMediaCrop = (cropArea: CropArea) => {
         if (!imageMetadata) return
 
         const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, cropArea)
         if (!changed) return
 
-        commit(valueExtern, cropAdjustments)
+        commit(valueExtern, { [HOOK_BEFORE_SAVE]: cropAdjustments })
     }
 
     const handleOpenMediaSelection = () => {
@@ -76,11 +75,7 @@ export const Editor = ({
         }
 
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', () => (
-            <MediaSelectionScreen
-                type="images"
-                constraints={constraints}
-                onComplete={handleMediaSelection}
-            />
+            <MediaSelectionScreen type="images" constraints={constraints} onComplete={handleMediaSelection} />
         ))
     }
 
@@ -124,7 +119,10 @@ export const Editor = ({
             <ControlBar
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
-                onDelete={() => commit()}
+                onDelete={() => {
+                    console.log('delete')
+                    return commit('' as any)
+                }}
                 cropEnabled={Boolean(editorOptions?.features?.crop)}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />

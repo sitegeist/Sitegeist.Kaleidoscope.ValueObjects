@@ -6,7 +6,7 @@ import { MetaDataInput } from '../components/metaDataInput'
 import { PreviewGrid } from '../components/previewGrid'
 import { useImageMetadataCollection } from '../hooks/useImageMetaDataCollection'
 import { AssetWithMeta, CropArea, Props } from '../types'
-import { MEDIA_TYPE_IMAGE } from '../utils/constants'
+import { HOOK_BEFORE_SAVE_COLLECTION, MEDIA_TYPE_IMAGE } from '../utils/constants'
 import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { Image } from '../utils/image'
 
@@ -15,6 +15,7 @@ export const CollectionEditor = ({
     neos: { globalRegistry },
     renderSecondaryInspector,
     options: editorOptions,
+    hooks,
     commit,
 }: Props<AssetWithMeta[]>) => {
     const imagesIdentifiers = useMemo(() => {
@@ -23,9 +24,7 @@ export const CollectionEditor = ({
 
     const imageMetadataCollection = useImageMetadataCollection(imagesIdentifiers)
     const valueRef = useRef<AssetWithMeta[]>(valueExtern)
-    const [selectedImageIdentifier, setSelectedImageIdentifier] = useState<string>(
-        valueExtern[0]?.asset.__identifier
-    )
+    const [selectedImageIdentifier, setSelectedImageIdentifier] = useState<string>(valueExtern[0]?.asset.__identifier)
 
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
 
@@ -35,19 +34,25 @@ export const CollectionEditor = ({
 
     const getImageMetadata = useCallback(
         (assetIdentifier: string) => {
-            return imageMetadataCollection.find(
-                (image) => image.object.__identity === assetIdentifier
-            )
+            const imageMetaData = imageMetadataCollection.find((image) => image.object.__identity === assetIdentifier)
+
+            if (!hooks) return imageMetaData
+
+            const croppedImages = hooks[HOOK_BEFORE_SAVE_COLLECTION]
+            if (!croppedImages) return imageMetaData
+
+            const croppedImage = croppedImages.find((image) => image.object.__identity === assetIdentifier)
+            if (!croppedImage) return imageMetaData
+
+            return croppedImage
         },
-        [imageMetadataCollection]
+        [imageMetadataCollection, hooks]
     )
 
     const handleDelete = () => {
         if (!selectedImageIdentifier) return
 
-        const filteredValues = valueExtern.filter(
-            (v) => v.asset.__identifier !== selectedImageIdentifier
-        )
+        const filteredValues = valueExtern.filter((v) => v.asset.__identifier !== selectedImageIdentifier)
         commit(filteredValues)
         setSelectedImageIdentifier(filteredValues[0]?.asset.__identifier)
     }
@@ -87,7 +92,6 @@ export const CollectionEditor = ({
         ])
     }
 
-    //todo: handle crop for multiple images
     const handleMediaCrop = (cropArea: CropArea) => {
         if (!selectedImageIdentifier) return
 
@@ -97,7 +101,23 @@ export const CollectionEditor = ({
         const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, cropArea)
         if (!changed) return
 
-        commit(valueExtern, cropAdjustments)
+        if (!hooks) return commit(valueExtern, { [HOOK_BEFORE_SAVE_COLLECTION]: [cropAdjustments] })
+
+        const adjustments = hooks[HOOK_BEFORE_SAVE_COLLECTION]
+        if (!adjustments) return commit(valueExtern, { [HOOK_BEFORE_SAVE_COLLECTION]: [cropAdjustments] })
+
+        const isCropped = adjustments.find((a) => a.object.__identity === selectedImageIdentifier)
+        if (!isCropped) return commit(valueExtern, { [HOOK_BEFORE_SAVE_COLLECTION]: [...adjustments, cropAdjustments] })
+
+        commit(valueExtern, {
+            [HOOK_BEFORE_SAVE_COLLECTION]: [
+                ...adjustments.map((a) => {
+                    if (a.object.__identity !== selectedImageIdentifier) return a
+
+                    return cropAdjustments
+                }),
+            ],
+        })
     }
 
     const handleOpenMediaSelection = () => {
@@ -112,11 +132,7 @@ export const CollectionEditor = ({
         }
 
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', () => (
-            <MediaSelectionScreen
-                type="images"
-                constraints={constraints}
-                onComplete={handleMediaSelection}
-            />
+            <MediaSelectionScreen type="images" constraints={constraints} onComplete={handleMediaSelection} />
         ))
     }
 

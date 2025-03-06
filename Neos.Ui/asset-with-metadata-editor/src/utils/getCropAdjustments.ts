@@ -1,5 +1,4 @@
 import { CropArea, ImageMetadata } from '../types'
-import { HOOK_BEFORE_SAVE } from './constants'
 
 export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropArea) => {
     if (!imageMetadata)
@@ -12,9 +11,7 @@ export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropA
     const imageHeight = imageMetadata.originalDimensions.height
 
     const currentCropAdjustments =
-        imageMetadata?.object?.adjustments?.[
-            'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'
-        ]
+        imageMetadata?.object?.adjustments?.['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment']
 
     const nextCropAdjustments = {
         x: Math.round((cropArea.x / 100) * imageWidth),
@@ -32,7 +29,7 @@ export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropA
     if (!cropAdjustmentsHaveChanged)
         return {
             changed: false,
-            cropAdjustments: nextCropAdjustments,
+            cropAdjustments: null,
         }
 
     const nextImage = {
@@ -48,6 +45,6 @@ export const getCropAdjustments = (imageMetadata: ImageMetadata, cropArea: CropA
 
     return {
         changed: true,
-        cropAdjustments: { [HOOK_BEFORE_SAVE]: nextImage },
+        cropAdjustments: nextImage,
     }
 }
