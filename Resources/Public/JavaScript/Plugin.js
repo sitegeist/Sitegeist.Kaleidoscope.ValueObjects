@@ -9258,7 +9258,12 @@ var PreviewGrid = function PreviewGrid(_a) {
         onSelect = _a.onSelect,
         onEmptyPreviewClick = _a.onEmptyPreviewClick,
         onSort = _a.onSort;
-    var sensors = (0, core_1.useSensors)((0, core_1.useSensor)(core_1.PointerSensor));
+    var sensors = (0, core_1.useSensors)((0, core_1.useSensor)(core_1.PointerSensor, {
+        activationConstraint: {
+            delay: 100,
+            tolerance: 5
+        }
+    }));
     var imageIdentifiers = (0, react_1.useMemo)(function () {
         return images.map(function (image) {
             return image.object.__identity;
@@ -9297,9 +9302,9 @@ var SortableGridItem = function SortableGridItem(_a) {
         transition: transition
     };
     var mergedOnClick = function mergedOnClick(e) {
-        console.log('mergedOnClick', listeners, onClick);
+        var _a;
         onClick();
-        listeners === null || listeners === void 0 ? void 0 : listeners.onClick(e);
+        (_a = listeners === null || listeners === void 0 ? void 0 : listeners.onClick) === null || _a === void 0 ? void 0 : _a.call(listeners, e);
     };
     return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
 };
@@ -9682,7 +9687,6 @@ var Editor = function Editor(_a) {
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            console.log('delete');
             return commit('');
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };

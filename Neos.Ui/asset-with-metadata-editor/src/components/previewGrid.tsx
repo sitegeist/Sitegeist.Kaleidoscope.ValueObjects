@@ -1,5 +1,5 @@
 import { DndContext, DragEndEvent, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core'
-import { SortableContext, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import React, { MouseEventHandler, useMemo } from 'react'
@@ -28,7 +28,6 @@ type PreviewGridProps = {
     onSort: (imageIdentifiers: string[]) => void
 }
 
-//todo add drag and drop
 export const PreviewGrid = ({
     images,
     selectedImageIdentifier,
@@ -36,7 +35,14 @@ export const PreviewGrid = ({
     onEmptyPreviewClick,
     onSort,
 }: PreviewGridProps) => {
-    const sensors = useSensors(useSensor(PointerSensor))
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                delay: 100, // Start drag after holding for 250ms
+                tolerance: 5, // or after moving 5px
+            },
+        })
+    )
 
     const imageIdentifiers = useMemo(() => images.map((image) => image.object.__identity), [images])
 
@@ -86,9 +92,8 @@ const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) =
     }
 
     const mergedOnClick = (e: any) => {
-        console.log('mergedOnClick', listeners, onClick)
         onClick()
-        listeners?.onClick(e)
+        listeners?.onClick?.(e)
     }
 
     return (

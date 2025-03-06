@@ -47,7 +47,7 @@ export type Props<T> = {
     neos: {
         globalRegistry: any
     }
-    commit: (value?: T | null, ...args: any[]) => void
+    commit: (value?: T | null | '', ...args: any[]) => void
 }
 
 export type Option = {
