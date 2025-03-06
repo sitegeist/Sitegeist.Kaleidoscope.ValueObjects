@@ -9728,7 +9728,7 @@ var Editor = function Editor(_a) {
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            return commit('delete');
+            return commit('');
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;
@@ -10189,6 +10189,15 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
         }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __rest = undefined && undefined.__rest || function (s, e) {
+    var t = {};
+    for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    }if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerAssetWithMetadataEditor = void 0;
 var React = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
@@ -10215,12 +10224,15 @@ function registerAssetWithMetadataEditor(globalRegistry) {
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor', {
         component: function component(props) {
             console.log('Editor Props', props);
-            return React.createElement(editor_1.Editor, __assign({}, props));
+            var value = props.value,
+                rest = __rest(props, ["value"]);
+            return React.createElement(editor_1.Editor, __assign({}, rest, { value: typeof value === 'string' ? undefined : value }));
         }
     });
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor', {
         component: function component(props) {
-            console.log('Editor Props', props);
+            var value = props.value,
+                rest = __rest(props, ["value"]);
             return React.createElement(collectionEditor_1.CollectionEditor, __assign({}, props));
         }
     });

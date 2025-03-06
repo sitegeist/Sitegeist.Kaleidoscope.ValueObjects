@@ -123,7 +123,7 @@ export const Editor = ({
             <ControlBar
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
-                onDelete={() => commit('delete')}
+                onDelete={() => commit('')}
                 cropEnabled={Boolean(editorOptions?.features?.crop)}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />
