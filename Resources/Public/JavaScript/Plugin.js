@@ -9557,6 +9557,7 @@ var previewGrid_1 = __webpack_require__(/*! ../components/previewGrid */ "../ass
 var useImageMetaDataCollection_1 = __webpack_require__(/*! ../hooks/useImageMetaDataCollection */ "../asset-with-metadata-editor/lib/hooks/useImageMetaDataCollection.js");
 var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
 var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
+var getForceCrop_1 = __webpack_require__(/*! ../utils/getForceCrop */ "../asset-with-metadata-editor/lib/utils/getForceCrop.js");
 var getImageMetaData_1 = __webpack_require__(/*! ../utils/getImageMetaData */ "../asset-with-metadata-editor/lib/utils/getImageMetaData.js");
 var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
 var CollectionEditor = function CollectionEditor(_a) {
@@ -9627,69 +9628,29 @@ var CollectionEditor = function CollectionEditor(_a) {
     };
     var handleMediaSelection = function handleMediaSelection(assetIdentifier) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var cropOptions, imageMetadata, forcedAspectRatio, imageAspectRatio, width_1, height_1, y_1, _a, changed_1, cropAdjustments_1, adjustments_1, height, width, x, y, _b, changed, cropAdjustments, adjustments;
-            var _c, _d;
-            var _e, _f, _g, _h;
-            return __generator(this, function (_j) {
-                switch (_j.label) {
+            var cropOptions, commitValue, imageMetadata, cropAdjustments, adjustments;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         if (valueExtern.some(function (v) {
                             return v.asset.__identifier === assetIdentifier;
                         })) return [2];
                         cropOptions = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.crop;
-                        if (!(cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.forceCrop)) return [2, commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
+                        commitValue = __spreadArray(__spreadArray([], __read(valueRef.current), false), [{
                             asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
                             title: '',
                             alt: ''
-                        }], false))];
+                        }], false);
+                        if (!(cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.forceCrop)) return [2, commit(commitValue)];
                         return [4, (0, getImageMetaData_1.getImageMetaData)(assetIdentifier)];
                     case 1:
-                        imageMetadata = _j.sent();
-                        if (!imageMetadata) return [2];
-                        forcedAspectRatio = ((_f = (_e = cropOptions.aspectRatio.locked) === null || _e === void 0 ? void 0 : _e.width) !== null && _f !== void 0 ? _f : 0) / ((_h = (_g = cropOptions.aspectRatio.locked) === null || _g === void 0 ? void 0 : _g.height) !== null && _h !== void 0 ? _h : 0);
-                        imageAspectRatio = imageMetadata.originalDimensions.width / imageMetadata.originalDimensions.height;
-                        if (imageAspectRatio === forcedAspectRatio) return [2, commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
-                            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
-                            title: '',
-                            alt: ''
-                        }], false))];
-                        if (forcedAspectRatio > imageAspectRatio) {
-                            width_1 = imageMetadata.originalDimensions.width;
-                            height_1 = Math.floor(width_1 / forcedAspectRatio);
-                            y_1 = Math.floor((imageMetadata.originalDimensions.height - height_1) / 2);
-                            _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
-                                x: 0,
-                                y: y_1 / imageMetadata.originalDimensions.height * 100,
-                                width: 100,
-                                height: height_1 / imageMetadata.originalDimensions.height * 100,
-                                aspect: forcedAspectRatio
-                            }), changed_1 = _a.changed, cropAdjustments_1 = _a.cropAdjustments;
-                            if (!changed_1) return [2];
-                            adjustments_1 = hooksRef.current ? hooksRef.current[constants_1.HOOK_BEFORE_SAVE_COLLECTION] : undefined;
-                            return [2, commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
-                                asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
-                                title: '',
-                                alt: ''
-                            }], false), (_c = {}, _c[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = __spreadArray(__spreadArray([], __read(adjustments_1 !== null && adjustments_1 !== void 0 ? adjustments_1 : []), false), [cropAdjustments_1], false), _c))];
-                        }
-                        height = imageMetadata.originalDimensions.height;
-                        width = height * forcedAspectRatio;
-                        x = Math.floor((imageMetadata.originalDimensions.width - width) / 2);
-                        y = 0;
-                        _b = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
-                            x: x / imageMetadata.originalDimensions.width * 100,
-                            y: y,
-                            width: width / imageMetadata.originalDimensions.width * 100,
-                            height: 100,
-                            aspect: forcedAspectRatio
-                        }), changed = _b.changed, cropAdjustments = _b.cropAdjustments;
-                        if (!changed) return [2];
+                        imageMetadata = _b.sent();
+                        if (!imageMetadata) return [2, commit(commitValue)];
+                        cropAdjustments = (0, getForceCrop_1.getForceCrop)(imageMetadata, cropOptions);
+                        if (!cropAdjustments) return [2, commit(commitValue)];
                         adjustments = hooksRef.current ? hooksRef.current[constants_1.HOOK_BEFORE_SAVE_COLLECTION] : undefined;
-                        return [2, commit(__spreadArray(__spreadArray([], __read(valueRef.current), false), [{
-                            asset: { __identifier: assetIdentifier, __flow_object_type: constants_1.MEDIA_TYPE_IMAGE },
-                            title: '',
-                            alt: ''
-                        }], false), (_d = {}, _d[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = __spreadArray(__spreadArray([], __read(adjustments !== null && adjustments !== void 0 ? adjustments : []), false), [cropAdjustments], false), _d))];
+                        return [2, commit(commitValue, (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE_COLLECTION] = __spreadArray(__spreadArray([], __read(adjustments !== null && adjustments !== void 0 ? adjustments : []), false), [cropAdjustments], false), _a))];
                 }
             });
         });
@@ -10619,6 +10580,65 @@ var getCropAdjustments = function getCropAdjustments(imageMetadata, cropArea) {
 };
 exports.getCropAdjustments = getCropAdjustments;
 //# sourceMappingURL=getCropAdjustments.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/utils/getForceCrop.js":
+/*!***************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/utils/getForceCrop.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getForceCrop = void 0;
+var getCropAdjustments_1 = __webpack_require__(/*! ./getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
+var getForceCrop = function getForceCrop(imageMetadata, cropOptions) {
+    var _a, _b, _c, _d;
+    var forcedAspectRatio = ((_b = (_a = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _a === void 0 ? void 0 : _a.width) !== null && _b !== void 0 ? _b : 0) / ((_d = (_c = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _c === void 0 ? void 0 : _c.height) !== null && _d !== void 0 ? _d : 0);
+    var imageAspectRatio = imageMetadata.originalDimensions.width / imageMetadata.originalDimensions.height;
+    if (imageAspectRatio === forcedAspectRatio) return;
+    if (forcedAspectRatio > imageAspectRatio) {
+        var aspectWidth_1 = imageMetadata.originalDimensions.width;
+        var aspectHeight_1 = Math.floor(aspectWidth_1 / forcedAspectRatio);
+        var x_1 = 0;
+        var y_1 = getAxisInPercent(aspectHeight_1, imageMetadata.originalDimensions.height);
+        var _e = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
+            x: x_1,
+            y: y_1,
+            width: 100,
+            height: aspectHeight_1 / imageMetadata.originalDimensions.height * 100,
+            aspect: forcedAspectRatio
+        }),
+            changed_1 = _e.changed,
+            cropAdjustments_1 = _e.cropAdjustments;
+        if (!changed_1) return;
+        return cropAdjustments_1;
+    }
+    var aspectHeight = imageMetadata.originalDimensions.height;
+    var aspectWidth = Math.floor(aspectHeight * forcedAspectRatio);
+    var x = getAxisInPercent(aspectWidth, imageMetadata.originalDimensions.width);
+    var y = 0;
+    var _f = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
+        x: x,
+        y: y,
+        width: aspectWidth / imageMetadata.originalDimensions.width * 100,
+        height: 100,
+        aspect: forcedAspectRatio
+    }),
+        changed = _f.changed,
+        cropAdjustments = _f.cropAdjustments;
+    if (!changed) return;
+    return cropAdjustments;
+};
+exports.getForceCrop = getForceCrop;
+var getAxisInPercent = function getAxisInPercent(aspectValue, originalValue) {
+    return Math.floor((originalValue - aspectValue) / 2) / originalValue * 100;
+};
+//# sourceMappingURL=getForceCrop.js.map
 
 /***/ }),
 
