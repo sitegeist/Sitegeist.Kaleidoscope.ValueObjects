@@ -121,6 +121,18 @@ imageSources = ${q(node).property('imageSourceProxyCollection')}
 imageSources.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyCollectionUnwrapper
 ```
 
+## Development 
+
+To build the javascript for the inspector-editors the following docker commands can be used.
+
+```bash
+# run development build
+docker run -it -v $(pwd):/app -w /app node:23 sh -c "yarn && yarn build:dev"
+
+# run production build 
+docker run -it -v $(pwd):/app -w /app node:23 sh -c "yarn && yarn build"
+```
+
 ## Contribution
 
 We will gladly accept contributions. Please send us pull requests.

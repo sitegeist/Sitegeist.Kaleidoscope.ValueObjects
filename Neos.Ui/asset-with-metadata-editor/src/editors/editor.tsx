@@ -88,7 +88,6 @@ export const Editor = ({
             .get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper')
 
         const image = getImageMeta()
-        console.log('image', image)
         if (!image) return
 
         renderSecondaryInspector('IMAGE_CROP', () => (
@@ -123,7 +122,7 @@ export const Editor = ({
             <ControlBar
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
-                onDelete={() => commit('')}
+                onDelete={() => commit({})}
                 cropEnabled={Boolean(editorOptions?.features?.crop)}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />

@@ -87,9 +87,9 @@
 /******/ ({
 
 /***/ "../../node_modules/@dnd-kit/accessibility/dist/accessibility.esm.js":
-/*!******************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@dnd-kit/accessibility/dist/accessibility.esm.js ***!
-  \******************************************************************************************************************************************/
+/*!**************************************************************************!*\
+  !*** /app/node_modules/@dnd-kit/accessibility/dist/accessibility.esm.js ***!
+  \**************************************************************************/
 /*! exports provided: HiddenText, LiveRegion, useAnnouncement */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -166,9 +166,9 @@ function useAnnouncement() {
 /***/ }),
 
 /***/ "../../node_modules/@dnd-kit/core/dist/core.esm.js":
-/*!************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@dnd-kit/core/dist/core.esm.js ***!
-  \************************************************************************************************************************/
+/*!********************************************************!*\
+  !*** /app/node_modules/@dnd-kit/core/dist/core.esm.js ***!
+  \********************************************************/
 /*! exports provided: AutoScrollActivator, DndContext, DragOverlay, KeyboardCode, KeyboardSensor, MeasuringFrequency, MeasuringStrategy, MouseSensor, PointerSensor, TouchSensor, TraversalOrder, applyModifiers, closestCenter, closestCorners, defaultAnnouncements, defaultCoordinates, defaultDropAnimation, defaultDropAnimationSideEffects, defaultKeyboardCoordinateGetter, defaultScreenReaderInstructions, getClientRect, getFirstCollision, getScrollableAncestors, pointerWithin, rectIntersection, useDndContext, useDndMonitor, useDraggable, useDroppable, useSensor, useSensors */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4185,9 +4185,9 @@ const DragOverlay = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.me
 /***/ }),
 
 /***/ "../../node_modules/@dnd-kit/sortable/dist/sortable.esm.js":
-/*!********************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@dnd-kit/sortable/dist/sortable.esm.js ***!
-  \********************************************************************************************************************************/
+/*!****************************************************************!*\
+  !*** /app/node_modules/@dnd-kit/sortable/dist/sortable.esm.js ***!
+  \****************************************************************/
 /*! exports provided: SortableContext, arrayMove, arraySwap, defaultAnimateLayoutChanges, defaultNewIndexGetter, hasSortableData, horizontalListSortingStrategy, rectSortingStrategy, rectSwappingStrategy, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4997,9 +4997,9 @@ function isAfter(a, b) {
 /***/ }),
 
 /***/ "../../node_modules/@dnd-kit/utilities/dist/utilities.esm.js":
-/*!**********************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@dnd-kit/utilities/dist/utilities.esm.js ***!
-  \**********************************************************************************************************************************/
+/*!******************************************************************!*\
+  !*** /app/node_modules/@dnd-kit/utilities/dist/utilities.esm.js ***!
+  \******************************************************************/
 /*! exports provided: CSS, add, canUseDOM, findFirstFocusableNode, getEventCoordinates, getOwnerDocument, getWindow, hasViewportRelativeCoordinates, isDocument, isHTMLElement, isKeyboardEvent, isNode, isSVGElement, isTouchEvent, isWindow, subtract, useCombinedRefs, useEvent, useInterval, useIsomorphicLayoutEffect, useLatestValue, useLazyMemo, useNodeRef, usePrevious, useUniqueId */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5370,9 +5370,9 @@ function findFirstFocusableNode(element) {
 /***/ }),
 
 /***/ "../../node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js":
-/*!**************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js ***!
-  \**************************************************************************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** /app/node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js ***!
+  \**********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5400,9 +5400,9 @@ var isPropValid = /* #__PURE__ */Object(_emotion_memoize__WEBPACK_IMPORTED_MODUL
 /***/ }),
 
 /***/ "../../node_modules/@emotion/memoize/dist/emotion-memoize.esm.js":
-/*!**************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@emotion/memoize/dist/emotion-memoize.esm.js ***!
-  \**************************************************************************************************************************************/
+/*!**********************************************************************!*\
+  !*** /app/node_modules/@emotion/memoize/dist/emotion-memoize.esm.js ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5423,9 +5423,9 @@ function memoize(fn) {
 /***/ }),
 
 /***/ "../../node_modules/@emotion/stylis/dist/stylis.browser.esm.js":
-/*!************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@emotion/stylis/dist/stylis.browser.esm.js ***!
-  \************************************************************************************************************************************/
+/*!********************************************************************!*\
+  !*** /app/node_modules/@emotion/stylis/dist/stylis.browser.esm.js ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6051,9 +6051,9 @@ function stylis_min (W) {
 /***/ }),
 
 /***/ "../../node_modules/@emotion/unitless/dist/unitless.browser.esm.js":
-/*!****************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@emotion/unitless/dist/unitless.browser.esm.js ***!
-  \****************************************************************************************************************************************/
+/*!************************************************************************!*\
+  !*** /app/node_modules/@emotion/unitless/dist/unitless.browser.esm.js ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6114,9 +6114,9 @@ var unitlessKeys = {
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/createConsumerApi.js":
-/*!*******************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/createConsumerApi.js ***!
-  \*******************************************************************************************************************************************************/
+/*!***************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/createConsumerApi.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6148,9 +6148,9 @@ exports["default"] = createConsumerApi;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/index.js":
-/*!*******************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/index.js ***!
-  \*******************************************************************************************************************************************/
+/*!***************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/index.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6172,9 +6172,9 @@ exports["default"] = readFromConsumerApi_1["default"]('manifest');
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/manifest.js":
-/*!**********************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/manifest.js ***!
-  \**********************************************************************************************************************************************/
+/*!******************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/manifest.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6196,9 +6196,9 @@ exports["default"] = function (manifests) {
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js":
-/*!*********************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js ***!
-  \*********************************************************************************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6226,9 +6226,9 @@ exports["default"] = readFromConsumerApi;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/registry/AbstractRegistry.js":
-/*!***************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/registry/AbstractRegistry.js ***!
-  \***************************************************************************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/registry/AbstractRegistry.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6249,9 +6249,9 @@ exports["default"] = AbstractRegistry;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousMetaRegistry.js":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousMetaRegistry.js ***!
-  \**********************************************************************************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousMetaRegistry.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6280,9 +6280,9 @@ exports["default"] = SynchronousMetaRegistry;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousRegistry.js":
-/*!******************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousRegistry.js ***!
-  \******************************************************************************************************************************************************************/
+/*!**************************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/registry/SynchronousRegistry.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6384,9 +6384,9 @@ exports["default"] = SynchronousRegistry;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/dist/registry/index.js":
-/*!****************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/dist/registry/index.js ***!
-  \****************************************************************************************************************************************************/
+/*!************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/dist/registry/index.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6404,9 +6404,9 @@ exports.SynchronousMetaRegistry = SynchronousMetaRegistry_1["default"];
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-backend-connector/index.js":
-/*!**********************************************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-backend-connector/index.js ***!
-  \**********************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-backend-connector/index.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6431,9 +6431,9 @@ exports.fetchWithErrorHandling = fetchWithErrorHandling;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js":
-/*!****************************************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js ***!
-  \****************************************************************************************************************************************************************************************/
+/*!************************************************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js ***!
+  \************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6451,9 +6451,9 @@ module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().Rea
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-dom/index.js":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-dom/index.js ***!
-  \*****************************************************************************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-dom/index.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6471,9 +6471,9 @@ module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDOM;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js":
-/*!*************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js ***!
-  \*************************************************************************************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6491,9 +6491,9 @@ module.exports = (0, _readFromConsumerApi2.default)('vendor')().React;
 /***/ }),
 
 /***/ "../../node_modules/@neos-project/positional-array-sorter/dist/positionalArraySorter.js":
-/*!*************************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/positional-array-sorter/dist/positionalArraySorter.js ***!
-  \*************************************************************************************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** /app/node_modules/@neos-project/positional-array-sorter/dist/positionalArraySorter.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6754,9 +6754,9 @@ exports["default"] = positionalArraySorter;
 /***/ }),
 
 /***/ "../../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
-/*!*****************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
-  \*****************************************************************************************************************************************************/
+/*!*************************************************************************************!*\
+  !*** /app/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6869,9 +6869,9 @@ module.exports = hoistNonReactStatics;
 /***/ }),
 
 /***/ "../../node_modules/monet/dist/monet.js":
-/*!*************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/monet/dist/monet.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************!*\
+  !*** /app/node_modules/monet/dist/monet.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8181,9 +8181,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 /***/ }),
 
 /***/ "../../node_modules/process/browser.js":
-/*!************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/process/browser.js ***!
-  \************************************************************************************************************/
+/*!********************************************!*\
+  !*** /app/node_modules/process/browser.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8376,9 +8376,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ "../../node_modules/react-is/cjs/react-is.development.js":
-/*!******************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/react-is/cjs/react-is.development.js ***!
-  \******************************************************************************************************************************/
+/*!**************************************************************!*\
+  !*** /app/node_modules/react-is/cjs/react-is.development.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8569,9 +8569,9 @@ exports.typeOf = typeOf;
 /***/ }),
 
 /***/ "../../node_modules/react-is/index.js":
-/*!***********************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/react-is/index.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************!*\
+  !*** /app/node_modules/react-is/index.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8586,9 +8586,9 @@ if (false) {} else {
 /***/ }),
 
 /***/ "../../node_modules/shallowequal/index.js":
-/*!***************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/shallowequal/index.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************!*\
+  !*** /app/node_modules/shallowequal/index.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8643,9 +8643,9 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 /***/ }),
 
 /***/ "../../node_modules/styled-components/dist/styled-components.browser.esm.js":
-/*!*************************************************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/styled-components/dist/styled-components.browser.esm.js ***!
-  \*************************************************************************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** /app/node_modules/styled-components/dist/styled-components.browser.esm.js ***!
+  \*********************************************************************************/
 /*! exports provided: default, ServerStyleSheet, StyleSheetConsumer, StyleSheetContext, StyleSheetManager, ThemeConsumer, ThemeContext, ThemeProvider, __PRIVATE__, createGlobalStyle, css, isStyledComponent, keyframes, useTheme, version, withTheme */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8685,9 +8685,9 @@ function y(){return(y=Object.assign||function(e){for(var t=1;t<arguments.length;
 /***/ }),
 
 /***/ "../../node_modules/tslib/tslib.es6.js":
-/*!************************************************************************************************************!*\
-  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/tslib/tslib.es6.js ***!
-  \************************************************************************************************************/
+/*!********************************************!*\
+  !*** /app/node_modules/tslib/tslib.es6.js ***!
+  \********************************************/
 /*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9751,7 +9751,6 @@ var Editor = function Editor(_a) {
     var handleOpenImageCropper = function handleOpenImageCropper() {
         var ImageCropper = globalRegistry.get('inspector').get('secondaryEditors').get('Neos.Neos/Inspector/Secondary/Editors/ImageCropper').component;
         var image = getImageMeta();
-        console.log('image', image);
         if (!image) return;
         renderSecondaryInspector('IMAGE_CROP', function () {
             var _a, _b, _c;
@@ -9765,7 +9764,7 @@ var Editor = function Editor(_a) {
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(controlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
-            return commit('');
+            return commit({});
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;
@@ -10260,10 +10259,9 @@ function registerAssetWithMetadataEditor(globalRegistry) {
     }
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor', {
         component: function component(props) {
-            console.log('Editor Props', props);
             var value = props.value,
                 rest = __rest(props, ["value"]);
-            return React.createElement(editor_1.Editor, __assign({}, rest, { value: typeof value === 'string' ? undefined : value }));
+            return React.createElement(editor_1.Editor, __assign({}, rest, { value: !value || Object.keys(value).length === 0 ? undefined : value }));
         }
     });
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor', {

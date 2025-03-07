@@ -16,8 +16,12 @@ final class ImageSourceProxy implements \JsonSerializable
     ) {
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): ?self
     {
+        // empty arrays are effectively null values and should be persisted as such
+        if ($data === []) {
+            return null;
+        }
         return new self(
             ImageAssetProxy::fromArray($data['asset']),
             $data['alt'] ?? '',
