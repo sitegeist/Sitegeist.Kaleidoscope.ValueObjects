@@ -2,6 +2,7 @@
     "description": "Value objects and editors based on Kaleidoscope",
     "type": "neos-package",
     "name": "sitegeist/kaleidoscope-valueobjects",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": ">=8.2",
         "neos/neos": "~8.3",
