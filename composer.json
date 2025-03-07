@@ -5,7 +5,7 @@
     "license": "GPL-3.0-or-later",
     "require": {
         "php": ">=8.2",
-        "neos/neos": "~8.3",
+        "neos/neos": "~8.3 || ^9.0",
         "sitegeist/kaleidoscope": "~6.8"
     },
     "require-dev": {
