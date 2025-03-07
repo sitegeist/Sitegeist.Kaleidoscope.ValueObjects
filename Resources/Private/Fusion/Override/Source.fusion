@@ -1,0 +1,3 @@
+prototype(Sitegeist.Kaleidoscope:Source) < prototype(Neos.Fusion:Component) {
+    imageSource.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyUnwrapper
+}
