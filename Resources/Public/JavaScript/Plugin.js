@@ -8938,9 +8938,42 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/components/ControlBar.js":
+/***/ "../asset-with-metadata-editor/lib/components/changeIndicator.js":
+/*!***********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/changeIndicator.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = undefined && undefined.__makeTemplateObject || function (cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", { value: raw });
+    } else {
+        cooked.raw = raw;
+    }
+    return cooked;
+};
+var __importDefault = undefined && undefined.__importDefault || function (mod) {
+    return mod && mod.__esModule ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ChangeIndicator = void 0;
+var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
+exports.ChangeIndicator = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    box-shadow: ", ";\n    border-radius: 2px;\n"], ["\n    box-shadow: ", ";\n    border-radius: 2px;\n"])), function (_a) {
+    var changed = _a.changed;
+    return changed ? '0 0 0 2px orange' : 'none';
+});
+var templateObject_1;
+//# sourceMappingURL=changeIndicator.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/components/controlBar.js":
 /*!******************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/components/ControlBar.js ***!
+  !*** ../asset-with-metadata-editor/lib/components/controlBar.js ***!
   \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8975,14 +9008,14 @@ var ControlBar = function ControlBar(_a) {
 };
 exports.ControlBar = ControlBar;
 var templateObject_1;
-//# sourceMappingURL=ControlBar.js.map
+//# sourceMappingURL=controlBar.js.map
 
 /***/ }),
 
-/***/ "../asset-with-metadata-editor/lib/components/changeIndicator.js":
-/*!***********************************************************************!*\
-  !*** ../asset-with-metadata-editor/lib/components/changeIndicator.js ***!
-  \***********************************************************************/
+/***/ "../asset-with-metadata-editor/lib/components/dragIndicator.js":
+/*!*********************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/components/dragIndicator.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9001,14 +9034,17 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
     return mod && mod.__esModule ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChangeIndicator = void 0;
+exports.DragIndicator = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
-exports.ChangeIndicator = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    box-shadow: ", ";\n    border-radius: 2px;\n"], ["\n    box-shadow: ", ";\n    border-radius: 2px;\n"])), function (_a) {
-    var changed = _a.changed;
-    return changed ? '0 0 0 2px orange' : 'none';
-});
-var templateObject_1;
-//# sourceMappingURL=changeIndicator.js.map
+var DragDot = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 3px;\n    height: 3px;\n    background-color: white;\n    border-radius: 100%;\n"], ["\n    width: 3px;\n    height: 3px;\n    background-color: white;\n    border-radius: 100%;\n"])));
+var DragIndicatorContainer = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n"], ["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n"])));
+var DragIndicator = function DragIndicator() {
+    return react_1.default.createElement(DragIndicatorContainer, null, react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null));
+};
+exports.DragIndicator = DragIndicator;
+var templateObject_1, templateObject_2;
+//# sourceMappingURL=dragIndicator.js.map
 
 /***/ }),
 
@@ -9198,7 +9234,7 @@ var Overlay = styled_components_1.default.div(templateObject_4 || (templateObjec
     var hover = _a.hover;
     return hover && "\n        &:hover {\n            height: 100%;\n            width: 100%;\n            background-color: var(--colors-PrimaryBlue);\n        }\n        &:hover ".concat(CropArea, " {\n            opacity: 0.7;\n        }\n\n        &:hover ").concat(ImageContainer, " {\n            background-color: var(--colors-PrimaryBlue);\n        }\n        &:hover ").concat(IconContainer, " {\n            display: flex;\n        }\n    ");
 });
-var StyledImage = styled_components_1.default.img(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(\n            45deg,\n            #cccccc 25%,\n            transparent 25%,\n            transparent 75%,\n            #cccccc 75%,\n            #cccccc\n        ),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
+var StyledImage = styled_components_1.default.img(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"], ["\n    position: absolute;\n    background-color: #fff;\n    background-size: 10px 10px;\n    background-position:\n        0 0,\n        25px 25px;\n    background-image: linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc),\n        linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);\n"])));
 var Preview = function Preview(_a) {
     var image = _a.image,
         onClick = _a.onClick,
@@ -9280,9 +9316,10 @@ var utilities_1 = __webpack_require__(/*! @dnd-kit/utilities */ "../../node_modu
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var changeIndicator_1 = __webpack_require__(/*! ./changeIndicator */ "../asset-with-metadata-editor/lib/components/changeIndicator.js");
+var dragIndicator_1 = __webpack_require__(/*! ./dragIndicator */ "../asset-with-metadata-editor/lib/components/dragIndicator.js");
 var preview_1 = __webpack_require__(/*! ./preview */ "../asset-with-metadata-editor/lib/components/preview.js");
 var Grid = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"], ["\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 4px;\n    width: 100%;\n"])));
-var GridItem = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"], ["\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"])), function (_a) {
+var GridItem = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    position: relative;\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"], ["\n    position: relative;\n    width: 100%;\n    height: 100%;\n    border: 1px solid ", ";\n"])), function (_a) {
     var selected = _a.selected;
     return selected ? 'var(--colors-PrimaryBlue)' : 'transparent';
 });
@@ -9341,7 +9378,7 @@ var SortableGridItem = function SortableGridItem(_a) {
         onClick();
         (_a = listeners === null || listeners === void 0 ? void 0 : listeners.onClick) === null || _a === void 0 ? void 0 : _a.call(listeners, e);
     };
-    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
+    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(dragIndicator_1.DragIndicator, null), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
 };
 var templateObject_1, templateObject_2;
 //# sourceMappingURL=previewGrid.js.map
@@ -9430,7 +9467,7 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectionEditor = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
+var controlBar_1 = __webpack_require__(/*! ../components/controlBar */ "../asset-with-metadata-editor/lib/components/controlBar.js");
 var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
 var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
 var previewGrid_1 = __webpack_require__(/*! ../components/previewGrid */ "../asset-with-metadata-editor/lib/components/previewGrid.js");
@@ -9565,7 +9602,7 @@ var CollectionEditor = function CollectionEditor(_a) {
         setSelectedImageIdentifier(identifier);
         renderSecondaryInspector(undefined, undefined);
     };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: handleSelectImage, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting, changed: highlight }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(ControlBar_1.ControlBar, { cropEnabled: Boolean((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _c === void 0 ? void 0 : _c.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: handleSelectImage, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting, changed: highlight }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(controlBar_1.ControlBar, { cropEnabled: Boolean((_c = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _c === void 0 ? void 0 : _c.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
 };
 exports.CollectionEditor = CollectionEditor;
 //# sourceMappingURL=collectionEditor.js.map
@@ -9645,8 +9682,8 @@ var __read = undefined && undefined.__read || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Editor = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
-var ControlBar_1 = __webpack_require__(/*! ../components/ControlBar */ "../asset-with-metadata-editor/lib/components/ControlBar.js");
 var changeIndicator_1 = __webpack_require__(/*! ../components/changeIndicator */ "../asset-with-metadata-editor/lib/components/changeIndicator.js");
+var controlBar_1 = __webpack_require__(/*! ../components/controlBar */ "../asset-with-metadata-editor/lib/components/controlBar.js");
 var editorContainer_1 = __webpack_require__(/*! ../components/editorContainer */ "../asset-with-metadata-editor/lib/components/editorContainer.js");
 var metaDataInput_1 = __webpack_require__(/*! ../components/metaDataInput */ "../asset-with-metadata-editor/lib/components/metaDataInput.js");
 var preview_1 = __webpack_require__(/*! ../components/preview */ "../asset-with-metadata-editor/lib/components/preview.js");
@@ -9727,7 +9764,7 @@ var Editor = function Editor(_a) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
-        } }), react_1.default.createElement(ControlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
+        } }), react_1.default.createElement(controlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
             return commit('');
         }, cropEnabled: Boolean((_b = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _b === void 0 ? void 0 : _b.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };

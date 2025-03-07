@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import { ImageMetadata } from '../types'
 import { ChangeIndicator } from './changeIndicator'
+import { DragIndicator } from './dragIndicator'
 import { Preview } from './preview'
 
 const Grid = styled.div`
@@ -16,6 +17,7 @@ const Grid = styled.div`
     width: 100%;
 `
 const GridItem = styled.div<{ selected?: boolean }>`
+    position: relative;
     width: 100%;
     height: 100%;
     border: 1px solid ${({ selected }) => (selected ? 'var(--colors-PrimaryBlue)' : 'transparent')};
@@ -41,8 +43,8 @@ export const PreviewGrid = ({
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                delay: 100, // Start drag after holding for 250ms
-                tolerance: 5, // or after moving 5px
+                delay: 100,
+                tolerance: 5,
             },
         })
     )
@@ -110,6 +112,7 @@ const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) =
             {...listeners}
             onClick={mergedOnClick}
         >
+            <DragIndicator />
             <Preview image={image} small />
         </GridItem>
     )

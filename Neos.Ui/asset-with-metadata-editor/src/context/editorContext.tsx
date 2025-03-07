@@ -66,8 +66,6 @@ export const EditorContextProvider = ({ children, extern, update }: EditorContex
     }
 
     return (
-        <EditorContext.Provider value={{ meta, extern, setMeta: onChange, update }}>
-            {children}
-        </EditorContext.Provider>
+        <EditorContext.Provider value={{ meta, extern, setMeta: onChange, update }}>{children}</EditorContext.Provider>
     )
 }

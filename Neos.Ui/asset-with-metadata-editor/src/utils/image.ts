@@ -49,9 +49,7 @@ export class Image {
     get cropAdjustment() {
         const { image } = this
         return Maybe.fromNull(
-            image?.object?.adjustments?.[
-                'Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'
-            ] ?? null
+            image?.object?.adjustments?.['Neos\\Media\\Domain\\Model\\Adjustment\\CropImageAdjustment'] ?? null
         )
     }
 
@@ -63,10 +61,7 @@ export class Image {
         const { cropAdjustment, previewScalingFactor } = this
         return cropAdjustment.map((cropAdjustment) =>
             Object.fromEntries(
-                Object.entries(cropAdjustment).map(([key, value]) => [
-                    key,
-                    (value as number) * previewScalingFactor,
-                ])
+                Object.entries(cropAdjustment).map(([key, value]) => [key, (value as number) * previewScalingFactor])
             )
         )
     }
@@ -74,9 +69,7 @@ export class Image {
     get resizeAdjustment() {
         const { image } = this
         return Maybe.fromNull(
-            image?.object?.adjustments?.[
-                'Neos\\Media\\Domain\\Model\\Adjustment\\ResizeImageAdjustment'
-            ] ?? null
+            image?.object?.adjustments?.['Neos\\Media\\Domain\\Model\\Adjustment\\ResizeImageAdjustment'] ?? null
         )
     }
 
@@ -84,10 +77,7 @@ export class Image {
         const { resizeAdjustment, previewScalingFactor } = this
         return resizeAdjustment.map((resizeAdjustment) =>
             Object.fromEntries(
-                Object.entries(resizeAdjustment).map(([key, value]) => [
-                    key,
-                    (value as number) * previewScalingFactor,
-                ])
+                Object.entries(resizeAdjustment).map(([key, value]) => [key, (value as number) * previewScalingFactor])
             )
         )
     }

@@ -37,12 +37,6 @@ export const ControlBar = ({
                 />
             )}
         </div>
-        <IconButton
-            icon="times"
-            size="small"
-            style="lighter"
-            onClick={onDelete}
-            disabled={!selectedImageIdentifier}
-        />
+        <IconButton icon="times" size="small" style="lighter" onClick={onDelete} disabled={!selectedImageIdentifier} />
     </Container>
 )

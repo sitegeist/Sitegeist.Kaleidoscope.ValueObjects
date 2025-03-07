@@ -71,14 +71,7 @@ const StyledImage = styled.img`
     background-position:
         0 0,
         25px 25px;
-    background-image: linear-gradient(
-            45deg,
-            #cccccc 25%,
-            transparent 25%,
-            transparent 75%,
-            #cccccc 75%,
-            #cccccc
-        ),
+    background-image: linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc),
         linear-gradient(45deg, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);
 `
 
@@ -89,28 +82,17 @@ type PreviewProps = {
 }
 
 export const Preview = ({ image, onClick, small }: PreviewProps) => {
-    const thumbnail = image
-        ? Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216)
-        : null
+    const thumbnail = image ? Thumbnail.fromImageData(image, small ? 83 : 273, small ? 72 : 216) : null
 
     return (
         <Overlay onClick={onClick} hover={Boolean(onClick)}>
             <ImageContainer small={small}>
                 <IconContainer show={!thumbnail}>
-                    <Icon
-                        icon="camera"
-                        size={small ? '3xl' : '5x'}
-                        mask={['fas', 'circle']}
-                        transform="shrink-8"
-                    />
+                    <Icon icon="camera" size={small ? '3xl' : '5x'} mask={['fas', 'circle']} transform="shrink-8" />
                 </IconContainer>
                 {thumbnail && (
                     <CropArea style={thumbnail.styles.cropArea}>
-                        <StyledImage
-                            style={thumbnail.styles.thumbnail}
-                            src={thumbnail.uri}
-                            alt="Preview"
-                        />
+                        <StyledImage style={thumbnail.styles.thumbnail} src={thumbnail.uri} alt="Preview" />
                     </CropArea>
                 )}
             </ImageContainer>

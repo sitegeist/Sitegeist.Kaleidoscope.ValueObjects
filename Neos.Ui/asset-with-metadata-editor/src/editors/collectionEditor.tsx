@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ControlBar } from '../components/ControlBar'
+import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
 import { MetaDataInput } from '../components/metaDataInput'
 import { PreviewGrid } from '../components/previewGrid'

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { ControlBar } from '../components/ControlBar'
 import { ChangeIndicator } from '../components/changeIndicator'
+import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
 import { MetaDataInput } from '../components/metaDataInput'
 import { Preview } from '../components/preview'
