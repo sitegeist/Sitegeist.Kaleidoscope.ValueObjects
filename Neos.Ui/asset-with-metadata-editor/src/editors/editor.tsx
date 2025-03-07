@@ -62,6 +62,8 @@ export const Editor = ({
         const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, cropArea)
         if (!changed) return
 
+        console.log('cropArea', cropArea)
+
         commit(valueExtern, { [HOOK_BEFORE_SAVE]: cropAdjustments })
     }
 

@@ -36,6 +36,7 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor', {
         component: (props: any) => {
             const { value, ...rest } = props
+            console.log('CollectionEditor Props', props)
 
             return <CollectionEditor {...props} />
         },

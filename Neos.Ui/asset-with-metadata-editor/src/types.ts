@@ -24,31 +24,33 @@ export type Props<T> = {
         [HOOK_BEFORE_SAVE_COLLECTION]: ImageMetadata[]
     }
     highlight?: boolean
-    options?: {
-        placeholder: string
-        disabled?: boolean
-        threshold?: any
-        constraints?: any
-        features?: {
-            crop?: boolean
-        }
-        crop?: {
-            aspectRatio: {
-                options?: any
-                forceCrop?: boolean
-                locked?: {
-                    width?: number
-                    height?: number
-                }
-            }
-        }
-    }
+    options?: EditorOptions
     editor: string
     renderSecondaryInspector: Function
     neos: {
         globalRegistry: any
     }
     commit: (value?: T | null | {}, ...args: any[]) => void
+}
+
+export type EditorOptions = {
+    placeholder: string
+    disabled?: boolean
+    threshold?: any
+    constraints?: any
+    features?: {
+        crop?: boolean
+    }
+    crop?: {
+        aspectRatio: {
+            options?: any
+            forceCrop?: boolean
+            locked?: {
+                width?: number
+                height?: number
+            }
+        }
+    }
 }
 
 export type Option = {

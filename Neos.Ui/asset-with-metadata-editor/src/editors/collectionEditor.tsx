@@ -8,6 +8,7 @@ import { useImageMetadataCollection } from '../hooks/useImageMetaDataCollection'
 import { AssetWithMeta, CropArea, Props } from '../types'
 import { HOOK_BEFORE_SAVE_COLLECTION, MEDIA_TYPE_IMAGE } from '../utils/constants'
 import { getCropAdjustments } from '../utils/getCropAdjustments'
+import { getImageMetaData } from '../utils/getImageMetaData'
 import { Image } from '../utils/image'
 
 export const CollectionEditor = ({
@@ -25,8 +26,14 @@ export const CollectionEditor = ({
 
     const imageMetadataCollection = useImageMetadataCollection(imagesIdentifiers)
     const [selectedImageIdentifier, setSelectedImageIdentifier] = useState<string>(valueExtern[0]?.asset.__identifier)
-
+    const valueRef = useRef<AssetWithMeta[]>(valueExtern)
+    const hooksRef = useRef<any>(hooks)
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
+
+    useEffect(() => {
+        valueRef.current = valueExtern
+        hooksRef.current = hooks
+    }, [valueExtern, hooks])
 
     const getImageMetadata = useCallback(
         (assetIdentifier: string) => {
@@ -77,17 +84,103 @@ export const CollectionEditor = ({
         commit(updatedImages)
     }
 
-    const handleMediaSelection = (assetIdentifier: any) => {
+    const handleMediaSelection = async (assetIdentifier: string) => {
         if (valueExtern.some((v) => v.asset.__identifier === assetIdentifier)) return
 
-        commit([
-            ...valueExtern,
+        const cropOptions = editorOptions?.crop
+
+        if (!cropOptions?.aspectRatio.forceCrop)
+            return commit([
+                ...valueRef.current,
+                {
+                    asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                    title: '',
+                    alt: '',
+                },
+            ])
+
+        const imageMetadata = await getImageMetaData(assetIdentifier)
+        if (!imageMetadata) return
+
+        const forcedAspectRatio =
+            (cropOptions.aspectRatio.locked?.width ?? 0) / (cropOptions.aspectRatio.locked?.height ?? 0)
+
+        const imageAspectRatio = imageMetadata.originalDimensions.width / imageMetadata.originalDimensions.height
+
+        if (imageAspectRatio === forcedAspectRatio)
+            return commit([
+                ...valueRef.current,
+                {
+                    asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                    title: '',
+                    alt: '',
+                },
+            ])
+
+        if (forcedAspectRatio > imageAspectRatio) {
+            const width = imageMetadata.originalDimensions.width
+            const height = Math.floor(width / forcedAspectRatio)
+
+            const y = Math.floor((imageMetadata.originalDimensions.height - height) / 2)
+
+            const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, {
+                x: 0,
+                y: (y / imageMetadata.originalDimensions.height) * 100,
+                width: 100,
+                height: (height / imageMetadata.originalDimensions.height) * 100,
+                aspect: forcedAspectRatio,
+            })
+
+            if (!changed) return
+
+            const adjustments = hooksRef.current ? hooksRef.current[HOOK_BEFORE_SAVE_COLLECTION] : undefined
+
+            return commit(
+                [
+                    ...valueRef.current,
+                    {
+                        asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                        title: '',
+                        alt: '',
+                    },
+                ],
+                {
+                    [HOOK_BEFORE_SAVE_COLLECTION]: [...(adjustments ?? []), cropAdjustments],
+                }
+            )
+        }
+
+        const height = imageMetadata.originalDimensions.height
+        const width = height * forcedAspectRatio
+
+        const x = Math.floor((imageMetadata.originalDimensions.width - width) / 2)
+        const y = 0
+
+        const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, {
+            x: (x / imageMetadata.originalDimensions.width) * 100,
+            y,
+            width: (width / imageMetadata.originalDimensions.width) * 100,
+            height: 100,
+            aspect: forcedAspectRatio,
+        })
+
+        if (!changed) return
+
+        const adjustments = hooksRef.current ? hooksRef.current[HOOK_BEFORE_SAVE_COLLECTION] : undefined
+
+        return commit(
+            [
+                ...valueRef.current,
+                {
+                    asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                    title: '',
+                    alt: '',
+                },
+            ],
             {
-                asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
-                title: '',
-                alt: '',
-            },
-        ])
+                [HOOK_BEFORE_SAVE_COLLECTION]: [...(adjustments ?? []), cropAdjustments],
+            }
+        )
     }
 
     const handleMediaCrop = (cropArea: CropArea) => {
