@@ -12,6 +12,7 @@ Neos:
       inspector:
         dataTypes:
           'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':
+            defaultValue: null      
             editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataEditor'
             editorOptions:
               # This is a 1:1 copy of the default image editor settings from Neos
@@ -32,8 +33,9 @@ Neos:
                   allowCustom: true
                   locked:
                     width: 0
-                    height: 0
+                    height: 0        
           'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection':
+            defaultValue: []   
             editor: 'Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor'
             editorOptions:
               # This is a 1:1 copy of the default image editor settings from Neos
