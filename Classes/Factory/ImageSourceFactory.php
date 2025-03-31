@@ -29,7 +29,7 @@ class ImageSourceFactory
 
     public function tryCreateFromProxy(ImageSourceProxy $imageSourceProxy): ?ImageSourceInterface
     {
-        $image = $this->imageFactory->tryCreateFromProxy($imageSourceProxy->image);
+        $image = $this->imageFactory->tryCreateFromProxy($imageSourceProxy->asset);
 
         if ($image === null) {
             return null;
