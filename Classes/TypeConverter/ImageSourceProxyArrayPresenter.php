@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sitegeist\Kaleidoscope\ValueObjects\TypeConverter;
@@ -65,9 +66,8 @@ class ImageSourceProxyArrayPresenter extends AbstractTypeConverter
         }
 
         throw new \Exception(sprintf(
-                'ImageSourceProxyArrayPresenter can only convert ImageSourceProxy "%s" was given.',
-                get_debug_type($source)
-            )
-        );
+            'ImageSourceProxyArrayPresenter can only convert ImageSourceProxy "%s" was given.',
+            get_debug_type($source)
+        ));
     }
 }
