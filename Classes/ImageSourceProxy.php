@@ -10,7 +10,7 @@ use Neos\Flow\Annotations as Flow;
 final class ImageSourceProxy implements \JsonSerializable
 {
     public function __construct(
-        public readonly ImageAssetProxy $image,
+        public readonly ImageAssetProxy $asset,
         public readonly string $alt = '',
         public readonly string $title = '',
     ) {
@@ -32,9 +32,14 @@ final class ImageSourceProxy implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'asset' => $this->image->jsonSerialize(),
+            'asset' => $this->asset->jsonSerialize(),
             'alt' => $this->alt,
             'title' => $this->title,
         ];
+    }
+
+    public function __toString(): string
+    {
+        return '-';
     }
 }

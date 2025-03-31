@@ -18,8 +18,8 @@ final class ImageAssetProxy implements \JsonSerializable
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['__identifier'],
-            $data['__flow_object_type'],
+            $data['__identifier'] ?? $data['identifier'],
+            $data['__flow_object_type'] ?? $data['classname'],
         );
     }
 
