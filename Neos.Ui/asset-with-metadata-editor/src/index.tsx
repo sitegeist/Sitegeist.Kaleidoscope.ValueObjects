@@ -29,16 +29,15 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
         component: (props: any) => {
             const { value, ...rest } = props
 
-            return <Editor {...rest} value={(!value || Object.keys(value).length === 0) ? undefined : value} />
+            return <Editor {...rest} value={!value || Object.keys(value).length === 0 ? undefined : value} />
         },
     })
 
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor', {
         component: (props: any) => {
             const { value, ...rest } = props
-            console.log('CollectionEditor Props', props)
 
-            return <CollectionEditor {...props} />
+            return <CollectionEditor {...rest} value={!value || !Array.isArray(value) ? [] : value} />
         },
     })
 
