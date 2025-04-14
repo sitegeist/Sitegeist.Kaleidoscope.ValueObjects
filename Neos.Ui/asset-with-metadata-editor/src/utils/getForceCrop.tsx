@@ -2,8 +2,9 @@ import { EditorOptions, ImageMetadata } from '../types'
 import { getCropAdjustments } from './getCropAdjustments'
 
 const getForcedAspectRatio = (cropOptions: EditorOptions['crop']) => {
-    if (cropOptions?.aspectRatio.locked)
+    if (cropOptions?.aspectRatio.locked?.width && cropOptions?.aspectRatio.locked?.height) {
         return (cropOptions?.aspectRatio.locked?.width ?? 0) / (cropOptions?.aspectRatio.locked?.height ?? 0)
+    }
 
     if (cropOptions?.aspectRatio.defaultOption && cropOptions?.aspectRatio.options) {
         const defaultOption = cropOptions?.aspectRatio.options[cropOptions?.aspectRatio.defaultOption]
@@ -21,6 +22,8 @@ const getForcedAspectRatio = (cropOptions: EditorOptions['crop']) => {
 
 export const getForceCrop = (imageMetadata: ImageMetadata, cropOptions: EditorOptions['crop']) => {
     const forcedAspectRatio = getForcedAspectRatio(cropOptions)
+
+    console.log('forcedAspectRatio', forcedAspectRatio)
     const imageAspectRatio = imageMetadata.originalDimensions.width / imageMetadata.originalDimensions.height
 
     if (imageAspectRatio === forcedAspectRatio) return
