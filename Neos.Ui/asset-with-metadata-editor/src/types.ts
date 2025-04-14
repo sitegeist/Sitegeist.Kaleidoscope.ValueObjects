@@ -43,12 +43,13 @@ export type EditorOptions = {
     }
     crop?: {
         aspectRatio: {
-            options?: any
+            options?: Record<string, { width?: number; height?: number; label: string }>
             forceCrop?: boolean
             locked?: {
                 width?: number
                 height?: number
             }
+            defaultOption?: string
         }
     }
 }

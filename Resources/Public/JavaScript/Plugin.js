@@ -10379,8 +10379,7 @@ function registerAssetWithMetadataEditor(globalRegistry) {
         component: function component(props) {
             var value = props.value,
                 rest = __rest(props, ["value"]);
-            console.log('CollectionEditor Props', props);
-            return React.createElement(collectionEditor_1.CollectionEditor, __assign({}, props));
+            return React.createElement(collectionEditor_1.CollectionEditor, __assign({}, rest, { value: !value || !Array.isArray(value) ? [] : value }));
         }
     });
     saveHooksRegistry === null || saveHooksRegistry === void 0 ? void 0 : saveHooksRegistry.set(constants_1.HOOK_BEFORE_SAVE, createImageVariant);
@@ -10596,9 +10595,25 @@ exports.getCropAdjustments = getCropAdjustments;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getForceCrop = void 0;
 var getCropAdjustments_1 = __webpack_require__(/*! ./getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
+var getForcedAspectRatio = function getForcedAspectRatio(cropOptions) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    if (((_a = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _a === void 0 ? void 0 : _a.width) && ((_b = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _b === void 0 ? void 0 : _b.height)) {
+        return ((_d = (_c = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _c === void 0 ? void 0 : _c.width) !== null && _d !== void 0 ? _d : 0) / ((_f = (_e = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _e === void 0 ? void 0 : _e.height) !== null && _f !== void 0 ? _f : 0);
+    }
+    if ((cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.defaultOption) && (cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.options)) {
+        var defaultOption = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.options[cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.defaultOption];
+        return ((_g = defaultOption.width) !== null && _g !== void 0 ? _g : 0) / ((_h = defaultOption.height) !== null && _h !== void 0 ? _h : 0);
+    }
+    if (cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.options) {
+        var keys = Object.keys(cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.options);
+        var firstOption = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.options[keys[0]];
+        return ((_j = firstOption.width) !== null && _j !== void 0 ? _j : 0) / ((_k = firstOption.height) !== null && _k !== void 0 ? _k : 0);
+    }
+    return 0;
+};
 var getForceCrop = function getForceCrop(imageMetadata, cropOptions) {
-    var _a, _b, _c, _d;
-    var forcedAspectRatio = ((_b = (_a = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _a === void 0 ? void 0 : _a.width) !== null && _b !== void 0 ? _b : 0) / ((_d = (_c = cropOptions === null || cropOptions === void 0 ? void 0 : cropOptions.aspectRatio.locked) === null || _c === void 0 ? void 0 : _c.height) !== null && _d !== void 0 ? _d : 0);
+    var forcedAspectRatio = getForcedAspectRatio(cropOptions);
+    console.log('forcedAspectRatio', forcedAspectRatio);
     var imageAspectRatio = imageMetadata.originalDimensions.width / imageMetadata.originalDimensions.height;
     if (imageAspectRatio === forcedAspectRatio) return;
     if (forcedAspectRatio > imageAspectRatio) {
@@ -10606,15 +10621,15 @@ var getForceCrop = function getForceCrop(imageMetadata, cropOptions) {
         var aspectHeight_1 = Math.floor(aspectWidth_1 / forcedAspectRatio);
         var x_1 = 0;
         var y_1 = getAxisInPercent(aspectHeight_1, imageMetadata.originalDimensions.height);
-        var _e = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
+        var _a = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
             x: x_1,
             y: y_1,
             width: 100,
             height: aspectHeight_1 / imageMetadata.originalDimensions.height * 100,
             aspect: forcedAspectRatio
         }),
-            changed_1 = _e.changed,
-            cropAdjustments_1 = _e.cropAdjustments;
+            changed_1 = _a.changed,
+            cropAdjustments_1 = _a.cropAdjustments;
         if (!changed_1) return;
         return cropAdjustments_1;
     }
@@ -10622,15 +10637,15 @@ var getForceCrop = function getForceCrop(imageMetadata, cropOptions) {
     var aspectWidth = Math.floor(aspectHeight * forcedAspectRatio);
     var x = getAxisInPercent(aspectWidth, imageMetadata.originalDimensions.width);
     var y = 0;
-    var _f = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
+    var _b = (0, getCropAdjustments_1.getCropAdjustments)(imageMetadata, {
         x: x,
         y: y,
         width: aspectWidth / imageMetadata.originalDimensions.width * 100,
         height: 100,
         aspect: forcedAspectRatio
     }),
-        changed = _f.changed,
-        cropAdjustments = _f.cropAdjustments;
+        changed = _b.changed,
+        cropAdjustments = _b.cropAdjustments;
     if (!changed) return;
     return cropAdjustments;
 };
