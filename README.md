@@ -120,6 +120,53 @@ imageSource.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObject
 imageSources = ${q(node).property('imageSourceProxyCollection')}
 imageSources.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyCollectionUnwrapper
 ```
+## Migration data
+
+To convert existing Nodes to the new ImageSourceProxy and ImageSourceProxyCollection you can use the included 
+transformation and configure your own content migrations.
+
+```yaml
+up:
+  comments: 'Convert Images and Asset[] to ImageSourceProxy and ImageSourceProxyCollection'
+  migration:
+    - filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Vendor.Site:Node'
+            withSubTypes: true
+      transformations:
+        - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageToImageSourceProxy'
+          settings:
+            sourceProperty: 'image'
+            targetProperty: 'image'
+            altProperty: 'imageAlt'
+            titleProperty: 'imageTitle'
+        - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\AssetsToImageSourceProxyCollection'
+          settings:
+            sourceProperty: 'imageList'
+            targetProperty: 'imageList'
+
+down:
+  comments: 'Convert ImageSourceProxy and ImageSourceProxyCollection back to Images'
+  migration:
+      - filters:
+            - type: 'NodeType'
+              settings:
+                  nodeType: 'Vendor.Site:Node'
+                  withSubTypes: true
+        transformations:
+            - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageSourceProxyToImage'
+              settings:
+                  sourceProperty: 'image'
+                  targetProperty: 'image'
+                  altProperty: 'imageAlt'
+                  titleProperty: 'imageTitle'
+            - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageSourceProxyCollectionToAssets'
+              settings:
+                  sourceProperty: 'imageList'
+                  targetProperty: 'imageList'
+
+```
 
 ## Development 
 

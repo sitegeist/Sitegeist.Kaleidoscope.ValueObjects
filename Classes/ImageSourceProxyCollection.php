@@ -6,6 +6,11 @@ namespace Sitegeist\Kaleidoscope\ValueObjects;
 
 use Neos\Flow\Annotations as Flow;
 
+/**
+ * @phpstan-import-type imagesourceProxyShape from ImageSourceProxy
+ * @phpstan-type imagesourceProxycollectionShape imagesourceProxyShape[]
+ * @implements \IteratorAggregate<int, ImageSourceProxy>
+ */
 #[Flow\Proxy(false)]
 class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
@@ -33,6 +38,10 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         return count($this->items);
     }
 
+    /**
+     * @param imagesourceProxycollectionShape $data
+     * @return self
+     */
     public static function fromArray(array $data): self
     {
         $items = array_map(
@@ -42,6 +51,9 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         return new self(...array_filter($items));
     }
 
+    /**
+     * @return imagesourceProxycollectionShape
+     */
     public function jsonSerialize(): array
     {
         return array_map(

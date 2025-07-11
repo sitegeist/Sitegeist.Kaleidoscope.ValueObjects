@@ -1,0 +1,7 @@
+parameters:
+	level: 8
+	paths:
+		- Classes
+	reportUnmatchedIgnoredErrors: false
+	excludePaths:
+		- Classes/Migration/*

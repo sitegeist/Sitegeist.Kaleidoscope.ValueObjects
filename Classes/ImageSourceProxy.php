@@ -6,6 +6,10 @@ namespace Sitegeist\Kaleidoscope\ValueObjects;
 
 use Neos\Flow\Annotations as Flow;
 
+/**
+ * @phpstan-import-type assetProxyShape from ImageAssetProxy
+ * @phpstan-type imagesourceProxyShape array{asset:assetProxyShape, alt?:string, title?: string}
+ */
 #[Flow\Proxy(false)]
 final class ImageSourceProxy implements \JsonSerializable
 {
@@ -16,6 +20,10 @@ final class ImageSourceProxy implements \JsonSerializable
     ) {
     }
 
+    /**
+     * @param imagesourceProxyShape|array{} $data
+     * @return self|null
+     */
     public static function fromArray(array $data): ?self
     {
         // empty arrays are effectively null values and should be persisted as such
@@ -29,6 +37,9 @@ final class ImageSourceProxy implements \JsonSerializable
         );
     }
 
+    /**
+     * @return imagesourceProxyShape
+     */
     public function jsonSerialize(): array
     {
         return [
