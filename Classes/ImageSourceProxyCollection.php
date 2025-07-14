@@ -25,6 +25,45 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         $this->items = $items;
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
+
+    public function getFirst(): ?ImageSourceProxy
+    {
+        if (count($this->items) > 0) {
+            return $this->items[array_key_first($this->items)];
+        }
+        return null;
+    }
+
+    public function getRandom(): ?ImageSourceProxy
+    {
+        if (count($this->items) > 0) {
+            $randomKey = array_rand($this->items);
+            return $this->items[$randomKey];
+        }
+        return null;
+    }
+
+    public function withRandomOrder(): self
+    {
+        $items = $this->items;
+        shuffle($items);
+        return new self(...$items);
+    }
+
+    public function widthAppendedCollection(ImageSourceProxyCollection $collection): self
+    {
+        return new self(...$this->items, ...$collection->items);
+    }
+
+    public function widthAppendedItem(ImageSourceProxy $item): self
+    {
+        return new self(...$this->items, ...[$item]);
+    }
+
     /**
      * @return \Traversable<ImageSourceProxy>
      */
