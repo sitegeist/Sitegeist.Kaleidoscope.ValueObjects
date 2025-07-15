@@ -52,6 +52,15 @@ class ValueObjectHelper implements ProtectedContextAwareInterface
         return new ImageSourceProxyCollection(...$proxies);
     }
 
+    /**
+     * @param ImageSourceProxyCollection|ImageSourceProxy|null ...$items
+     * @return @return ImageSourceInterface[]
+     */
+    public function combineAndUnwrapCollection(ImageSourceProxyCollection|ImageSourceProxy|null ...$items): array
+    {
+        return $this->unwrapProxyCollection( $this->combineCollection(...$items));
+    }
+
     public function allowsCallOfMethod($methodName)
     {
         return true;
