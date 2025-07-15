@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\Kaleidoscope\ValueObjects;
 
+use Doctrine\Persistence\Proxy;
 use Neos\Flow\Annotations as Flow;
 use Neos\Media\Domain\Model\AssetInterface;
 use Neos\Media\Domain\Model\Image;
@@ -42,9 +43,16 @@ final class ImageAssetProxy implements \JsonSerializable
 
     public static function fromAsset(Image|ImageVariant $asset): self
     {
+        if ($asset instanceof Proxy) {
+            /** @var class-string $className */
+            $className = get_parent_class($asset);
+        } else {
+            /** @var class-string $className */
+            $className = get_class($asset);
+        }
         return new self(
             $asset->getIdentifier(),
-            get_class($asset),
+            $className
         );
     }
 

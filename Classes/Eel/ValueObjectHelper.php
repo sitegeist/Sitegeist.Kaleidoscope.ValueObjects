@@ -54,11 +54,11 @@ class ValueObjectHelper implements ProtectedContextAwareInterface
 
     /**
      * @param ImageSourceProxyCollection|ImageSourceProxy|null ...$items
-     * @return @return ImageSourceInterface[]
+     * @return ImageSourceInterface[]
      */
     public function combineAndUnwrapCollection(ImageSourceProxyCollection|ImageSourceProxy|null ...$items): array
     {
-        return $this->unwrapProxyCollection( $this->combineCollection(...$items));
+        return $this->unwrapProxyCollection($this->combineCollection(...$items));
     }
 
     public function allowsCallOfMethod($methodName)
