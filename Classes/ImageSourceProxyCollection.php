@@ -6,6 +6,11 @@ namespace Sitegeist\Kaleidoscope\ValueObjects;
 
 use Neos\Flow\Annotations as Flow;
 
+/**
+ * @phpstan-import-type imagesourceProxyShape from ImageSourceProxy
+ * @phpstan-type imagesourceProxycollectionShape imagesourceProxyShape[]
+ * @implements \IteratorAggregate<int, ImageSourceProxy>
+ */
 #[Flow\Proxy(false)]
 class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
@@ -18,6 +23,45 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         ImageSourceProxy ...$items,
     ) {
         $this->items = $items;
+    }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
+
+    public function getFirst(): ?ImageSourceProxy
+    {
+        if (count($this->items) > 0) {
+            return $this->items[array_key_first($this->items)];
+        }
+        return null;
+    }
+
+    public function getRandom(): ?ImageSourceProxy
+    {
+        if (count($this->items) > 0) {
+            $randomKey = array_rand($this->items);
+            return $this->items[$randomKey];
+        }
+        return null;
+    }
+
+    public function withRandomOrder(): self
+    {
+        $items = $this->items;
+        shuffle($items);
+        return new self(...$items);
+    }
+
+    public function widthAppendedCollection(ImageSourceProxyCollection $collection): self
+    {
+        return new self(...$this->items, ...$collection->items);
+    }
+
+    public function widthAppendedItem(ImageSourceProxy $item): self
+    {
+        return new self(...$this->items, ...[$item]);
     }
 
     /**
@@ -33,6 +77,10 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         return count($this->items);
     }
 
+    /**
+     * @param imagesourceProxycollectionShape $data
+     * @return self
+     */
     public static function fromArray(array $data): self
     {
         $items = array_map(
@@ -42,6 +90,9 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
         return new self(...array_filter($items));
     }
 
+    /**
+     * @return imagesourceProxycollectionShape
+     */
     public function jsonSerialize(): array
     {
         return array_map(

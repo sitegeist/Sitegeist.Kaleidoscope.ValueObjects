@@ -14,16 +14,25 @@
         "squizlabs/php_codesniffer": "^3.7"
     },
     "scripts": {
-        "fix:style": "phpcbf --colors --standard=PSR12 Classes",
+        "fix:style": "phpcbf --colors --standard=PSR12 Classes Tests",
         "fix": ["composer install", "composer fix:style"],
-        "test:style": "phpcs --colors -n --standard=PSR12 Classes",
-        "test:stan": "phpstan analyse Classes",
+        "test:style": "phpcs --colors -n --standard=PSR12 Classes Tests",
+        "test:stan8": "phpstan analyse Classes -v -c phpstan-v8.neon",
+        "test:stan9": "phpstan analyse Classes -v -c phpstan-v9.neon",
+        "test:unit": "phpunit Tests/Unit",
         "cc": "phpstan clear cache",
-        "test": ["composer install", "composer test:style" , "composer test:stan"]
+        "test": ["composer install", "composer test:style" , "composer test:stan8", "composer test:unit"],
+        "test8": ["composer install", "composer test:style" , "composer test:stan8", "composer test:unit"],
+        "test9": ["composer install", "composer test:style" , "composer test:stan9", "composer test:unit"]
     },
     "autoload": {
         "psr-4": {
             "Sitegeist\\Kaleidoscope\\ValueObjects\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sitegeist\\Kaleidoscope\\ValueObjects\\Tests\\": "Tests/"
         }
     },
     "extra": {

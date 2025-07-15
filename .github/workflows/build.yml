@@ -43,4 +43,9 @@ jobs:
               run: composer require neos/neos ^${{ matrix.neos-versions }} --no-progress --no-interaction
 
             - name: Run Tests
-              run: composer test
+              if: ${{! startsWith(matrix.neos-versions, '9') }}
+              run: composer test8
+
+            - name:  Run Tests
+              if: ${{startsWith(matrix.neos-versions, '9') }}
+              run: composer test9

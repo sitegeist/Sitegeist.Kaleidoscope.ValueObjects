@@ -11,7 +11,7 @@ use Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection;
 class ImageSourceProxyCollectionArrayPresenter extends AbstractTypeConverter
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $sourceTypes = [ImageSourceProxyCollection::class];
 
@@ -43,7 +43,7 @@ class ImageSourceProxyCollectionArrayPresenter extends AbstractTypeConverter
      * Convert all properties in the source array
      *
      * @param mixed $source
-     * @return array
+     * @return array{}
      */
     public function getSourceChildPropertiesToBeConverted($source)
     {
@@ -53,11 +53,11 @@ class ImageSourceProxyCollectionArrayPresenter extends AbstractTypeConverter
     /**
      * Convert an object from \Neos\Media\Domain\Model\ImageInterface to a json representation
      *
-     * @param ImageSourceProxyCollection $source
+     * @param ImageSourceProxyCollection|mixed $source
      * @param string $targetType must be 'array'
-     * @param array $convertedChildProperties
+     * @param mixed[] $convertedChildProperties
      * @param PropertyMappingConfigurationInterface $configuration
-     * @return string|Error The converted Image, a Validation Error or NULL
+     * @return mixed[]
      */
     public function convertFrom($source, $targetType, array $convertedChildProperties = [], ?PropertyMappingConfigurationInterface $configuration = null)
     {
