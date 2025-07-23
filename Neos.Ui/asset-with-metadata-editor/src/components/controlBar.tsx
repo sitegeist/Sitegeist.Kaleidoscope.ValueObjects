@@ -9,6 +9,11 @@ const Container = styled.div`
     margin-top: 6px;
 `
 
+const ButtonContainer = styled.div`
+    display: flex;
+    gap: 4px;
+`
+
 type ControlBarProps = {
     onOpenImageSelector: () => void
     onOpenImageCropper: () => void
@@ -25,7 +30,7 @@ export const ControlBar = ({
     selectedImageIdentifier,
 }: ControlBarProps) => (
     <Container>
-        <div>
+        <ButtonContainer>
             <IconButton icon="camera" size="small" style="lighter" onClick={onOpenImageSelector} />
             {cropEnabled && (
                 <IconButton
@@ -36,7 +41,7 @@ export const ControlBar = ({
                     disabled={!selectedImageIdentifier}
                 />
             )}
-        </div>
+        </ButtonContainer>
         <IconButton icon="times" size="small" style="lighter" onClick={onDelete} disabled={!selectedImageIdentifier} />
     </Container>
 )

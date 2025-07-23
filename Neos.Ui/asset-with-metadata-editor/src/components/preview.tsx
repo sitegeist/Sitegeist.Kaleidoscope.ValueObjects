@@ -11,7 +11,7 @@ const IconContainer = styled.div<{ show?: boolean }>`
     display: ${({ show }) => (show ? 'flex' : 'none')};
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1;
     opacity: 0.7;
 `
 

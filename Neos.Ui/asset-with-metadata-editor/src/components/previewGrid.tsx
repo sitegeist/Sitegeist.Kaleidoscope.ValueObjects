@@ -2,7 +2,7 @@ import { DndContext, DragEndEvent, PointerSensor, closestCenter, useSensor, useS
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import React, { MouseEventHandler, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { ImageMetadata } from '../types'
@@ -89,13 +89,14 @@ type SortableGridItemProps = {
     onClick: () => void
 }
 const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: image.object.__identity,
     })
 
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
+        zIndex: isDragging ? 20 : 1,
     }
 
     const mergedOnClick = (e: any) => {
@@ -112,7 +113,7 @@ const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) =
             {...listeners}
             onClick={mergedOnClick}
         >
-            <DragIndicator />
+            <DragIndicator isDragging={isDragging} />
             <Preview image={image} small />
         </GridItem>
     )

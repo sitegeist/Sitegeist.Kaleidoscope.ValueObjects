@@ -5,5 +5,5 @@ export const EditorContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-top: 24px;
+    margin-top: 4px;
 `
