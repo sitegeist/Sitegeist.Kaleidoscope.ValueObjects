@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { ChangeIndicator } from '../components/changeIndicator'
 import { ControlBar } from '../components/controlBar'
@@ -22,6 +22,10 @@ export const Editor = ({
 }: Props<AssetWithMeta>) => {
     const [openCropper, setOpenCropper] = useState(false)
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
+
+    const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
+        | string
+        | undefined
 
     useEffect(() => {
         if (openCropper) {
@@ -118,6 +122,8 @@ export const Editor = ({
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
+                sidekickApiKey={sidekickApiKey}
+                selectedImageOriginUrl={getImageMeta()?.originalImageResourceUri}
                 onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
                 onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
             />

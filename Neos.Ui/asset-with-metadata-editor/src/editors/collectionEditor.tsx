@@ -31,6 +31,10 @@ export const CollectionEditor = ({
     const hooksRef = useRef<any>(hooks)
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
 
+    const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
+        | string
+        | undefined
+
     useEffect(() => {
         valueRef.current = valueExtern
         hooksRef.current = hooks
@@ -214,6 +218,8 @@ export const CollectionEditor = ({
                 alt={selectedImage?.alt}
                 title={selectedImage?.title}
                 selectedImageIdentifier={selectedImageIdentifier}
+                sidekickApiKey={sidekickApiKey}
+                selectedImageOriginUrl={getImageMetadata(selectedImageIdentifier)?.originalImageResourceUri}
                 onAltChange={handleAltChange}
                 onTitleChange={handleTitleChange}
             />
