@@ -7,7 +7,7 @@ const DragDot = styled.div`
     background-color: white;
     border-radius: 100%;
 `
-const DragIndicatorContainer = styled.div`
+const DragIndicatorContainer = styled.div<{ isDragging?: boolean }>`
     position: absolute;
     top: 3px;
     right: 3px;
@@ -21,11 +21,12 @@ const DragIndicatorContainer = styled.div`
     border-radius: 2px;
     opacity: 0.5;
     z-index: 10;
+    cursor: ${({ isDragging }) => (isDragging ? 'grabbing' : 'grab')};
 `
 
-export const DragIndicator = () => {
+export const DragIndicator = ({ isDragging }: { isDragging?: boolean }) => {
     return (
-        <DragIndicatorContainer>
+        <DragIndicatorContainer isDragging={isDragging}>
             <DragDot />
             <DragDot />
             <DragDot />
