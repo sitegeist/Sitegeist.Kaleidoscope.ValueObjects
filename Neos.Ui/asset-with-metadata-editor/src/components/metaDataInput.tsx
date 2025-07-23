@@ -95,7 +95,8 @@ export const MetaDataInput = ({
                     />
                     {sidekickApiKey && selectedImageOriginUrl && (
                         <IconButton
-                            icon={isPending ? 'hourglass-start' : 'magic'}
+                            icon={isPending ? 'spinner' : 'magic'}
+                            iconProps={{ theme: isPending ? 'icon--spin' : 'icon' }}
                             size="regular"
                             style="lighter"
                             onClick={() =>

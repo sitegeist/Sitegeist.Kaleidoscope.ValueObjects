@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const getAltText = async (imageUrl: string, apiKey: string) => {
+export const getAltText = async (imageUrl: string, apiKey: string, language: string) => {
     const { data } = await axios.post(
-        'https://api.neosidekick.com/api/v1/chat?language=de',
+        `https://api.neosidekick.com/api/v1/chat?language=${language}`,
         {
             module: 'alt_tag_generator',
             platform: 'neos',

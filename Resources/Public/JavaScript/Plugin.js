@@ -6430,6 +6430,26 @@ exports.fetchWithErrorHandling = fetchWithErrorHandling;
 
 /***/ }),
 
+/***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js ***!
+  \****************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "../../node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
+
+/***/ }),
+
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js ***!
@@ -6467,6 +6487,26 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDOM;
+
+/***/ }),
+
+/***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js ***!
+  \*******************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "../../node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
 
 /***/ }),
 
@@ -21186,14 +21226,14 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAltText = void 0;
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "../../node_modules/axios/index.js"));
-var getAltText = function getAltText(imageUrl, apiKey) {
+var getAltText = function getAltText(imageUrl, apiKey, language) {
     return __awaiter(void 0, void 0, void 0, function () {
         var data;
         var _a, _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    return [4, axios_1.default.post('https://api.neosidekick.com/api/v1/chat?language=de', {
+                    return [4, axios_1.default.post("https://api.neosidekick.com/api/v1/chat?language=".concat(language), {
                         module: 'alt_tag_generator',
                         platform: 'neos',
                         user_input: [{
@@ -21472,7 +21512,7 @@ var MetaDataInput = function MetaDataInput(_a) {
     var _d = (0, useSideKick_1.useSideKick)(handleAltChange),
         generateAltText = _d.generateAltText,
         isPending = _d.isPending;
-    return react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(AltContainer, null, react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange, disabled: !selectedImageIdentifier }), sidekickApiKey && selectedImageOriginUrl && react_1.default.createElement(react_ui_components_1.IconButton, { icon: isPending ? 'hourglass-start' : 'magic', size: "regular", style: "lighter", onClick: function onClick() {
+    return react_1.default.createElement(TextContainer, null, react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "title" }, "Title", react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "title", value: titleValue, onChange: handleTitleChange, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.Label, { htmlFor: "alt" }, "Alt", react_1.default.createElement(AltContainer, null, react_1.default.createElement(react_ui_components_1.TextInput, { type: "text", id: "alt", value: altValue, onChange: handleAltChange, disabled: !selectedImageIdentifier }), sidekickApiKey && selectedImageOriginUrl && react_1.default.createElement(react_ui_components_1.IconButton, { icon: isPending ? 'spinner' : 'magic', iconProps: { theme: isPending ? 'icon--spin' : 'icon' }, size: "regular", style: "lighter", onClick: function onClick() {
             return generateAltText({ imageUrl: selectedImageOriginUrl, apiKey: sidekickApiKey });
         }, disabled: isPending }))));
 };
@@ -22528,13 +22568,17 @@ var __rest = undefined && undefined.__rest || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSideKick = void 0;
+var neos_ui_redux_store_1 = __webpack_require__(/*! @neos-project/neos-ui-redux-store */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js");
 var react_query_1 = __webpack_require__(/*! @tanstack/react-query */ "../../node_modules/@tanstack/react-query/build/lib/index.esm.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js");
 var getAltText_1 = __webpack_require__(/*! ../api/getAltText */ "../asset-with-metadata-editor/lib/api/getAltText.js");
 var useSideKick = function useSideKick(_onSuccess) {
+    var activeContentDimensions = (0, react_redux_1.useSelector)(neos_ui_redux_store_1.selectors.CR.ContentDimensions.active);
+    var language = activeContentDimensions.language ? activeContentDimensions.language[0] : 'en';
     var _a = (0, react_query_1.useMutation)(function (_a) {
         var imageUrl = _a.imageUrl,
             apiKey = _a.apiKey;
-        return (0, getAltText_1.getAltText)(imageUrl, apiKey);
+        return (0, getAltText_1.getAltText)(imageUrl, apiKey, language);
     }, {
         onSuccess: function onSuccess(data) {
             return data && _onSuccess(data);
