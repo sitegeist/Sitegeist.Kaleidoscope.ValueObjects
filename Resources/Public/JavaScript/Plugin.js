@@ -21317,16 +21317,17 @@ var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-compo
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var Container = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: flex;\n    gap: 4px;\n    justify-content: space-between;\n    margin-top: 6px;\n"], ["\n    display: flex;\n    gap: 4px;\n    justify-content: space-between;\n    margin-top: 6px;\n"])));
+var ButtonContainer = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    display: flex;\n    gap: 4px;\n"], ["\n    display: flex;\n    gap: 4px;\n"])));
 var ControlBar = function ControlBar(_a) {
     var onOpenImageSelector = _a.onOpenImageSelector,
         onOpenImageCropper = _a.onOpenImageCropper,
         onDelete = _a.onDelete,
         cropEnabled = _a.cropEnabled,
         selectedImageIdentifier = _a.selectedImageIdentifier;
-    return react_1.default.createElement(Container, null, react_1.default.createElement("div", null, react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: onOpenImageSelector }), cropEnabled && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: onOpenImageCropper, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "times", size: "small", style: "lighter", onClick: onDelete, disabled: !selectedImageIdentifier }));
+    return react_1.default.createElement(Container, null, react_1.default.createElement(ButtonContainer, null, react_1.default.createElement(react_ui_components_1.IconButton, { icon: "camera", size: "small", style: "lighter", onClick: onOpenImageSelector }), cropEnabled && react_1.default.createElement(react_ui_components_1.IconButton, { icon: "crop", size: "small", style: "lighter", onClick: onOpenImageCropper, disabled: !selectedImageIdentifier })), react_1.default.createElement(react_ui_components_1.IconButton, { icon: "times", size: "small", style: "lighter", onClick: onDelete, disabled: !selectedImageIdentifier }));
 };
 exports.ControlBar = ControlBar;
-var templateObject_1;
+var templateObject_1, templateObject_2;
 //# sourceMappingURL=controlBar.js.map
 
 /***/ }),
@@ -21357,9 +21358,13 @@ exports.DragIndicator = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var DragDot = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 3px;\n    height: 3px;\n    background-color: white;\n    border-radius: 100%;\n"], ["\n    width: 3px;\n    height: 3px;\n    background-color: white;\n    border-radius: 100%;\n"])));
-var DragIndicatorContainer = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n"], ["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n"])));
-var DragIndicator = function DragIndicator() {
-    return react_1.default.createElement(DragIndicatorContainer, null, react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null));
+var DragIndicatorContainer = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n    cursor: ", ";\n"], ["\n    position: absolute;\n    top: 3px;\n    right: 3px;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    gap: 1px;\n    align-items: center;\n    justify-content: center;\n    padding: 2px;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 2px;\n    opacity: 0.5;\n    z-index: 10;\n    cursor: ", ";\n"])), function (_a) {
+    var isDragging = _a.isDragging;
+    return isDragging ? 'grabbing' : 'grab';
+});
+var DragIndicator = function DragIndicator(_a) {
+    var isDragging = _a.isDragging;
+    return react_1.default.createElement(DragIndicatorContainer, { isDragging: isDragging }, react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null), react_1.default.createElement(DragDot, null));
 };
 exports.DragIndicator = DragIndicator;
 var templateObject_1, templateObject_2;
@@ -21391,7 +21396,7 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EditorContainer = void 0;
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
-exports.EditorContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 24px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 24px;\n"])));
+exports.EditorContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 4px;\n"], ["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    margin-top: 4px;\n"])));
 var templateObject_1;
 //# sourceMappingURL=editorContainer.js.map
 
@@ -21549,7 +21554,7 @@ var react_ui_components_1 = __webpack_require__(/*! @neos-project/react-ui-compo
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.browser.esm.js"));
 var thumbnail_1 = __webpack_require__(/*! ../utils/thumbnail */ "../asset-with-metadata-editor/lib/utils/thumbnail.js");
-var IconContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"], ["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n    opacity: 0.7;\n"])), function (_a) {
+var IconContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1;\n    opacity: 0.7;\n"], ["\n    position: relative;\n    height: 100%;\n    display: ", ";\n    justify-content: center;\n    align-items: center;\n    z-index: 1;\n    opacity: 0.7;\n"])), function (_a) {
     var show = _a.show;
     return show ? 'flex' : 'none';
 });
@@ -21696,17 +21701,19 @@ var SortableGridItem = function SortableGridItem(_a) {
         listeners = _b.listeners,
         setNodeRef = _b.setNodeRef,
         transform = _b.transform,
-        transition = _b.transition;
+        transition = _b.transition,
+        isDragging = _b.isDragging;
     var style = {
         transform: utilities_1.CSS.Transform.toString(transform),
-        transition: transition
+        transition: transition,
+        zIndex: isDragging ? 20 : 1
     };
     var mergedOnClick = function mergedOnClick(e) {
         var _a;
         onClick();
         (_a = listeners === null || listeners === void 0 ? void 0 : listeners.onClick) === null || _a === void 0 ? void 0 : _a.call(listeners, e);
     };
-    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(dragIndicator_1.DragIndicator, null), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
+    return react_1.default.createElement(GridItem, __assign({ ref: setNodeRef, style: style, selected: selected }, attributes, listeners, { onClick: mergedOnClick }), react_1.default.createElement(dragIndicator_1.DragIndicator, { isDragging: isDragging }), react_1.default.createElement(preview_1.Preview, { image: image, small: true }));
 };
 var templateObject_1, templateObject_2;
 //# sourceMappingURL=previewGrid.js.map
