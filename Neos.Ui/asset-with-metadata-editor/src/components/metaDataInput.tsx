@@ -1,7 +1,8 @@
-import { Label, TextInput } from '@neos-project/react-ui-components'
+import { IconButton, Label, TextInput } from '@neos-project/react-ui-components'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import { useSideKick } from '../hooks/useSideKick'
 import { debounce } from '../utils/debounce'
 
 const TextContainer = styled.div`
@@ -10,23 +11,35 @@ const TextContainer = styled.div`
     flex-direction: column;
     gap: 6px;
 `
+
+const AltContainer = styled.div`
+    display: flex;
+    > div {
+        flex-grow: 1;
+    }
+`
+
 const debounceAlt = debounce(300)
 const debounceTitle = debounce(300)
 
 type MetaDataInputProps = {
     title?: string
     alt?: string
+    sidekickApiKey?: string
+    selectedImageIdentifier?: string
+    selectedImageOriginUrl?: string
     onTitleChange: (title: string) => void
     onAltChange: (alt: string) => void
-    selectedImageIdentifier?: string
 }
 
 export const MetaDataInput = ({
     title,
     alt,
+    selectedImageIdentifier,
+    sidekickApiKey,
+    selectedImageOriginUrl,
     onTitleChange,
     onAltChange,
-    selectedImageIdentifier,
 }: MetaDataInputProps) => {
     const [altValue, setAltValue] = useState('')
     const [titleValue, setTitleValue] = useState('')
@@ -55,6 +68,9 @@ export const MetaDataInput = ({
             onAltChange(value)
         })
     }
+
+    const { generateAltText, isPending } = useSideKick(handleAltChange)
+
     return (
         <TextContainer>
             <Label htmlFor="title">
@@ -69,13 +85,27 @@ export const MetaDataInput = ({
             </Label>
             <Label htmlFor="alt">
                 Alt
-                <TextInput
-                    type="text"
-                    id="alt"
-                    value={altValue}
-                    onChange={handleAltChange}
-                    disabled={!selectedImageIdentifier}
-                />
+                <AltContainer>
+                    <TextInput
+                        type="text"
+                        id="alt"
+                        value={altValue}
+                        onChange={handleAltChange}
+                        disabled={!selectedImageIdentifier}
+                    />
+                    {sidekickApiKey && selectedImageOriginUrl && (
+                        <IconButton
+                            icon={isPending ? 'spinner' : 'magic'}
+                            iconProps={{ theme: isPending ? 'icon--spin' : 'icon' }}
+                            size="regular"
+                            style="lighter"
+                            onClick={() =>
+                                generateAltText({ imageUrl: selectedImageOriginUrl, apiKey: sidekickApiKey })
+                            }
+                            disabled={isPending}
+                        />
+                    )}
+                </AltContainer>
             </Label>
         </TextContainer>
     )

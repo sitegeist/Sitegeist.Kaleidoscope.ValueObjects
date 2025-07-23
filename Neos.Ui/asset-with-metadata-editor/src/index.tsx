@@ -1,4 +1,5 @@
 import { SynchronousRegistry } from '@neos-project/neos-ui-extensibility'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import * as React from 'react'
 
 import { CollectionEditor } from './editors/collectionEditor'
@@ -7,6 +8,8 @@ import { endpoints } from './neos-bridge/backend'
 import { IGlobalRegistry } from './neos-bridge/globalRegistry'
 import { AssetWithMeta, ImageMetadata } from './types'
 import { HOOK_BEFORE_SAVE, HOOK_BEFORE_SAVE_COLLECTION } from './utils/constants'
+
+const queryClient = new QueryClient()
 
 export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry): void {
     const inspectorRegistry = globalRegistry.get('inspector')
@@ -29,7 +32,11 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
         component: (props: any) => {
             const { value, ...rest } = props
 
-            return <Editor {...rest} value={!value || Object.keys(value).length === 0 ? undefined : value} />
+            return (
+                <QueryClientProvider client={queryClient}>
+                    <Editor {...rest} value={!value || Object.keys(value).length === 0 ? undefined : value} />
+                </QueryClientProvider>
+            )
         },
     })
 
@@ -37,7 +44,11 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
         component: (props: any) => {
             const { value, ...rest } = props
 
-            return <CollectionEditor {...rest} value={!value || !Array.isArray(value) ? [] : value} />
+            return (
+                <QueryClientProvider client={queryClient}>
+                    <CollectionEditor {...rest} value={!value || !Array.isArray(value) ? [] : value} />
+                </QueryClientProvider>
+            )
         },
     })
 

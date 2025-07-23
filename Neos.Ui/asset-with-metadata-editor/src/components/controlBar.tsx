@@ -1,5 +1,5 @@
 import { IconButton } from '@neos-project/react-ui-components'
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
