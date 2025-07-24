@@ -21895,10 +21895,11 @@ var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments *
 var getForceCrop_1 = __webpack_require__(/*! ../utils/getForceCrop */ "../asset-with-metadata-editor/lib/utils/getForceCrop.js");
 var getImageMetaData_1 = __webpack_require__(/*! ../utils/getImageMetaData */ "../asset-with-metadata-editor/lib/utils/getImageMetaData.js");
 var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
+var prependConfiguredDomainToImageUri_1 = __webpack_require__(/*! ../utils/prependConfiguredDomainToImageUri */ "../asset-with-metadata-editor/lib/utils/prependConfiguredDomainToImageUri.js");
 var CollectionEditor = function CollectionEditor(_a) {
-    var _b, _c, _d, _e, _f;
-    var _g = _a.value,
-        valueExtern = _g === void 0 ? [] : _g,
+    var _b, _c, _d, _e, _f, _g, _h;
+    var _j = _a.value,
+        valueExtern = _j === void 0 ? [] : _j,
         globalRegistry = _a.neos.globalRegistry,
         renderSecondaryInspector = _a.renderSecondaryInspector,
         editorOptions = _a.options,
@@ -21911,15 +21912,16 @@ var CollectionEditor = function CollectionEditor(_a) {
         });
     }, [valueExtern]);
     var imageMetadataCollection = (0, useImageMetaDataCollection_1.useImageMetadataCollection)(imagesIdentifiers);
-    var _h = __read((0, react_1.useState)((_b = valueExtern[0]) === null || _b === void 0 ? void 0 : _b.asset.__identifier), 2),
-        selectedImageIdentifier = _h[0],
-        setSelectedImageIdentifier = _h[1];
+    var _k = __read((0, react_1.useState)((_b = valueExtern[0]) === null || _b === void 0 ? void 0 : _b.asset.__identifier), 2),
+        selectedImageIdentifier = _k[0],
+        setSelectedImageIdentifier = _k[1];
     var valueRef = (0, react_1.useRef)(valueExtern);
     var hooksRef = (0, react_1.useRef)(hooks);
     var selectedImage = valueExtern.find(function (v) {
         return v.asset.__identifier === selectedImageIdentifier;
     });
     var sidekickApiKey = (_d = (_c = globalRegistry.get('NEOSidekick.AiAssistant')) === null || _c === void 0 ? void 0 : _c.get('configuration')) === null || _d === void 0 ? void 0 : _d.apiKey;
+    var sidekickInstanceDomain = (_f = (_e = globalRegistry.get('NEOSidekick.AiAssistant')) === null || _e === void 0 ? void 0 : _e.get('configuration')) === null || _f === void 0 ? void 0 : _f.domain;
     (0, react_1.useEffect)(function () {
         valueRef.current = valueExtern;
         hooksRef.current = hooks;
@@ -22048,7 +22050,7 @@ var CollectionEditor = function CollectionEditor(_a) {
         setSelectedImageIdentifier(identifier);
         renderSecondaryInspector(undefined, undefined);
     };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: handleSelectImage, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting, changed: highlight }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, sidekickApiKey: sidekickApiKey, selectedImageOriginUrl: (_e = getImageMetadata(selectedImageIdentifier)) === null || _e === void 0 ? void 0 : _e.originalImageResourceUri, onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(controlBar_1.ControlBar, { cropEnabled: Boolean((_f = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _f === void 0 ? void 0 : _f.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(previewGrid_1.PreviewGrid, { images: images, selectedImageIdentifier: selectedImageIdentifier, onSelect: handleSelectImage, onEmptyPreviewClick: handleOpenMediaSelection, onSort: handleImageSorting, changed: highlight }), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.alt, title: selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.title, selectedImageIdentifier: selectedImageIdentifier, sidekickApiKey: sidekickApiKey, selectedImageOriginUrl: (0, prependConfiguredDomainToImageUri_1.prependConfiguredDomainToImageUri)((_g = getImageMetadata(selectedImageIdentifier)) === null || _g === void 0 ? void 0 : _g.originalImageResourceUri, sidekickInstanceDomain), onAltChange: handleAltChange, onTitleChange: handleTitleChange }), react_1.default.createElement(controlBar_1.ControlBar, { cropEnabled: Boolean((_h = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _h === void 0 ? void 0 : _h.crop), selectedImageIdentifier: selectedImageIdentifier, onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: handleDelete }));
 };
 exports.CollectionEditor = CollectionEditor;
 //# sourceMappingURL=collectionEditor.js.map
@@ -22137,8 +22139,9 @@ var useImageMetadata_1 = __webpack_require__(/*! ../hooks/useImageMetadata */ ".
 var constants_1 = __webpack_require__(/*! ../utils/constants */ "../asset-with-metadata-editor/lib/utils/constants.js");
 var getCropAdjustments_1 = __webpack_require__(/*! ../utils/getCropAdjustments */ "../asset-with-metadata-editor/lib/utils/getCropAdjustments.js");
 var image_1 = __webpack_require__(/*! ../utils/image */ "../asset-with-metadata-editor/lib/utils/image.js");
+var prependConfiguredDomainToImageUri_1 = __webpack_require__(/*! ../utils/prependConfiguredDomainToImageUri */ "../asset-with-metadata-editor/lib/utils/prependConfiguredDomainToImageUri.js");
 var Editor = function Editor(_a) {
-    var _b, _c, _d, _e;
+    var _b, _c, _d, _e, _f, _g;
     var valueExtern = _a.value,
         globalRegistry = _a.neos.globalRegistry,
         renderSecondaryInspector = _a.renderSecondaryInspector,
@@ -22146,11 +22149,12 @@ var Editor = function Editor(_a) {
         hooks = _a.hooks,
         highlight = _a.highlight,
         commit = _a.commit;
-    var _f = __read((0, react_1.useState)(false), 2),
-        openCropper = _f[0],
-        setOpenCropper = _f[1];
+    var _h = __read((0, react_1.useState)(false), 2),
+        openCropper = _h[0],
+        setOpenCropper = _h[1];
     var imageMetadata = (0, useImageMetadata_1.useImageMetadata)(valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier);
     var sidekickApiKey = (_c = (_b = globalRegistry.get('NEOSidekick.AiAssistant')) === null || _b === void 0 ? void 0 : _b.get('configuration')) === null || _c === void 0 ? void 0 : _c.apiKey;
+    var sidekickInstanceDomain = (_e = (_d = globalRegistry.get('NEOSidekick.AiAssistant')) === null || _d === void 0 ? void 0 : _d.get('configuration')) === null || _e === void 0 ? void 0 : _e.domain;
     (0, react_1.useEffect)(function () {
         if (openCropper) {
             setTimeout(function () {
@@ -22185,7 +22189,6 @@ var Editor = function Editor(_a) {
             changed = _b.changed,
             cropAdjustments = _b.cropAdjustments;
         if (!changed) return;
-        console.log('cropArea', cropArea);
         commit(valueExtern, (_a = {}, _a[constants_1.HOOK_BEFORE_SAVE] = cropAdjustments, _a));
     };
     var handleOpenMediaSelection = function handleOpenMediaSelection() {
@@ -22207,13 +22210,13 @@ var Editor = function Editor(_a) {
                 }, onComplete: handleMediaCrop });
         });
     };
-    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(changeIndicator_1.ChangeIndicator, { changed: highlight }, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection })), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, sidekickApiKey: sidekickApiKey, selectedImageOriginUrl: (_d = getImageMeta()) === null || _d === void 0 ? void 0 : _d.originalImageResourceUri, onAltChange: function onAltChange(alt) {
+    return react_1.default.createElement(editorContainer_1.EditorContainer, null, react_1.default.createElement(changeIndicator_1.ChangeIndicator, { changed: highlight }, react_1.default.createElement(preview_1.Preview, { image: valueExtern && getImageMeta(), onClick: handleOpenMediaSelection })), react_1.default.createElement(metaDataInput_1.MetaDataInput, { alt: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.alt, title: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.title, selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier, sidekickApiKey: sidekickApiKey, selectedImageOriginUrl: (0, prependConfiguredDomainToImageUri_1.prependConfiguredDomainToImageUri)((_f = getImageMeta()) === null || _f === void 0 ? void 0 : _f.originalImageResourceUri, sidekickInstanceDomain), onAltChange: function onAltChange(alt) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { alt: alt }), hooks);
         }, onTitleChange: function onTitleChange(title) {
             return valueExtern && commit(__assign(__assign({}, valueExtern), { title: title }), hooks);
         } }), react_1.default.createElement(controlBar_1.ControlBar, { onOpenImageSelector: handleOpenMediaSelection, onOpenImageCropper: handleOpenImageCropper, onDelete: function onDelete() {
             return commit({});
-        }, cropEnabled: Boolean((_e = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _e === void 0 ? void 0 : _e.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
+        }, cropEnabled: Boolean((_g = editorOptions === null || editorOptions === void 0 ? void 0 : editorOptions.features) === null || _g === void 0 ? void 0 : _g.crop), selectedImageIdentifier: valueExtern === null || valueExtern === void 0 ? void 0 : valueExtern.asset.__identifier }));
 };
 exports.Editor = Editor;
 //# sourceMappingURL=editor.js.map
@@ -23333,6 +23336,35 @@ var Image = function () {
 }();
 exports.Image = Image;
 //# sourceMappingURL=image.js.map
+
+/***/ }),
+
+/***/ "../asset-with-metadata-editor/lib/utils/prependConfiguredDomainToImageUri.js":
+/*!************************************************************************************!*\
+  !*** ../asset-with-metadata-editor/lib/utils/prependConfiguredDomainToImageUri.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.prependConfiguredDomainToImageUri = void 0;
+function prependConfiguredDomainToImageUri(imageUri, instanceDomain) {
+    if (!imageUri || !instanceDomain) {
+        return;
+    }
+    var imageUriParts = imageUri.replace(/^http:\/\//, '').replace(/^https:\/\//, '').split('/');
+    console.log('imageUriParts', imageUriParts);
+    console.log('instanceDomain', instanceDomain);
+    var domain = instanceDomain.replace(/^http:\/\//, '').replace(/^https:\/\//, '');
+    imageUriParts.shift();
+    imageUriParts.unshift(domain);
+    return "https://".concat(imageUriParts.join('/'));
+}
+exports.prependConfiguredDomainToImageUri = prependConfiguredDomainToImageUri;
+//# sourceMappingURL=prependConfiguredDomainToImageUri.js.map
 
 /***/ }),
 

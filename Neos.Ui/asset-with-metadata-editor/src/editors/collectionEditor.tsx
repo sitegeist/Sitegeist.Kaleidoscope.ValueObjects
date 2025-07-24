@@ -11,6 +11,7 @@ import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { getForceCrop } from '../utils/getForceCrop'
 import { getImageMetaData } from '../utils/getImageMetaData'
 import { Image } from '../utils/image'
+import { prependConfiguredDomainToImageUri } from '../utils/prependConfiguredDomainToImageUri'
 
 export const CollectionEditor = ({
     value: valueExtern = [],
@@ -32,6 +33,10 @@ export const CollectionEditor = ({
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
 
     const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
+        | string
+        | undefined
+
+    const sidekickInstanceDomain = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.domain as
         | string
         | undefined
 
@@ -219,7 +224,10 @@ export const CollectionEditor = ({
                 title={selectedImage?.title}
                 selectedImageIdentifier={selectedImageIdentifier}
                 sidekickApiKey={sidekickApiKey}
-                selectedImageOriginUrl={getImageMetadata(selectedImageIdentifier)?.originalImageResourceUri}
+                selectedImageOriginUrl={prependConfiguredDomainToImageUri(
+                    getImageMetadata(selectedImageIdentifier)?.originalImageResourceUri,
+                    sidekickInstanceDomain
+                )}
                 onAltChange={handleAltChange}
                 onTitleChange={handleTitleChange}
             />

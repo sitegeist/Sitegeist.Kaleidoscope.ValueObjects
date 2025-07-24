@@ -10,6 +10,7 @@ import { AssetWithMeta, CropArea, Props } from '../types'
 import { HOOK_BEFORE_SAVE, MEDIA_TYPE_IMAGE } from '../utils/constants'
 import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { Image } from '../utils/image'
+import { prependConfiguredDomainToImageUri } from '../utils/prependConfiguredDomainToImageUri'
 
 export const Editor = ({
     value: valueExtern,
@@ -24,6 +25,10 @@ export const Editor = ({
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
 
     const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
+        | string
+        | undefined
+
+    const sidekickInstanceDomain = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.domain as
         | string
         | undefined
 
@@ -65,8 +70,6 @@ export const Editor = ({
 
         const { changed, cropAdjustments } = getCropAdjustments(imageMetadata, cropArea)
         if (!changed) return
-
-        console.log('cropArea', cropArea)
 
         commit(valueExtern, { [HOOK_BEFORE_SAVE]: cropAdjustments })
     }
@@ -123,7 +126,10 @@ export const Editor = ({
                 title={valueExtern?.title}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
                 sidekickApiKey={sidekickApiKey}
-                selectedImageOriginUrl={getImageMeta()?.originalImageResourceUri}
+                selectedImageOriginUrl={prependConfiguredDomainToImageUri(
+                    getImageMeta()?.originalImageResourceUri,
+                    sidekickInstanceDomain
+                )}
                 onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
                 onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
             />
