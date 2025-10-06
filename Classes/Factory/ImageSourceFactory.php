@@ -30,14 +30,6 @@ class ImageSourceFactory
         }
 
         if ($image->getWidth() > 0 && $image->getHeight() > 0) {
-            if ($image->getResource()->getMediaType() === 'image/svg+xml') {
-                return new SvgAssetImageSource(
-                    $image,
-                    $imageSourceProxy->title,
-                    $imageSourceProxy->alt,
-                    true
-                );
-            }
             return new AssetImageSource(
                 $image,
                 $imageSourceProxy->title,
