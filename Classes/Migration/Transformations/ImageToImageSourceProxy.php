@@ -62,8 +62,6 @@ class ImageToImageSourceProxy extends AbstractTransformation
      */
     public function isTransformable(NodeData $node): bool
     {
-
-
         if (
             $node->hasProperty($this->sourceProperty)
             && $node->hasProperty($this->targetProperty)
@@ -72,7 +70,7 @@ class ImageToImageSourceProxy extends AbstractTransformation
         ) {
             $sourceValue = $node->getProperty($this->sourceProperty);
             if (
-                $sourceValue instanceof Image || $sourceValue instanceof ImageVariant
+                $sourceValue instanceof Image || $sourceValue instanceof ImageVariant || $sourceValue === ''
             ) {
                 return true;
             }
@@ -89,13 +87,17 @@ class ImageToImageSourceProxy extends AbstractTransformation
     public function execute(NodeData $node): NodeData
     {
         /**
-         * @var Image|ImageVariant $sourceValue
+         * @var Image|ImageVariant|string $sourceValue
          */
         $sourceValue = $node->getProperty($this->sourceProperty);
-        $alt = $this->altProperty ? $node->getProperty($this->altProperty) : "";
-        $title = $this->titleProperty ? $node->getProperty($this->titleProperty) : "";
-        $targetValue = new ImageSourceProxy(ImageAssetProxy::fromAsset($sourceValue), $alt, $title);
-        $node->setProperty($this->targetProperty, $targetValue);
+        if ($sourceValue === '') {
+            $node->setProperty($this->targetProperty, null);
+        } elseif ($sourceValue instanceof Image || $sourceValue instanceof ImageVariant) {
+            $alt = $this->altProperty ? $node->getProperty($this->altProperty) : "";
+            $title = $this->titleProperty ? $node->getProperty($this->titleProperty) : "";
+            $targetValue = new ImageSourceProxy(ImageAssetProxy::fromAsset($sourceValue), $alt, $title);
+            $node->setProperty($this->targetProperty, $targetValue);
+        }
         return $node;
     }
 }
