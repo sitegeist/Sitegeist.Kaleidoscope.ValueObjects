@@ -64,6 +64,9 @@ class ImageSourceProxyCollectionArrayPresenter extends AbstractTypeConverter
         if ($source instanceof ImageSourceProxyCollection) {
             return $source->jsonSerialize();
         }
+        if ($source === []) {
+            return [];
+        }
 
         throw new \Exception(sprintf(
             'ImageSourceProxyArrayPresenter can only convert ImageSourceProxyCollection "%s" was given.',
