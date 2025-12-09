@@ -12,7 +12,7 @@ use Neos\Flow\Annotations as Flow;
  * @implements \IteratorAggregate<int, ImageSourceProxy>
  */
 #[Flow\Proxy(false)]
-class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \JsonSerializable
+class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \JsonSerializable, \Stringable
 {
     /**
      * @var ImageSourceProxy[]
@@ -99,5 +99,10 @@ class ImageSourceProxyCollection implements \IteratorAggregate, \Countable, \Jso
             fn(ImageSourceProxy $item) => $item->jsonSerialize(),
             $this->items,
         );
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this->jsonSerialize(), JSON_THROW_ON_ERROR);
     }
 }
