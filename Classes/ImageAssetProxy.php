@@ -16,7 +16,7 @@ use Neos\Media\Domain\Model\ImageVariant;
  * @phpstan-type assetProxyShape assetProxyShapeV8|assetProxyShapeV9
  */
 #[Flow\Proxy(false)]
-final class ImageAssetProxy implements \JsonSerializable
+final class ImageAssetProxy implements \JsonSerializable, \Stringable
 {
     /**
      * @param class-string $classname
@@ -65,5 +65,10 @@ final class ImageAssetProxy implements \JsonSerializable
           '__flow_object_type' => $this->classname,
           '__identifier' => $this->identifier
         ];
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this->jsonSerialize(), JSON_THROW_ON_ERROR);
     }
 }

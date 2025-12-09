@@ -11,7 +11,7 @@ use Neos\Flow\Annotations as Flow;
  * @phpstan-type imagesourceProxyShape array{asset:assetProxyShape, alt?:string, title?: string}
  */
 #[Flow\Proxy(false)]
-final class ImageSourceProxy implements \JsonSerializable
+final class ImageSourceProxy implements \JsonSerializable, \Stringable
 {
     public function __construct(
         public readonly ImageAssetProxy $asset,
@@ -51,6 +51,6 @@ final class ImageSourceProxy implements \JsonSerializable
 
     public function __toString(): string
     {
-        return '-';
+        return json_encode($this->jsonSerialize(), JSON_THROW_ON_ERROR);
     }
 }
