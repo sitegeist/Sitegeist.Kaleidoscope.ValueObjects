@@ -10,13 +10,18 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 6px;
+
+    .required {
+        border: 1px solid #ff460d;
+    }
 `
 
-const AltContainer = styled.div`
+const AltContainer = styled.div<{ required?: boolean }>`
     display: flex;
     > div {
         flex-grow: 1;
     }
+    border: ${({ required }) => (required ? '1px solid #ff460d' : 'none')};
 `
 
 const debounceAlt = debounce(300)
@@ -25,6 +30,8 @@ const debounceTitle = debounce(300)
 type MetaDataInputProps = {
     title?: string
     alt?: string
+    requireTitle?: boolean
+    requireAlt?: boolean
     sidekickApiKey?: string
     selectedImageIdentifier?: string
     selectedImageOriginUrl?: string
@@ -35,6 +42,8 @@ type MetaDataInputProps = {
 export const MetaDataInput = ({
     title,
     alt,
+    requireTitle,
+    requireAlt,
     selectedImageIdentifier,
     sidekickApiKey,
     selectedImageOriginUrl,
@@ -71,6 +80,9 @@ export const MetaDataInput = ({
 
     const { generateAltText, isPending } = useSideKick(handleAltChange)
 
+    const isTitleValid = selectedImageIdentifier && requireTitle && !titleValue
+    const isAltValid = selectedImageIdentifier && requireAlt && !altValue
+
     return (
         <TextContainer>
             <Label htmlFor="title">
@@ -81,11 +93,12 @@ export const MetaDataInput = ({
                     value={titleValue}
                     onChange={handleTitleChange}
                     disabled={!selectedImageIdentifier}
+                    className={isTitleValid && 'required'}
                 />
             </Label>
             <Label htmlFor="alt">
                 Alt
-                <AltContainer>
+                <AltContainer required={Boolean(isAltValid)}>
                     <TextInput
                         type="text"
                         id="alt"

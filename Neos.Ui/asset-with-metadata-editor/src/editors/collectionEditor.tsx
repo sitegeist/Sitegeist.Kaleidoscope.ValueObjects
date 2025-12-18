@@ -11,6 +11,7 @@ import { getCropAdjustments } from '../utils/getCropAdjustments'
 import { getForceCrop } from '../utils/getForceCrop'
 import { getImageMetaData } from '../utils/getImageMetaData'
 import { Image } from '../utils/image'
+import { isEmpty } from '../utils/isEmpty'
 import { prependConfiguredDomainToImageUri } from '../utils/prependConfiguredDomainToImageUri'
 
 export const CollectionEditor = ({
@@ -209,9 +210,18 @@ export const CollectionEditor = ({
         renderSecondaryInspector(undefined, undefined)
     }
 
+    const inValidImages = valueExtern
+        .filter(
+            (v) =>
+                (editorOptions?.validation?.notEmpty?.alt && isEmpty(v.alt)) ||
+                (editorOptions?.validation?.notEmpty?.title && isEmpty(v.title))
+        )
+        .map((v) => v.asset.__identifier)
+
     return (
         <EditorContainer>
             <PreviewGrid
+                inValidImages={inValidImages}
                 images={images}
                 selectedImageIdentifier={selectedImageIdentifier}
                 onSelect={handleSelectImage}
@@ -222,6 +232,8 @@ export const CollectionEditor = ({
             <MetaDataInput
                 alt={selectedImage?.alt}
                 title={selectedImage?.title}
+                requireTitle={editorOptions?.validation?.notEmpty?.title}
+                requireAlt={editorOptions?.validation?.notEmpty?.alt}
                 selectedImageIdentifier={selectedImageIdentifier}
                 sidekickApiKey={sidekickApiKey}
                 selectedImageOriginUrl={prependConfiguredDomainToImageUri(

@@ -8,6 +8,7 @@ import { endpoints } from './neos-bridge/backend'
 import { IGlobalRegistry } from './neos-bridge/globalRegistry'
 import { AssetWithMeta, ImageMetadata } from './types'
 import { HOOK_BEFORE_SAVE, HOOK_BEFORE_SAVE_COLLECTION } from './utils/constants'
+import { NotEmpty } from './validators/NotEmpty'
 
 const queryClient = new QueryClient()
 
@@ -51,6 +52,18 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
             )
         },
     })
+
+    const validatorsRegistry = globalRegistry.get('validators')
+
+    if (!validatorsRegistry) {
+        console.warn('[Sitegeist.Kaleidoscope.ValueObjects]: Could not find inspector validators registry.')
+        console.warn(
+            '[Sitegeist.Kaleidoscope.ValueObjects]: Skipping registration of AssetWithMetadataEditor Validators...'
+        )
+        return
+    }
+
+    validatorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Validators/NotEmpty', NotEmpty)
 
     saveHooksRegistry?.set(HOOK_BEFORE_SAVE, createImageVariant)
 
