@@ -8,6 +8,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Sitegeist\Kaleidoscope\Domain\AssetImageSource;
 use Sitegeist\Kaleidoscope\Domain\ImageSourceInterface;
+use Sitegeist\Kaleidoscope\Domain\SvgAssetImageSource;
 use Sitegeist\Kaleidoscope\Domain\UriImageSource;
 use Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy;
 use Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxyCollection;
@@ -20,13 +21,6 @@ class ImageSourceFactory
     #[Flow\Inject]
     protected ResourceManager $resourceManager;
 
-    /**
-     * @var string[]
-     */
-    protected array $nonScalableMediaTypes = [
-        'image/svg+xml',
-    ];
-
     public function tryCreateFromProxy(ImageSourceProxy $imageSourceProxy): ?ImageSourceInterface
     {
         $image = $this->imageFactory->tryCreateFromProxy($imageSourceProxy->asset);
@@ -35,7 +29,7 @@ class ImageSourceFactory
             return null;
         }
 
-        if (in_array($image->getResource()->getMediaType(), $this->nonScalableMediaTypes, true)) {
+        if (!$image->getWidth() || !$image->getHeight()) {
             $uri = $this->resourceManager->getPublicPersistentResourceUri($image->getResource());
             if (is_string($uri)) {
                 return new UriImageSource(
