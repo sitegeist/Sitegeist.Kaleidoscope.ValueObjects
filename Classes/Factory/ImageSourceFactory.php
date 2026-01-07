@@ -29,25 +29,25 @@ class ImageSourceFactory
             return null;
         }
 
-        if ($image->getWidth() > 0 && $image->getHeight() > 0) {
-            return new AssetImageSource(
-                $image,
-                $imageSourceProxy->title,
-                $imageSourceProxy->alt,
-                true
-            );
+        if (!$image->getWidth() || !$image->getHeight()) {
+            $uri = $this->resourceManager->getPublicPersistentResourceUri($image->getResource());
+            if (is_string($uri)) {
+                return new UriImageSource(
+                    $uri,
+                    $imageSourceProxy->title,
+                    $imageSourceProxy->alt
+                );
+            } else {
+                return null;
+            }
         }
 
-        $uri = $this->resourceManager->getPublicPersistentResourceUri($image->getResource());
-        if (is_string($uri)) {
-            return new UriImageSource(
-                $uri,
-                $imageSourceProxy->title,
-                $imageSourceProxy->alt
-            );
-        } else {
-            return null;
-        }
+        return new AssetImageSource(
+            $image,
+            $imageSourceProxy->title,
+            $imageSourceProxy->alt,
+            true
+        );
     }
 
     /**
