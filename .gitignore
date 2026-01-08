@@ -3,3 +3,4 @@
 composer.lock
 Packages
 vendor
+**/cache/
