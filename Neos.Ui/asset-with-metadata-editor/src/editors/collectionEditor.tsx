@@ -34,7 +34,7 @@ export const CollectionEditor = ({
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
     const imageUploaderRef = useRef<any>(null)
 
-    const isUploadEnabled = true // Boolean(editorOptions?.features?.upload)
+    const isUploadEnabled = Boolean(editorOptions?.features?.upload)
     const isCropEnabled = Boolean(editorOptions?.features?.crop)
 
     const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
