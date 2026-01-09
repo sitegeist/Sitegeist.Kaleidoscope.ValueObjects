@@ -6007,10 +6007,13 @@ exports.NotEmpty = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var isEmpty_1 = __webpack_require__(/*! ../utils/isEmpty */ "../asset-with-metadata-editor/lib/utils/isEmpty.js");
 var isValueValid = function isValueValid(value, validatorOptions) {
-    if (validatorOptions.alt && (0, isEmpty_1.isEmpty)(value.alt)) {
+    if (!value) {
+        return true;
+    }
+    if (validatorOptions.alt && (0, isEmpty_1.isEmpty)(value === null || value === void 0 ? void 0 : value.alt)) {
         return false;
     }
-    if (validatorOptions.title && (0, isEmpty_1.isEmpty)(value.title)) {
+    if (validatorOptions.title && (0, isEmpty_1.isEmpty)(value === null || value === void 0 ? void 0 : value.title)) {
         return false;
     }
     return true;

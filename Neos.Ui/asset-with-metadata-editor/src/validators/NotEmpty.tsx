@@ -10,11 +10,15 @@ interface NotEmptyOptions {
 }
 
 const isValueValid = (value: AssetWithMeta, validatorOptions: NotEmptyOptions) => {
-    if (validatorOptions.alt && isEmpty(value.alt)) {
+    if (!value) {
+        return true
+    }
+
+    if (validatorOptions.alt && isEmpty(value?.alt)) {
         return false
     }
 
-    if (validatorOptions.title && isEmpty(value.title)) {
+    if (validatorOptions.title && isEmpty(value?.title)) {
         return false
     }
     return true
