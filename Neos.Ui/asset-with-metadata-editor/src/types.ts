@@ -40,6 +40,7 @@ export type EditorOptions = {
     constraints?: any
     features?: {
         crop?: boolean
+        upload?: boolean
     }
     crop?: {
         aspectRatio: {
@@ -99,6 +100,13 @@ export type CropArea = {
 
 export type BackendEndpoints = {
     loadImageMetadata: (assetIdentifier: string) => Promise<ImageMetadata>
+    uploadAsset: (
+        file: File,
+        propertyName: string,
+        focusedNodePath: string,
+        siteNodePath: string,
+        metaData: string
+    ) => Promise<any>
     createImageVariant: (
         uuidOfImage: string,
         image: ImageMetadata
