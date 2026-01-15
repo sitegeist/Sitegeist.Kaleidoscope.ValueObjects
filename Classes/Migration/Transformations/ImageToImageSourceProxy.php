@@ -13,6 +13,11 @@ use Neos\Media\Domain\Model\ImageVariant;
 use Sitegeist\Kaleidoscope\ValueObjects\ImageAssetProxy;
 use Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy;
 
+// prevent php erors in neos 9 because AbstractTransformation does not exist there
+if (!class_exists('\\Neos\\ContentRepository\\Migration\\Transformations\\AbstractTransformation', false)) {
+    class_alias(AbstractTransformationMock::class, '\\Neos\\ContentRepository\\Migration\\Transformations\\AbstractTransformation', false);
+}
+
 class ImageToImageSourceProxy extends AbstractTransformation
 {
     /**

@@ -12,6 +12,11 @@ use Sitegeist\Kaleidoscope\ValueObjects\Factory\ImageAssetFactory;
 use Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy;
 use Neos\Flow\Annotations as Flow;
 
+// prevent php erors in neos 9 because AbstractTransformation does not exist there
+if (!class_exists('\\Neos\\ContentRepository\\Migration\\Transformations\\AbstractTransformation', false)) {
+    class_alias(AbstractTransformationMock::class, '\\Neos\\ContentRepository\\Migration\\Transformations\\AbstractTransformation', false);
+}
+
 class ImageSourceProxyToImage extends AbstractTransformation
 {
     /**
