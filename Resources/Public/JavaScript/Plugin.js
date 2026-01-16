@@ -403,6 +403,26 @@ exports.fetchWithErrorHandling = fetchWithErrorHandling;
 
 /***/ }),
 
+/***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-i18n/index.js":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-i18n/index.js ***!
+  \*********************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "../../node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiI18n;
+
+/***/ }),
+
 /***/ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** /Users/christian.pansch/Projects/Sitegeist.Kaleidoscope.ValueObjects/node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js ***!
@@ -6004,6 +6024,7 @@ var __importDefault = undefined && undefined.__importDefault || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotEmpty = void 0;
+var neos_ui_i18n_1 = __importDefault(__webpack_require__(/*! @neos-project/neos-ui-i18n */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-i18n/index.js"));
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var isEmpty_1 = __webpack_require__(/*! ../utils/isEmpty */ "../asset-with-metadata-editor/lib/utils/isEmpty.js");
 var isValueValid = function isValueValid(value, validatorOptions) {
@@ -6019,18 +6040,46 @@ var isValueValid = function isValueValid(value, validatorOptions) {
     return true;
 };
 var NotEmpty = function NotEmpty(value, validatorOptions) {
-    var _a;
-    var validationErrorMessage = (_a = validatorOptions === null || validatorOptions === void 0 ? void 0 : validatorOptions.validationErrorMessage) !== null && _a !== void 0 ? _a : 'content.inspector.validators.notEmptyValidator.isEmpty';
+    var getValidationErrorMessage = function getValidationErrorMessage(validatorOptions) {
+        if (validatorOptions === null || validatorOptions === void 0 ? void 0 : validatorOptions.validationErrorMessage) {
+            return validatorOptions.validationErrorMessage;
+        }
+        if (validatorOptions.alt && validatorOptions.title) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingTitleAndAlt';
+        }
+        if (validatorOptions.alt) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingAlt';
+        }
+        if (validatorOptions.title) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingTitle';
+        }
+        return 'content.inspector.validators.notEmptyValidator.isEmpty';
+    };
+    var getValidationCollectionErrorMessage = function getValidationCollectionErrorMessage(validatorOptions) {
+        if (validatorOptions === null || validatorOptions === void 0 ? void 0 : validatorOptions.validationErrorMessage) {
+            return validatorOptions.validationErrorMessage;
+        }
+        if (validatorOptions.alt && validatorOptions.title) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingTitleAndAlt';
+        }
+        if (validatorOptions.alt) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingAlt';
+        }
+        if (validatorOptions.title) {
+            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingTitle';
+        }
+        return 'content.inspector.validators.notEmptyValidator.isEmpty';
+    };
     if (Array.isArray(value)) {
         if (value.some(function (item) {
             return !isValueValid(item, validatorOptions);
         })) {
-            return react_1.default.createElement("span", { id: validationErrorMessage }, validationErrorMessage);
+            return react_1.default.createElement(neos_ui_i18n_1.default, { id: getValidationErrorMessage(validatorOptions) });
         }
         return null;
     }
     if (!isValueValid(value, validatorOptions)) {
-        return react_1.default.createElement("span", { id: validationErrorMessage }, validationErrorMessage);
+        return react_1.default.createElement(neos_ui_i18n_1.default, { id: getValidationCollectionErrorMessage(validatorOptions) });
     }
     return null;
 };
