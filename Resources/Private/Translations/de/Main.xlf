@@ -2,27 +2,27 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file original="" product-name="Sitegeist.Kaleidoscope.ValueObjects" source-language="en" target-language="de" datatype="plaintext">
     <body>
-			<trans-unit id="validation.missingAlt" xml:space="preserve">
+			<trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.missingAlt" xml:space="preserve">
 				<source>Alt text is required.</source>
                 <target state="final">Alt-Text ist erforderlich.</target>
 			</trans-unit>
-            <trans-unit id="validation.missingTitle" xml:space="preserve">
+            <trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.missingTitle" xml:space="preserve">
 				<source>Title is required.</source>
                 <target state="final">Titel ist erforderlich.</target>
 			</trans-unit>
-            <trans-unit id="validation.missingTitleAndAlt" xml:space="preserve">
+            <trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.missingTitleAndAlt" xml:space="preserve">
 				<source>Title and alt text are required.</source>
                 <target state="final">Titel und Alt-Text sind erforderlich.</target>
 			</trans-unit>
-            <trans-unit id="validation.collectionItemMissingAlt" xml:space="preserve">
+            <trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingAlt" xml:space="preserve">
 				<source>One or more items in the collection are missing an alt text.</source>
                 <target state="final">Ein oder mehrere Elemente in der Sammlung fehlen einen Alt-Text.</target>
 			</trans-unit>
-            <trans-unit id="validation.collectionItemMissingTitle" xml:space="preserve">
+            <trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingTitle" xml:space="preserve">
 				<source>One or more items in the collection are missing a title.</source>
                 <target state="final">Ein oder mehrere Elemente in der Sammlung fehlen einen Titel.</target>
 			</trans-unit>
-            <trans-unit id="validation.collectionItemMissingTitleAndAlt" xml:space="preserve">
+            <trans-unit id="content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingTitleAndAlt" xml:space="preserve">
 				<source>One or more items in the collection are missing a title or an alt text.</source>
                 <target state="final">Ein oder mehrere Elemente in der Sammlung fehlen einen Titel oder einen Alt-Text.</target>
 			</trans-unit>

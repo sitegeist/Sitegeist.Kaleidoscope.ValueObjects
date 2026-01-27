@@ -31,13 +31,13 @@ export const NotEmpty = (value: AssetWithMeta | AssetWithMeta[], validatorOption
             return validatorOptions.validationErrorMessage
         }
         if (validatorOptions.alt && validatorOptions.title) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingTitleAndAlt'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.missingTitleAndAlt'
         }
         if (validatorOptions.alt) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingAlt'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.missingAlt'
         }
         if (validatorOptions.title) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.missingTitle'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.missingTitle'
         }
         return 'content.inspector.validators.notEmptyValidator.isEmpty'
     }
@@ -47,13 +47,13 @@ export const NotEmpty = (value: AssetWithMeta | AssetWithMeta[], validatorOption
             return validatorOptions.validationErrorMessage
         }
         if (validatorOptions.alt && validatorOptions.title) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingTitleAndAlt'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingTitleAndAlt'
         }
         if (validatorOptions.alt) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingAlt'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingAlt'
         }
         if (validatorOptions.title) {
-            return 'Sitegeist.Kaleidoscope.ValueObjects.validation.collectionItemMissingTitle'
+            return 'content.inspector.validators.kaleidoscope_value_object_validator.collectionItemMissingTitle'
         }
         return 'content.inspector.validators.notEmptyValidator.isEmpty'
     }
