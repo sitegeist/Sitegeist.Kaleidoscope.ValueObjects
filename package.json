@@ -17,5 +17,6 @@
         "@types/styled-components": "^5.1.9",
         "prettier": "^3.2.5",
         "typescript": "^4.2.4"
-    }
+    },
+    "packageManager": "yarn@3.6.4"
 }

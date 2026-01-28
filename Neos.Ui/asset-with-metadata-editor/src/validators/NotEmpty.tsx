@@ -60,13 +60,13 @@ export const NotEmpty = (value: AssetWithMeta | AssetWithMeta[], validatorOption
 
     if (Array.isArray(value)) {
         if (value.some((item) => !isValueValid(item, validatorOptions))) {
-            return <I18n id={getValidationErrorMessage(validatorOptions)} />
+            return <I18n id={getValidationErrorMessage(validatorOptions)} packageKey="Sitegeist.Kaleidoscope.ValueObjects" sourceName="Main" />
         }
         return null
     }
 
     if (!isValueValid(value, validatorOptions)) {
-        return <I18n id={getValidationCollectionErrorMessage(validatorOptions)} />
+        return <I18n id={getValidationCollectionErrorMessage(validatorOptions)} packageKey="Sitegeist.Kaleidoscope.ValueObjects" sourceName="Main" />
     }
 
     return null
