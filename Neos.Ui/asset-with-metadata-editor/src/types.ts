@@ -53,6 +53,12 @@ export type EditorOptions = {
             defaultOption?: string
         }
     }
+    validation?: {
+        notEmpty?: {
+            alt?: boolean
+            title?: boolean
+        }
+    }
 }
 
 export type Option = {

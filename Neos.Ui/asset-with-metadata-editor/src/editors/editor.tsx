@@ -148,6 +148,8 @@ export const Editor = ({
             <MetaDataInput
                 alt={valueExtern?.alt}
                 title={valueExtern?.title}
+                requireTitle={editorOptions?.validation?.notEmpty?.title}
+                requireAlt={editorOptions?.validation?.notEmpty?.alt}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
                 sidekickApiKey={sidekickApiKey}
                 selectedImageOriginUrl={prependConfiguredDomainToImageUri(

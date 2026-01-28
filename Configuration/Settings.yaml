@@ -9,6 +9,10 @@ Neos:
           '@sitegeist/kaleidoscope-valueobjects-plugin':
             resource: 'resource://Sitegeist.Kaleidoscope.ValueObjects/Public/JavaScript/Plugin.js'
     userInterface:
+      translation:
+        autoInclude:
+          'Sitegeist.Kaleidoscope.ValueObjects':
+            - Main
       inspector:
         dataTypes:
           'Sitegeist\Kaleidoscope\ValueObjects\ImageSourceProxy':

@@ -16,15 +16,17 @@ const Grid = styled.div`
     gap: 4px;
     width: 100%;
 `
-const GridItem = styled.div<{ selected?: boolean }>`
+const GridItem = styled.div<{ selected?: boolean; inValid?: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
-    border: 1px solid ${({ selected }) => (selected ? 'var(--colors-PrimaryBlue)' : 'transparent')};
+    border: 1px solid
+        ${({ selected, inValid }) => (selected ? 'var(--colors-PrimaryBlue)' : inValid ? '#ff460d' : 'transparent')};
 `
 
 type PreviewGridProps = {
     images: ImageMetadata[]
+    inValidImages: string[]
     selectedImageIdentifier?: string
     changed?: boolean
     onSelect: (imageIdentifier: string) => void
@@ -34,6 +36,7 @@ type PreviewGridProps = {
 
 export const PreviewGrid = ({
     images,
+    inValidImages,
     selectedImageIdentifier,
     changed,
     onSelect,
@@ -72,6 +75,7 @@ export const PreviewGrid = ({
                             <SortableGridItem
                                 key={image.object.__identity}
                                 image={image}
+                                inValid={inValidImages.includes(image.object.__identity)}
                                 selected={selectedImageIdentifier === image.object.__identity}
                                 onClick={() => onSelect(image.object.__identity)}
                             />
@@ -86,9 +90,10 @@ export const PreviewGrid = ({
 type SortableGridItemProps = {
     image: ImageMetadata
     selected: boolean
+    inValid: boolean
     onClick: () => void
 }
-const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) => {
+const SortableGridItem = ({ image, selected, inValid, onClick }: SortableGridItemProps) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: image.object.__identity,
     })
@@ -109,6 +114,7 @@ const SortableGridItem = ({ image, selected, onClick }: SortableGridItemProps) =
             ref={setNodeRef}
             style={style}
             selected={selected}
+            inValid={inValid}
             {...attributes}
             {...listeners}
             onClick={mergedOnClick}
