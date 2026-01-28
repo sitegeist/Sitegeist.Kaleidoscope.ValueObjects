@@ -3,4 +3,5 @@
 composer.lock
 Packages
 vendor
+**/cache/
 **/.yarn/

@@ -12,8 +12,22 @@ declare module '@neos-project/neos-ui-redux-store' {
                     language: [string]
                 }
             }
+            Nodes: {
+                focusedNodePathSelector: (state: any) => string
+                siteNodeContextPathSelector: (state: any) => string
+            }
         }
     }
 
     export const selectors: Selectors
+    export const store: {
+        getState: () => {
+            cr: {
+                nodes: {
+                    focusedNodePathSelector: string
+                    siteNodeContextPathSelector: string
+                }
+            }
+        }
+    }
 }

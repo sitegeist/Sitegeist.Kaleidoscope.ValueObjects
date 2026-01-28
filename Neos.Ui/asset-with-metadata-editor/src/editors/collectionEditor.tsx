@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
+import { ImageUploader } from '../components/imageUploader'
 import { MetaDataInput } from '../components/metaDataInput'
 import { PreviewGrid } from '../components/previewGrid'
 import { useImageMetadataCollection } from '../hooks/useImageMetaDataCollection'
@@ -32,6 +33,10 @@ export const CollectionEditor = ({
     const valueRef = useRef<AssetWithMeta[]>(valueExtern)
     const hooksRef = useRef<any>(hooks)
     const selectedImage = valueExtern.find((v) => v.asset.__identifier === selectedImageIdentifier)
+    const imageUploaderRef = useRef<any>(null)
+
+    const isUploadEnabled = Boolean(editorOptions?.features?.upload)
+    const isCropEnabled = Boolean(editorOptions?.features?.crop)
 
     const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
         | string
@@ -96,6 +101,7 @@ export const CollectionEditor = ({
     }
 
     const handleMediaSelection = async (assetIdentifier: string) => {
+        console.log('handleMediaSelection', assetIdentifier)
         if (valueExtern.some((v) => v.asset.__identifier === assetIdentifier)) return
 
         const cropOptions = editorOptions?.crop
@@ -119,6 +125,7 @@ export const CollectionEditor = ({
 
         const adjustments = hooksRef.current ? hooksRef.current[HOOK_BEFORE_SAVE_COLLECTION] : undefined
 
+        console.log('commit', commitValue)
         return commit(commitValue, {
             [HOOK_BEFORE_SAVE_COLLECTION]: [...(adjustments ?? []), cropAdjustments],
         })
@@ -166,6 +173,48 @@ export const CollectionEditor = ({
         renderSecondaryInspector('IMAGE_SELECT_MEDIA', () => (
             <MediaSelectionScreen type="images" constraints={constraints} onComplete={handleMediaSelection} />
         ))
+    }
+
+    const handleOpenMediaUpload = () => {
+        imageUploaderRef.current?.open()
+    }
+
+    const handleMediaUpload = async (assetIdentifier: string[]) => {
+        const cropOptions = editorOptions?.crop
+
+        const commitValue = [
+            ...valueRef.current,
+            ...assetIdentifier.map((identifier) => ({
+                asset: { __identifier: identifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+                title: '',
+                alt: '',
+            })),
+        ]
+
+        if (!cropOptions?.aspectRatio.forceCrop) return commit(commitValue)
+
+        const imageMetadatas = await Promise.all(
+            assetIdentifier.map(async (identifier) => {
+                return getImageMetaData(identifier)
+            })
+        )
+
+        if (!imageMetadatas) return commit(commitValue)
+
+        const cropAdjustments: ReturnType<typeof getForceCrop>[] = []
+        imageMetadatas.forEach((imageMetadata) => {
+            const cropAdjustment = getForceCrop(imageMetadata, cropOptions)
+            if (!cropAdjustment) return
+            cropAdjustments.push(cropAdjustment)
+        })
+
+        if (cropAdjustments.length === 0) return commit(commitValue)
+
+        const adjustments = hooksRef.current ? hooksRef.current[HOOK_BEFORE_SAVE_COLLECTION] : undefined
+
+        return commit(commitValue, {
+            [HOOK_BEFORE_SAVE_COLLECTION]: [...(adjustments ?? []), ...cropAdjustments],
+        })
     }
 
     const handleOpenImageCropper = () => {
@@ -220,15 +269,29 @@ export const CollectionEditor = ({
 
     return (
         <EditorContainer>
-            <PreviewGrid
-                inValidImages={inValidImages}
-                images={images}
-                selectedImageIdentifier={selectedImageIdentifier}
-                onSelect={handleSelectImage}
-                onEmptyPreviewClick={handleOpenMediaSelection}
-                onSort={handleImageSorting}
-                changed={highlight}
-            />
+            {editorOptions?.features?.upload ? (
+                <ImageUploader dropzoneRef={imageUploaderRef} multiple={true} onUpload={handleMediaUpload}>
+                    <PreviewGrid
+                        inValidImages={inValidImages}
+                        images={images}
+                        selectedImageIdentifier={selectedImageIdentifier}
+                        onSelect={handleSelectImage}
+                        onEmptyPreviewClick={handleOpenMediaSelection}
+                        onSort={handleImageSorting}
+                        changed={highlight}
+                    />
+                </ImageUploader>
+            ) : (
+                <PreviewGrid
+                    inValidImages={inValidImages}
+                    images={images}
+                    selectedImageIdentifier={selectedImageIdentifier}
+                    onSelect={handleSelectImage}
+                    onEmptyPreviewClick={handleOpenMediaSelection}
+                    onSort={handleImageSorting}
+                    changed={highlight}
+                />
+            )}
             <MetaDataInput
                 alt={selectedImage?.alt}
                 title={selectedImage?.title}
@@ -244,11 +307,13 @@ export const CollectionEditor = ({
                 onTitleChange={handleTitleChange}
             />
             <ControlBar
-                cropEnabled={Boolean(editorOptions?.features?.crop)}
+                cropEnabled={isCropEnabled}
                 selectedImageIdentifier={selectedImageIdentifier}
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
                 onDelete={handleDelete}
+                onOpenMediaUpload={handleOpenMediaUpload}
+                uploadEnabled={isUploadEnabled}
             />
         </EditorContainer>
     )

@@ -120,53 +120,12 @@ imageSource.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObject
 imageSources = ${q(node).property('imageSourceProxyCollection')}
 imageSources.@process.unwrapImageSourceProxy = Sitegeist.Kaleidoscope.ValueObjects:ImageSourceProxyCollectionUnwrapper
 ```
-## Migration data
+## Migration of existing data
 
-To convert existing Nodes to the new ImageSourceProxy and ImageSourceProxyCollection you can use the included 
-transformation and configure your own content migrations.
+For Neos 8 the package `Sitegeist.Kaleidoscope.ValueObjects.Migrations` provides migrations to convert existing Nodes to the new ImageSourceProxy and ImageSourceProxyCollection.
+The package can be installed via `composer require sitegeist/kaleidoscope-valueobjects-migrations`.
 
-```yaml
-up:
-  comments: 'Convert Images and Asset[] to ImageSourceProxy and ImageSourceProxyCollection'
-  migration:
-    - filters:
-        - type: 'NodeType'
-          settings:
-            nodeType: 'Vendor.Site:Node'
-            withSubTypes: true
-      transformations:
-        - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageToImageSourceProxy'
-          settings:
-            sourceProperty: 'image'
-            targetProperty: 'image'
-            altProperty: 'imageAlt'
-            titleProperty: 'imageTitle'
-        - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\AssetsToImageSourceProxyCollection'
-          settings:
-            sourceProperty: 'imageList'
-            targetProperty: 'imageList'
-
-down:
-  comments: 'Convert ImageSourceProxy and ImageSourceProxyCollection back to Images'
-  migration:
-      - filters:
-            - type: 'NodeType'
-              settings:
-                  nodeType: 'Vendor.Site:Node'
-                  withSubTypes: true
-        transformations:
-            - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageSourceProxyToImage'
-              settings:
-                  sourceProperty: 'image'
-                  targetProperty: 'image'
-                  altProperty: 'imageAlt'
-                  titleProperty: 'imageTitle'
-            - type: '\Sitegeist\Kaleidoscope\ValueObjects\Migration\Transformations\ImageSourceProxyCollectionToAssets'
-              settings:
-                  sourceProperty: 'imageList'
-                  targetProperty: 'imageList'
-
-```
+Migrations for Neos 9 are not yet available but will be in a separate package.
 
 ## Development 
 

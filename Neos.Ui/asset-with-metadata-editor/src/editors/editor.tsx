@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { ChangeIndicator } from '../components/changeIndicator'
 import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
+import { ImageUploader } from '../components/imageUploader'
 import { MetaDataInput } from '../components/metaDataInput'
 import { Preview } from '../components/preview'
 import { useImageMetadata } from '../hooks/useImageMetadata'
@@ -23,6 +24,10 @@ export const Editor = ({
 }: Props<AssetWithMeta>) => {
     const [openCropper, setOpenCropper] = useState(false)
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
+    const imageUploaderRef = useRef<any>(null)
+
+    const isUploadEnabled = Boolean(editorOptions?.features?.upload)
+    const isCropEnabled = Boolean(editorOptions?.features?.crop)
 
     const sidekickApiKey = globalRegistry.get('NEOSidekick.AiAssistant')?.get('configuration')?.apiKey as
         | string
@@ -90,6 +95,19 @@ export const Editor = ({
         ))
     }
 
+    const handleOpenMediaUpload = () => {
+        imageUploaderRef.current?.open()
+    }
+
+    const handleMediaUpload = (assetIdentifier: string) => {
+        commit({
+            asset: { __identifier: assetIdentifier, __flow_object_type: MEDIA_TYPE_IMAGE },
+            title: '',
+            alt: '',
+        })
+        setOpenCropper(true)
+    }
+
     const handleOpenImageCropper = () => {
         const { component: ImageCropper } = globalRegistry
             .get('inspector')
@@ -119,7 +137,13 @@ export const Editor = ({
     return (
         <EditorContainer>
             <ChangeIndicator changed={highlight}>
-                <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+                {editorOptions?.features?.upload ? (
+                    <ImageUploader dropzoneRef={imageUploaderRef} multiple={false} onUpload={handleMediaUpload}>
+                        <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+                    </ImageUploader>
+                ) : (
+                    <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+                )}
             </ChangeIndicator>
             <MetaDataInput
                 alt={valueExtern?.alt}
@@ -138,8 +162,10 @@ export const Editor = ({
             <ControlBar
                 onOpenImageSelector={handleOpenMediaSelection}
                 onOpenImageCropper={handleOpenImageCropper}
+                onOpenMediaUpload={handleOpenMediaUpload}
                 onDelete={() => commit({})}
-                cropEnabled={Boolean(editorOptions?.features?.crop)}
+                cropEnabled={isCropEnabled}
+                uploadEnabled={isUploadEnabled}
                 selectedImageIdentifier={valueExtern?.asset.__identifier}
             />
         </EditorContainer>

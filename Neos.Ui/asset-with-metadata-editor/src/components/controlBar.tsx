@@ -17,21 +17,26 @@ const ButtonContainer = styled.div`
 type ControlBarProps = {
     onOpenImageSelector: () => void
     onOpenImageCropper: () => void
+    onOpenMediaUpload: () => void
     onDelete: () => void
     cropEnabled: boolean
+    uploadEnabled: boolean
     selectedImageIdentifier?: string
 }
 
 export const ControlBar = ({
     onOpenImageSelector,
+    onOpenMediaUpload,
     onOpenImageCropper,
     onDelete,
     cropEnabled,
+    uploadEnabled,
     selectedImageIdentifier,
 }: ControlBarProps) => (
     <Container>
         <ButtonContainer>
             <IconButton icon="camera" size="small" style="lighter" onClick={onOpenImageSelector} />
+            {uploadEnabled && <IconButton icon="upload" size="small" style="lighter" onClick={onOpenMediaUpload} />}
             {cropEnabled && (
                 <IconButton
                     icon="crop"
