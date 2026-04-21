@@ -19248,7 +19248,7 @@ var neos_ui_i18n_1 = __importDefault(__webpack_require__(/*! @neos-project/neos-
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js"));
 var isEmpty_1 = __webpack_require__(/*! ../utils/isEmpty */ "../asset-with-metadata-editor/lib/utils/isEmpty.js");
 var isValueValid = function isValueValid(value, validatorOptions) {
-    if (!value) {
+    if (!(value === null || value === void 0 ? void 0 : value.asset)) {
         return true;
     }
     if (validatorOptions.alt && (0, isEmpty_1.isEmpty)(value === null || value === void 0 ? void 0 : value.alt)) {
