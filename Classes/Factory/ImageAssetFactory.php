@@ -16,11 +16,16 @@ class ImageAssetFactory
 
     public function tryCreateFromProxy(ImageAssetProxy $reference): ?ImageInterface
     {
-        $image = $this->persistenceManager->getObjectByIdentifier(
-            $reference->identifier,
-            $reference->classname,
-            true
-        );
+        try {
+            $image = $this->persistenceManager->getObjectByIdentifier(
+                $reference->identifier,
+                $reference->classname,
+                true
+            );
+        } catch (\Exception) {
+            return null;
+        }
+
         if ($image instanceof ImageInterface) {
             return $image;
         }
