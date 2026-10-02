@@ -39,6 +39,7 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
                 </QueryClientProvider>
             )
         },
+        hasOwnLabel: true,
     })
 
     editorsRegistry.set('Sitegeist.Kaleidoscope.ValueObjects/Inspector/Editors/AssetWithMetadataCollectionEditor', {
@@ -51,6 +52,7 @@ export function registerAssetWithMetadataEditor(globalRegistry: IGlobalRegistry)
                 </QueryClientProvider>
             )
         },
+        hasOwnLabel: true,
     })
 
     const validatorsRegistry = globalRegistry.get('validators')
