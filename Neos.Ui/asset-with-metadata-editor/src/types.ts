@@ -17,6 +17,11 @@ export type AssetWithMeta = {
 
 export type Props<T> = {
     identifier: string
+    id?: string
+    label?: string
+    helpMessage?: string
+    helpThumbnail?: string
+    i18nRegistry?: { translate: (id: string) => string }
     className: string
     value: T
     hooks: {

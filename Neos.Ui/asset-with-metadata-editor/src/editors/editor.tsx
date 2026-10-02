@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ChangeIndicator } from '../components/changeIndicator'
 import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
+import { EditorLabel } from '../components/editorLabel'
 import { ImageUploader } from '../components/imageUploader'
 import { MetaDataInput } from '../components/metaDataInput'
 import { Preview } from '../components/preview'
@@ -21,6 +22,11 @@ export const Editor = ({
     hooks,
     highlight,
     commit,
+    id,
+    label,
+    helpMessage,
+    helpThumbnail,
+    i18nRegistry,
 }: Props<AssetWithMeta>) => {
     const [openCropper, setOpenCropper] = useState(false)
     const imageMetadata = useImageMetadata(valueExtern?.asset.__identifier)
@@ -135,39 +141,48 @@ export const Editor = ({
     }
 
     return (
-        <EditorContainer>
-            <ChangeIndicator changed={highlight}>
-                {editorOptions?.features?.upload ? (
-                    <ImageUploader dropzoneRef={imageUploaderRef} multiple={false} onUpload={handleMediaUpload}>
+        <>
+            <EditorLabel
+                id={id}
+                label={label}
+                helpMessage={helpMessage}
+                helpThumbnail={helpThumbnail}
+                i18nRegistry={i18nRegistry}
+            />
+            <EditorContainer>
+                <ChangeIndicator changed={highlight}>
+                    {editorOptions?.features?.upload ? (
+                        <ImageUploader dropzoneRef={imageUploaderRef} multiple={false} onUpload={handleMediaUpload}>
+                            <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
+                        </ImageUploader>
+                    ) : (
                         <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
-                    </ImageUploader>
-                ) : (
-                    <Preview image={valueExtern && getImageMeta()} onClick={handleOpenMediaSelection} />
-                )}
-            </ChangeIndicator>
-            <MetaDataInput
-                alt={valueExtern?.alt}
-                title={valueExtern?.title}
-                requireTitle={editorOptions?.validation?.notEmpty?.title}
-                requireAlt={editorOptions?.validation?.notEmpty?.alt}
-                selectedImageIdentifier={valueExtern?.asset.__identifier}
-                sidekickApiKey={sidekickApiKey}
-                selectedImageOriginUrl={prependConfiguredDomainToImageUri(
-                    getImageMeta()?.originalImageResourceUri,
-                    sidekickInstanceDomain
-                )}
-                onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
-                onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
-            />
-            <ControlBar
-                onOpenImageSelector={handleOpenMediaSelection}
-                onOpenImageCropper={handleOpenImageCropper}
-                onOpenMediaUpload={handleOpenMediaUpload}
-                onDelete={() => commit({})}
-                cropEnabled={isCropEnabled}
-                uploadEnabled={isUploadEnabled}
-                selectedImageIdentifier={valueExtern?.asset.__identifier}
-            />
-        </EditorContainer>
+                    )}
+                </ChangeIndicator>
+                <ControlBar
+                    onOpenImageSelector={handleOpenMediaSelection}
+                    onOpenImageCropper={handleOpenImageCropper}
+                    onOpenMediaUpload={handleOpenMediaUpload}
+                    onDelete={() => commit({})}
+                    cropEnabled={isCropEnabled}
+                    uploadEnabled={isUploadEnabled}
+                    selectedImageIdentifier={valueExtern?.asset.__identifier}
+                />
+                <MetaDataInput
+                    alt={valueExtern?.alt}
+                    title={valueExtern?.title}
+                    requireTitle={editorOptions?.validation?.notEmpty?.title}
+                    requireAlt={editorOptions?.validation?.notEmpty?.alt}
+                    selectedImageIdentifier={valueExtern?.asset.__identifier}
+                    sidekickApiKey={sidekickApiKey}
+                    selectedImageOriginUrl={prependConfiguredDomainToImageUri(
+                        getImageMeta()?.originalImageResourceUri,
+                        sidekickInstanceDomain
+                    )}
+                    onAltChange={(alt) => valueExtern && commit({ ...valueExtern, alt }, hooks)}
+                    onTitleChange={(title) => valueExtern && commit({ ...valueExtern, title }, hooks)}
+                />
+            </EditorContainer>
+        </>
     )
 }

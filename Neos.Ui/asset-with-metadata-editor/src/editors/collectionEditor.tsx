@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { ControlBar } from '../components/controlBar'
 import { EditorContainer } from '../components/editorContainer'
+import { EditorLabel } from '../components/editorLabel'
 import { ImageUploader } from '../components/imageUploader'
 import { MetaDataInput } from '../components/metaDataInput'
 import { PreviewGrid } from '../components/previewGrid'
@@ -23,6 +24,11 @@ export const CollectionEditor = ({
     highlight,
     hooks,
     commit,
+    id,
+    label,
+    helpMessage,
+    helpThumbnail,
+    i18nRegistry,
 }: Props<AssetWithMeta[]>) => {
     const imagesIdentifiers = useMemo(() => {
         return valueExtern.map((v) => v.asset.__identifier)
@@ -268,9 +274,28 @@ export const CollectionEditor = ({
         .map((v) => v.asset.__identifier)
 
     return (
-        <EditorContainer>
-            {editorOptions?.features?.upload ? (
-                <ImageUploader dropzoneRef={imageUploaderRef} multiple={true} onUpload={handleMediaUpload}>
+        <>
+            <EditorLabel
+                id={id}
+                label={label}
+                helpMessage={helpMessage}
+                helpThumbnail={helpThumbnail}
+                i18nRegistry={i18nRegistry}
+            />
+            <EditorContainer>
+                {editorOptions?.features?.upload ? (
+                    <ImageUploader dropzoneRef={imageUploaderRef} multiple={true} onUpload={handleMediaUpload}>
+                        <PreviewGrid
+                            inValidImages={inValidImages}
+                            images={images}
+                            selectedImageIdentifier={selectedImageIdentifier}
+                            onSelect={handleSelectImage}
+                            onEmptyPreviewClick={handleOpenMediaSelection}
+                            onSort={handleImageSorting}
+                            changed={highlight}
+                        />
+                    </ImageUploader>
+                ) : (
                     <PreviewGrid
                         inValidImages={inValidImages}
                         images={images}
@@ -280,41 +305,31 @@ export const CollectionEditor = ({
                         onSort={handleImageSorting}
                         changed={highlight}
                     />
-                </ImageUploader>
-            ) : (
-                <PreviewGrid
-                    inValidImages={inValidImages}
-                    images={images}
-                    selectedImageIdentifier={selectedImageIdentifier}
-                    onSelect={handleSelectImage}
-                    onEmptyPreviewClick={handleOpenMediaSelection}
-                    onSort={handleImageSorting}
-                    changed={highlight}
-                />
-            )}
-            <MetaDataInput
-                alt={selectedImage?.alt}
-                title={selectedImage?.title}
-                requireTitle={editorOptions?.validation?.notEmpty?.title}
-                requireAlt={editorOptions?.validation?.notEmpty?.alt}
-                selectedImageIdentifier={selectedImageIdentifier}
-                sidekickApiKey={sidekickApiKey}
-                selectedImageOriginUrl={prependConfiguredDomainToImageUri(
-                    getImageMetadata(selectedImageIdentifier)?.originalImageResourceUri,
-                    sidekickInstanceDomain
                 )}
-                onAltChange={handleAltChange}
-                onTitleChange={handleTitleChange}
-            />
-            <ControlBar
-                cropEnabled={isCropEnabled}
-                selectedImageIdentifier={selectedImageIdentifier}
-                onOpenImageSelector={handleOpenMediaSelection}
-                onOpenImageCropper={handleOpenImageCropper}
-                onDelete={handleDelete}
-                onOpenMediaUpload={handleOpenMediaUpload}
-                uploadEnabled={isUploadEnabled}
-            />
-        </EditorContainer>
+                <ControlBar
+                    cropEnabled={isCropEnabled}
+                    selectedImageIdentifier={selectedImageIdentifier}
+                    onOpenImageSelector={handleOpenMediaSelection}
+                    onOpenImageCropper={handleOpenImageCropper}
+                    onDelete={handleDelete}
+                    onOpenMediaUpload={handleOpenMediaUpload}
+                    uploadEnabled={isUploadEnabled}
+                />
+                <MetaDataInput
+                    alt={selectedImage?.alt}
+                    title={selectedImage?.title}
+                    requireTitle={editorOptions?.validation?.notEmpty?.title}
+                    requireAlt={editorOptions?.validation?.notEmpty?.alt}
+                    selectedImageIdentifier={selectedImageIdentifier}
+                    sidekickApiKey={sidekickApiKey}
+                    selectedImageOriginUrl={prependConfiguredDomainToImageUri(
+                        getImageMetadata(selectedImageIdentifier)?.originalImageResourceUri,
+                        sidekickInstanceDomain
+                    )}
+                    onAltChange={handleAltChange}
+                    onTitleChange={handleTitleChange}
+                />
+            </EditorContainer>
+        </>
     )
 }
